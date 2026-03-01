@@ -34,7 +34,7 @@ In Home Assistant 2024+ (you're on 2026), MQTT configuration should be done thro
    Broker: 127.0.0.1
    Port: 1883
    Username: mqtt_user
-   Password: Pavan@2005
+   Password: YOUR_MQTT_PASSWORD
    ```
    
    **Leave other fields as default** (discovery will be enabled automatically)
@@ -63,12 +63,12 @@ After adding the integration:
 **In a terminal, run:**
 ```bash
 # Subscribe to all topics
-mosquitto_sub -h localhost -u mqtt_user -P 'Pavan@2005' -t '#' -v
+mosquitto_sub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t '#' -v
 ```
 
 **In another terminal, publish a test:**
 ```bash
-mosquitto_pub -h localhost -u mqtt_user -P 'Pavan@2005' -t 'test/topic' -m 'Hello MQTT!'
+mosquitto_pub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t 'test/topic' -m 'Hello MQTT!'
 ```
 
 You should see the message appear in the first terminal!
@@ -82,7 +82,7 @@ You should see the message appear in the first terminal!
 ✅ Home Assistant: RUNNING (http://localhost:8123)
 ✅ MQTT Broker: RUNNING (port 1883)
 ✅ Automations: 6 loaded from automations.yaml
-✅ Credentials: mqtt_user / Pavan@2005
+✅ Credentials: mqtt_user / YOUR_MQTT_PASSWORD
 ```
 
 ---
@@ -93,7 +93,7 @@ You should see the message appear in the first terminal!
 - Host: `127.0.0.1` (localhost)
 - Port: `1883`
 - Username: `mqtt_user`
-- Password: `Pavan@2005`
+- Password: `YOUR_MQTT_PASSWORD`
 
 **Keep these handy** - you'll need them when adding the integration!
 
@@ -129,7 +129,7 @@ After adding MQTT integration:
 2. **"Authentication failed"**
    - Solution: Double-check username and password
    - Username: `mqtt_user`
-   - Password: `Pavan@2005`
+   - Password: `YOUR_MQTT_PASSWORD`
 
 3. **Can't find MQTT in integration list**
    - Solution: Search for "MQTT" (it's case-sensitive in search)
@@ -143,7 +143,7 @@ Once Health Connect sensors are enabled on your phone:
 
 ```bash
 # Watch all health data messages
-mosquitto_sub -h localhost -u mqtt_user -P 'Pavan@2005' -t 'etms/#' -v
+mosquitto_sub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t 'etms/#' -v
 ```
 
 Expected output (once phone sensors are active):
@@ -172,10 +172,10 @@ ps aux | grep homeassistant
 sudo systemctl status mosquitto
 
 # Test MQTT connection
-mosquitto_pub -h localhost -u mqtt_user -P 'Pavan@2005' -t 'test' -m 'test'
+mosquitto_pub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t 'test' -m 'test'
 
 # Watch MQTT messages
-mosquitto_sub -h localhost -u mqtt_user -P 'Pavan@2005' -t '#' -v
+mosquitto_sub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t '#' -v
 
 # View Home Assistant logs
 tail -f /tmp/homeassistant.log

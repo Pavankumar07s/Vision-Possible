@@ -22,7 +22,7 @@ bash setup.sh --gpu      # With CUDA support
 python -m src --camera 0 --log-level DEBUG
 
 # 3. Monitor MQTT events (separate terminal)
-mosquitto_sub -h localhost -u mqtt_user -P 'Pavan@2005' -t 'etms/vision/#' -v
+mosquitto_sub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t 'etms/vision/#' -v
 ```
 
 ## Project structure
