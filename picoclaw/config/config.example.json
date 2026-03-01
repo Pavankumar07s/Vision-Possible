@@ -48,7 +48,7 @@
   "channels": {
     "telegram": {
       "enabled": false,
-      "token": "8717078476:AAFy5JCgb_eT6iIz_2dmbG13iLZVDUU7YOA",
+      "token": "YOUR_TELEGRAM_BOT_TOKEN",
       "proxy": "",
       "allow_from": [
         "YOUR_USER_ID"

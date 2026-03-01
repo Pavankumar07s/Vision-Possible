@@ -12,7 +12,7 @@ import json
 from twilio.rest import Client
 import os
 
-uri = os.getenv("MONGO_URI", "mongodb+srv://csc2106:ppijBFqcBxQgFfAk@csc2106.tjdvgts.mongodb.net/?retryWrites=true&w=majority&appName=csc2106")
+uri = os.getenv("MONGO_URI", "")
 
 # Lazy MongoDB connection — only connect when actually needed
 client = None
@@ -164,7 +164,7 @@ def sample_map_data():
     return jsonify(aggregated_data)
 
 def send_message(number):
-    account_sid = 'AC524e033062d7d1f4a65f7f161ddf63e5'
+    account_sid = os.getenv('TWILIO_ACCOUNT_SID', '')
     auth_token = os.getenv('AUTH_TOKEN')
     client = Client(account_sid, auth_token)
 
