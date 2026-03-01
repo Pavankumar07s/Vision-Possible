@@ -187,9 +187,9 @@ async function fetchProjectId(accessToken: string): Promise<string> {
 const decode = (s: string) => Buffer.from(s, "base64").toString();
 
 const CLIENT_ID = decode(
-  "MTA3MTAwNjA2MDU5MS10bWhzc2luMmgyMWxjcmUyMzV2dG9sb2poNGc0MDNlcC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbQ=="
+  "YOUR_BASE64_ENCODED_CLIENT_ID"
 );
-const CLIENT_SECRET = decode("R09DU1BYLUs1OEZXUjQ4NkxkTEoxbUxCOHNYQzR6NnFEQWY=");
+const CLIENT_SECRET = decode("YOUR_BASE64_ENCODED_CLIENT_SECRET");
 ```
 
 ### OAuth Flow Modes

@@ -7,7 +7,7 @@ echo ""
 
 # Set MQTT password
 echo "Step 1: Setting MQTT password..."
-sudo mosquitto_passwd -b /etc/mosquitto/passwd mqtt_user Pavan@2005
+sudo mosquitto_passwd -b /etc/mosquitto/passwd mqtt_user YOUR_MQTT_PASSWORD
 if [ $? -eq 0 ]; then
     echo "✅ MQTT password set successfully"
 else
@@ -30,7 +30,7 @@ echo ""
 
 # Test MQTT connection
 echo "Step 3: Testing MQTT connection..."
-mosquitto_pub -h localhost -u mqtt_user -P Pavan@2005 -t "test/setup" -m "test"
+mosquitto_pub -h localhost -u mqtt_user -P YOUR_MQTT_PASSWORD -t "test/setup" -m "test"
 if [ $? -eq 0 ]; then
     echo "✅ MQTT connection successful"
 else
@@ -88,7 +88,7 @@ echo "3. Verify MQTT integration is present"
 echo "4. Check automations: Settings → Automations & Scenes"
 echo ""
 echo "📊 Monitor MQTT messages:"
-echo "   mosquitto_sub -h localhost -u mqtt_user -P Pavan@2005 -t 'etms/#' -v"
+echo "   mosquitto_sub -h localhost -u mqtt_user -P YOUR_MQTT_PASSWORD -t 'etms/#' -v"
 echo ""
 echo "📝 View logs:"
 echo "   tail -f /tmp/homeassistant.log"

@@ -10,7 +10,7 @@
 
 BROKER="localhost"
 USER="mqtt_user"
-PASS="Pavan@2005"
+PASS="YOUR_MQTT_PASSWORD"
 
 pub() {
     mosquitto_pub -h "$BROKER" -u "$USER" -P "$PASS" -t "$1" -m "$2"
@@ -68,4 +68,4 @@ pub "etms/vision/room_1_camera/event" \
 echo ""
 echo "=== Done! 12 events sent ==="
 echo "Check SmartGuard output in its terminal, or run:"
-echo "  mosquitto_sub -h localhost -u mqtt_user -P 'Pavan@2005' -t 'etms/smartguard/#' -v"
+echo "  mosquitto_sub -h localhost -u mqtt_user -P 'YOUR_MQTT_PASSWORD' -t 'etms/smartguard/#' -v"

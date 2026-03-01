@@ -304,7 +304,7 @@ mqtt:
   broker: localhost
   port: 1883
   username: mqtt_user
-  password: Pavan@2005
+  password: YOUR_MQTT_PASSWORD
 
 policy:
   thresholds:
