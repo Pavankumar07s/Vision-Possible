@@ -1,0 +1,844 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# This Source Code Form is subject to the terms of the Mozilla Public License,
+# v. 2.0. If a copy of the MPL was not distributed with this file, You can
+# obtain one at https://mozilla.org/MPL/2.0/.
+# This code is Copyright 2019 - 2023 Absolute Performance, Inc, and 2024 - 2025
+# ProCern Technology Solutions.
+# It is written and maintained by Taylor C. Richberger <taylor.richberger@procern.com>
+
+''''A simple optionally-async python inotify library, focused on simplicity of use and operation, and leveraging modern Python features'''
+
+__version__ = '4.4.0'
+
+from contextlib import contextmanager
+from enum import IntFlag
+from io import BytesIO
+from pathlib import Path, PurePath
+from typing import TYPE_CHECKING, Callable, Generator, Optional, Union, Dict, List, cast
+import os
+from warnings import warn
+import weakref
+from weakref import ReferenceType
+from asyncio import Future
+import select
+from collections import deque
+
+# Python 3.7 suggests get_running_loop for library code
+try:
+    from asyncio import get_running_loop
+except ImportError:
+    from asyncio import get_event_loop as get_running_loop
+
+from . import _ffi
+
+@contextmanager
+def _get_events_future(fd: int, get_function: Callable[[Union[Future, '_FakeFuture']], None]) -> Generator[Future, None, None]:
+    '''Watch a file descriptor, call a get function, and unwatch the file descriptor.
+    '''
+    event_loop = get_running_loop()
+    future = event_loop.create_future()
+    event_loop.add_reader(fd, get_function, future)
+    try:
+        yield future
+    finally:
+        try:
+            event_loop.remove_reader(fd)
+        except Exception:
+            # The fd might already be closed; we don't want to interrupt
+            # a CancelledError.
+            pass
+
+class InitFlags(IntFlag):
+    '''Init flags for use with the :class:`Inotify` constructor.
+
+    You shouldn't have a reason to use this, as :attr:`CLOEXEC` will be desired
+    because there's no reason for exec'd children to inherit inotify handles
+    here, and :attr:`NONBLOCK` shouldn't even make a difference due to the
+    handle always being watched with select, unless you are using synchronous mode.
+    '''
+
+    __slots__ = ()
+
+    #: Set the close-on-exec (FD_CLOEXEC) flag on the new file descriptor.  See
+    #: the description of the O_CLOEXEC flag in  open(2)  for  reasons why this
+    #: may be useful.
+    CLOEXEC = os.O_CLOEXEC
+
+    #: Set the O_NONBLOCK file status flag on the open file description (see
+    #: open(2)) referred to by the new file descriptor.  Using this flag saves
+    #: extra calls to fcntl(2) to achieve the same result.
+    NONBLOCK = os.O_NONBLOCK
+
+
+class Mask(IntFlag):
+    '''Bit-mask for adding a watch and for analyzing watch events.
+
+    Because this is an IntFlag, all IntFlag operations work on it, such as
+    using the bitwise or operator to combine, or using the `in` operator to
+    check contents.
+    '''
+
+    __slots__ = ()
+
+    #: No flag, to facilitate defaults
+    ZERO = 0
+
+    #: File was accessed (e.g., read(2), execve(2)).
+    ACCESS = 0x00000001
+
+    #: File was modified (e.g., write(2), truncate(2)).
+    MODIFY = 0x00000002
+
+    #: Metadata changed—for example, permissions (e.g., chmod(2)), timestamps
+    #: (e.g.,  utimensat(2)),  extended  attributes  (setxattr(2)),  link count
+    #: (since Linux 2.6.25; e.g., for the target of link(2) and for unlink(2)),
+    #: and user/group ID (e.g., chown(2)).
+    ATTRIB = 0x00000004
+
+    #: File opened for writing was closed.
+    CLOSE_WRITE = 0x00000008
+
+    #: File or directory not opened for writing was closed.
+    CLOSE_NOWRITE = 0x00000010
+
+    #: :attr:`CLOSE_WRITE` | :attr:`CLOSE_NOWRITE`
+    CLOSE = CLOSE_WRITE | CLOSE_NOWRITE
+
+    #: File or directory was opened.
+    OPEN = 0x00000020
+
+    #: Generated for the directory containing the old filename when a file is renamed.
+    #: Note the cookie member in :class:`Event`.
+    MOVED_FROM = 0x00000040
+
+    #: Generated for the directory containing the new filename when a file is renamed.
+    #: Note the cookie member in :class:`Event`.
+    MOVED_TO = 0x00000080
+
+    #: :attr:`MOVED_FROM: | :attr:`MOVED_TO`
+    MOVE = MOVED_FROM | MOVED_TO
+
+    #: File/directory created in watched directory (e.g., open(2) O_CREAT,
+    #: mkdir(2), link(2), symlink(2), bind(2) on a UNIX domain socket).
+    CREATE = 0x00000100
+
+    #: File/directory deleted from watched directory.
+    DELETE = 0x00000200
+
+    #: Watched  file/directory  was  itself deleted.  (This event also occurs
+    #: if an object is moved to another filesystem, since mv(1) in effect
+    #: copies the file to the other filesystem and then deletes it from the
+    #: original filesystem.)  In addition, an :attr:`Mask.IGNORED` event will
+    #: subsequently be generated for the watch descriptor.
+    DELETE_SELF = 0x00000400
+
+    #: Watched file/directory was itself moved.
+    MOVE_SELF = 0x00000800
+
+    #: Filesystem containing watched object was unmounted.  In addition, an
+    #: :attr:`Mask.IGNORED` event  will  subsequently  be  generated  for  the  watch
+    #: descriptor.
+    UNMOUNT = 0x00002000
+
+    #: Event queue overflowed (wd is -1 for this event (:meth:`Event.watch` will be None)).
+    Q_OVERFLOW = 0x00004000
+
+    #: Watch was removed explicitly (inotify_rm_watch(2)) or automatically
+    #: (file was deleted, or filesystem was unmounted).
+    IGNORED = 0x00008000
+
+    #: (since Linux 2.6.15)
+    #: Watch pathname only if it is a directory; the error ENOTDIR results if
+    #: pathname is not a directory.  Using this flag provides an application
+    #: with a race-free way of ensuring that the monitored object is a
+    #: directory.
+    ONLYDIR = 0x01000000
+
+    #: Don't dereference pathname if it is a symbolic link.
+    DONT_FOLLOW = 0x02000000
+
+    #: By  default,  when  watching  events on the children of a directory,
+    #: events are generated for children even after they have been unlinked
+    #: from the directory.  This can result in large numbers of uninteresting
+    #: events for some applications (e.g., if  watching  /tmp,  in  which many
+    #: applications create temporary files whose names are immediately
+    #: unlinked).  Specifying :attr:`Mask.EXCL_UNLINK` changes the default behavior, so
+    #: that events are not generated for children after they have been unlinked
+    #: from the watched directory.
+    EXCL_UNLINK = 0x04000000
+
+    #: (since Linux 4.18)
+    #: Watch pathname only if it does not already have a watch associated with
+    #: it; the  error  EEXIST  results  if  pathname  is  already  being
+    #: watched.  Using this flag provides an application with a way of ensuring
+    #: that new watches do not modify existing ones.  This is useful because
+    #: multiple paths may refer to the same inode, and multiple calls to
+    #: inotify_add_watch(2) without this flag may clobber existing watch masks.
+    MASK_CREATE = 0x10000000
+
+    #: If a watch instance already exists for the filesystem object
+    #: corresponding to pathname, add (OR) the events in mask  to  the  watch
+    #: mask (instead of replacing the mask); the error EINVAL results if
+    #: :attr:`Mask.MASK_CREATE` is also specified.
+    MASK_ADD = 0x20000000
+
+    #: Subject of this event is a directory.
+    ISDIR = 0x40000000
+
+    #: Monitor the filesystem object corresponding to pathname for one event,
+    #: then remove from watch list.
+    ONESHOT = 0x80000000
+
+    #: Monitor all common types of events.  This does not include modifier flags like ONESHOT, MASK_CREATE, EXEC_UNLINK, etc.
+    ALL = ACCESS | MODIFY | ATTRIB | CLOSE | OPEN | MOVE | CREATE | DELETE | DELETE_SELF | MOVE_SELF
+
+
+
+class Watch:
+    '''Watch class.
+
+    You usually won't construct this directly, but rather use
+    :meth:`Inotify.add_watch` to create it.
+    '''
+
+    __slots__ = ('_inotify', '_mask', '_path', '_wd', '__weakref__')
+
+    def __init__(self, inotify: 'Inotify', path: Path, mask: Mask, wd: int) -> None:
+        '''
+        Do not instantiate this directly.  Use :meth:`Inotify.add_watch` instead.
+
+        :param Inotify inotify: The :class:`Inotify` instance this Watch is being added to
+        :param pathlib.Path path: A :class:`pathlib.Path` to the watch destination
+        :param Mask mask: The mask for the added watch.
+        '''
+        self._inotify = weakref.ref(inotify)
+        self._mask = mask
+        self.path = path
+        self._wd = wd
+
+    @property
+    def inotify(self) -> Optional['Inotify']:
+        '''The :class:`Inotify` instance this Watch belongs to.
+
+        This is internally stored as a weakref, so if the :class:`Watch`
+        outlives the :class:`Inotify`, this may return None.
+
+        :returns: The :class:`Inotify` instance this Watch belongs to.
+        '''
+        return self._inotify()
+
+    @property
+    def wd(self) -> int:
+        '''
+        The raw watch descriptor.
+        '''
+        return self._wd
+
+    @property
+    def path(self) -> Path:
+        '''
+        The path that this watch is for.
+        '''
+        return self._path
+
+    @path.setter
+    def path(self, value: Path) -> None:
+        self._path = value
+
+    @property
+    def mask(self) -> Mask:
+        '''
+        :returns: The mask that was used to construct this watch
+        '''
+        return self._mask
+
+    def __repr__(self) -> str:
+        return '<Watch path={!r} mask={!r}>'.format(self.path, self.mask)
+
+
+class Event:
+    '''Event output class.
+
+    The :class:`Mask` values may be tested directly against this class.
+    '''
+
+    __slots__ = ('_mask', '_cookie', '_name', '_watch')
+
+    def __init__(self,
+                 watch: Optional[Union[Watch, ReferenceType]],
+                 mask: Mask,
+                 cookie: int,
+                 name: Optional[Path]) -> None:
+        """Create the class.  This class is internal, for all intents and
+        purposes.  Client code should have no reason to construct instances of
+        it.
+
+        :watch: A :class:`Watch` instance, a weakref, or None
+        :mask: The mask that this event was created with
+        :cookie: The cookie integer for identifying move operations
+        :name: The name path.
+        :owns_watch: Whether the event should own the watch.
+        """
+
+        self._mask = mask
+        self._cookie = cookie
+        self._name = name
+        self._watch = watch
+
+    @property
+    def watch(self) -> Optional[Watch]:
+        '''The actual Watch instance associated with this event.
+
+        This is stored internally as a weak reference.  If the event is taken
+        out of context and outlives its generating :class:`Inotify`, this may
+        return None.
+
+        If :meth:`mask` contains IGNORED or the watch was a ONESHOT, this is
+        not a weak reference, but the actual watch instance.  If the watch was
+        ONESHOT, the corresponding IGNORED will not have a watch instance, only
+        the ONESHOT event itself.  This may be inconvenient, but the inotify
+        man page doesn't give strong enough guarantees to risk memory leak with
+        ONESHOT events by leaving the ownership change exclusively to IGNORED
+        events.
+
+        :returns: the watch instance that generated this
+        '''
+
+        if self._watch is None or isinstance(self._watch, Watch):
+            return self._watch
+        else:
+            return self._watch()
+
+    @property
+    def mask(self) -> Mask:
+        '''The mask associated with this event
+
+        :returns: the mask for this event
+        '''
+        return self._mask
+
+    @property
+    def cookie(self) -> int:
+        '''The cookie associated with this event.
+
+        According to the `inotify man page
+        <http://man7.org/linux/man-pages/man7/inotify.7.html>`_, cookie is a
+        unique integer that connects related events.  Currently, this is used
+        only for rename events, and allows the resulting pair of :attr:`Mask.MOVED_FROM`
+        and :attr:`Mask.MOVED_TO` events to be connected by the application.  For all
+        other event types, cookie is set to 0.
+
+        :returns: the cookie for this event
+        '''
+        return self._cookie
+
+    @property
+    def name(self) -> Optional[Path]:
+        '''The name associated with the event.
+        May be None, indicating the watch directory itself.
+
+        :returns: the name of the event, or None if the event is for the watch itself
+        '''
+        return self._name
+
+    @property
+    def path(self) -> Optional[Path]:
+        '''The full path to this event, constructed from the :class:`Watch`
+        path and the :meth:`name`.
+
+        If the :class:`Watch` no longer exists, this returns None.  If the
+        :meth:`name` does not exist, just returns the watch path.  This value
+        is absolute if the path used to construct the :class:`Watch` (the path
+        used with :meth:`Inotify.add_watch`) is absolute, otherwise it is
+        relative.  This means if you have changed directory between
+        constructing a watch with a relative path and receiving this event, you
+        will have to have another way of identifying the file correctly.
+
+        :returns: the full path for the event, or None if it can not be constructed.
+        '''
+        watch = self.watch
+        name = self.name
+        if watch is not None:
+            if name:
+                return watch.path / name
+            else:
+                return watch.path
+        return None
+
+    def __contains__(self, value) -> bool:
+        '''Roughly the same thing as ``value in event.mask``
+        '''
+        if isinstance(value, Mask):
+            return value in self.mask
+        raise TypeError("Only Mask is supported with Event's 'in' operator")
+
+    def __repr__(self) -> str:
+        return '<Event name={!r} mask={!r} cookie={} watch={!r}>'.format(
+            self.name, self.mask, self.cookie, self.watch)
+
+
+class _FakeFuture:
+    '''A fake future, used to support synchronous operation.'''
+
+    __slots__ = ('_result',)
+
+    def __init__(self) -> None:
+        self._result: List[Event] = []
+
+    def set_result(self, value: List[Event]) -> None:
+        self._result = value
+
+    def cancelled(self) -> bool:
+        return False
+
+    @property
+    def result(self) -> List[Event]:
+        return self._result
+
+
+class Inotify:
+    '''Core Inotify class.
+
+    Fetches events in bulk, if possible, and stores them internally.
+
+    Use :meth:`get` to get a single event.  This class operates as an async
+    generator, and may be asynchronously iterated, and will return events
+    forever.
+
+    :param int cache_size: The max number of full-size events to cache.  The
+        actual number may be higher, because most events will not be
+        full-sized.
+
+    :param sync_timeout: If this is not None, then sync_get will wait on an
+        epoll call for that long, and return None on a timeout.  Normal
+        iteration will also exit on a timeout.
+    '''
+
+    __slots__ = ('_fd', '_watches', '_events', '_epoll', '_sync_timeout', '_cache_size', '__weakref__')
+
+    def __init__(self,
+                 flags: InitFlags = InitFlags.CLOEXEC | InitFlags.NONBLOCK,
+                 cache_size: int = 10, sync_timeout: Optional[float] = None) -> None:
+        self.cache_size = cache_size
+        fd = _ffi.libc.inotify_init1(flags)
+        self._fd: Optional[int] = fd
+
+        # Watches dict used for matching events up with the watch descriptor,
+        # in order to get the full item path.
+        self._watches: Dict[int, Watch] = {}
+
+        self._events: List[Event] = []
+        self._epoll: select.epoll = select.epoll()
+        self._epoll.register(fd, select.EPOLLIN)
+        self.sync_timeout = sync_timeout
+
+    @property
+    def sync_timeout(self) -> Optional[float]:
+        '''The timeout for :meth:`sync_get` and synchronous iteration.
+
+        Set this to None to disable and -1 to wait forever.  These options can
+        be different depending on the blocking flags selected.
+        '''
+        return self._sync_timeout
+
+    @sync_timeout.setter
+    def sync_timeout(self, value: Optional[float]) -> None:
+        self._sync_timeout = value
+
+    @property
+    def fd(self) -> int:
+        '''Get the raw file descriptor.
+        '''
+        if self._fd is None:
+            raise ValueError('Can not work with closed inotify')
+        else:
+            return self._fd
+
+    def add_watch(self, path: Union[os.PathLike, bytes, str], mask: Mask) -> Watch:
+        '''Add a watch dir.
+
+        :param pathlib.Path path: a string, bytes, or PathLike object
+        :param Mask mask: a Mask determining how the watch behaves
+
+        :returns: The relevant Watch instance
+        '''
+
+        # Convert bytes to Path
+        if isinstance(path, bytes):
+            bytepath = path
+            path = Path(os.fsdecode(bytepath))
+        else:
+            # HACK: For some reason, pyright is convinced that path might be a
+            # memoryview or a bytearray here
+            if TYPE_CHECKING:
+                path = cast(Union[os.PathLike, str], path)
+
+            # Convert non-Path to Path
+            if not isinstance(path, Path):
+                path = Path(path)
+            bytepath = bytes(path)
+
+        try:
+            wd = _ffi.libc.inotify_add_watch(self.fd, bytepath, mask)
+        except OSError as e:
+            e.filename = path
+            raise e
+
+        # Happens for things like an existing watch instance being modified,
+        # like MASK_ADD
+        if wd in self._watches:
+            watch = self._watches[wd]
+        else:
+            watch = Watch(
+                inotify=self,
+                path=path,
+                mask=mask,
+                wd=wd,
+            )
+            self._watches[wd] = watch
+
+        return watch
+
+    def rm_watch(self, watch: Watch) -> None:
+        '''Remove a watch from this inotify instance.
+
+        This will generate an :attr:`Mask.IGNORED` event that contains the :class:`Watch`
+        instance.
+
+        :param Watch watch: the :class:`Watch` to remove
+        '''
+
+        _ffi.libc.inotify_rm_watch(self.fd, watch.wd)
+
+        # This does not remove from self._watches because the IGNORE event will
+        # do that for you.
+
+    def __enter__(self) -> 'Inotify':
+        return self
+
+    def __exit__(self, *args, **kwargs) -> None:
+        self.close()
+
+    def __del__(self) -> None:
+        self.close()
+
+    def close(self) -> None:
+        '''Close the file descriptor for this inotify.
+
+        Once this is done, do not do anything more with this inotify instance.
+        Associated :class:`Watch` and :class:`Event` instances are still valid,
+        but no more may be created, and if this :class:`Inotify` goes out of
+        scope and is cleaned up, the :class:`Event` may lose its
+        :class:`Watch` if you don't have a reference to it.
+
+        This is automatically called when this class is used as a context
+        manager.
+        '''
+        self.sync_timeout = None
+        if self._fd is not None:
+            self._epoll.close()
+            os.close(self._fd)
+            self._fd = None
+
+    @property
+    def cache_size(self) -> int:
+        '''The maximum number of full-sized events (events with a NAME_MAX-length name) to store.
+
+        More events may be stored, because very few events should use a NAME_MAX length name.'''
+        return self._cache_size
+
+    @cache_size.setter
+    def cache_size(self, value: int) -> None:
+        self._cache_size = int(value)
+
+    def _get(self, future: Union[Future, _FakeFuture]) -> None:
+        '''Retrieve an array of events into an array, which is set on the passed-in future.'''
+
+        buffer = BytesIO(os.read(self.fd, (_ffi.inotify_event_size + _ffi.NAME_MAX + 1) * self._cache_size))
+        events = []
+        while True:
+            event_buffer = buffer.read(_ffi.inotify_event_size)
+            if not event_buffer:
+                break
+            event_struct = _ffi.inotify_event.from_buffer_copy(event_buffer)
+            length = event_struct.len
+            name = None
+
+            if length > 0:
+                raw_name = buffer.read(length)
+                zero_pos = raw_name.find(0)
+                # If zero_pos is 0, we want name to stay None
+                if zero_pos != 0:
+                    # If zero_pos is -1, we want the whole name string, otherwise truncate the zeros
+                    if zero_pos > 0:
+                        raw_name = raw_name[:zero_pos]
+                    name = Path(os.fsdecode(raw_name))
+            mask = Mask(event_struct.mask)
+
+            watch: Optional[Union[Watch, ReferenceType]] = self._watches.get(event_struct.wd, None)
+
+            if isinstance(watch, Watch):
+                if Mask.IGNORED in mask or Mask.ONESHOT in watch.mask:
+                    # If IGNORED or ONESHOT, the event takes ownership of this watch
+                    del self._watches[event_struct.wd]
+                elif watch is not None:
+                    # Otherwise, Initify retains ownership and a weak reference is created
+                    watch = weakref.ref(watch)
+
+            event = Event(
+                watch=watch,
+                mask=mask,
+                cookie=event_struct.cookie,
+                name=name,
+            )
+            events.append(event)
+
+        if not future.cancelled():
+            future.set_result(events)
+
+    async def get(self) -> Event:
+        '''Get a single next event.
+
+        This is the core method of event retrieval.  Asynchronously iterating
+        this class simply calls this method forever.
+
+        May actually pull multiple events from the inotify handle, and store
+        extras internally.  Will always only return one.
+
+        Building some events may cause changes in the associated
+        :class:`Inotify` or :class:`Watch` instances.  For instance,
+        :attr:`Mask.IGNORE` will automatically remove its :class:`Watch`
+        instance from this :class:`Inotify` object.  A :attr:`Mask.ONESHOT`
+        Watch will remove itself on the first event.
+
+        .. caution::
+
+            A watched path being moved will cause the relevant
+            :meth:`Watch.path` to be incorrect.  This library will not
+            automatically update it for you, because :attr:`Mask.MOVE_SELF`
+            does not tell you the new name.  You would have to watch the parent
+            directory and change the :meth:`Watch.path` value yourself if you
+            want that functionality.
+
+            If you don't do this and the watch path is moved, the
+            :class:`Event` will have a correct name but incorrect path.
+
+        :returns: a single :class:`Event`
+        '''
+        if not self._events:
+            with _get_events_future(self.fd, self._get) as future:
+                self._events = await future
+        return self._events.pop(0)
+
+    def sync_get(self) -> Optional[Event]:
+        '''Get a single next event synchronously, or throw a blocking error if
+        you've opened this in nonblocking mode.
+
+        All concerns that apply to :meth:`get` also apply to this method.
+
+        :returns: a single :class:`Event`, or None if sync_timeout is not None and the poll timed out.
+        '''
+        if not self._events:
+            if self.sync_timeout is not None:
+                if not self._epoll.poll(self.sync_timeout, 1):
+                    return None
+            future = _FakeFuture()
+            self._get(future)
+            self._events = future.result
+        return self._events.pop(0)
+
+    def __aiter__(self) -> "Inotify":
+        return self
+
+    def __iter__(self) -> "Inotify":
+        return self
+
+    async def __anext__(self) -> Event:
+        """Iterate inotify events forever with :meth:`get`."""
+        return await self.get()
+
+    def __next__(self) -> Event:
+        """Iterate inotify events with :meth:`sync_get`.
+
+        If sync_timeout is None or -1, this will iterate forever, otherwise it iterates until a timeout is reached.
+        """
+        event = self.sync_get()
+        if event is None:
+            raise StopIteration
+        return event
+
+    @property
+    def watches(self) -> List[Watch]:
+        return list(self._watches.values())
+
+
+class RecursiveInotify(Inotify):
+    '''A Recursive superclass of Inotify.
+
+    Adds the :meth:`add_recursive_watch` method, but otherwise works the same.
+
+    Automatically adds and removes subdirectories as they are added and removed.
+    '''
+    _DIR_MASK = Mask.MOVED_FROM | Mask.MOVED_TO | Mask.CREATE | Mask.IGNORED
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._mask_map: Dict[Path, Optional[Mask]] = {}
+
+    def add_recursive_watch(
+        self, path: Path, mask: Optional[Mask] = None
+    ) -> List[Watch]:
+        '''Add a watch for the given directory path, which must be a directory, and all subdirectories.
+
+        Returns the watch for this path and all subdirectories, breadth-first (so the passed-in path is always first in the list.
+        '''
+        if not path.is_dir():
+            raise ValueError('Path must refer to a directory')
+        watches: List[Watch] = []
+        if mask is None:
+            set_mask = self._DIR_MASK
+        else:
+            set_mask = mask | self._DIR_MASK
+        watches.append(self.add_watch(path, set_mask))
+        self._mask_map[path] = mask
+        for child in path.iterdir():
+            if child.is_dir():
+                watches += self.add_recursive_watch(child, mask)
+
+        return watches
+
+    def __enter__(self) -> "RecursiveInotify":
+        return self
+
+    def __iter__(self) -> "RecursiveInotify":
+        return self
+
+    def __aiter__(self) -> "RecursiveInotify":
+        return self
+
+    def sync_get(self) -> Optional[Event]:
+        ev = super().sync_get()
+        if ev is None:
+            return
+
+        if Mask.ISDIR in ev.mask:
+            self._handle_directory_event(ev)
+
+        if Mask.IGNORED in ev.mask and ev.path in self._mask_map:
+            del self._mask_map[ev.path]
+
+        return ev
+
+    async def get(self) -> Event:
+        ev = await super().get()
+
+        if Mask.ISDIR in ev.mask:
+            self._handle_directory_event(ev)
+
+        if Mask.IGNORED in ev.mask and ev.path in self._mask_map:
+            del self._mask_map[ev.path]
+
+        return ev
+
+    def _handle_directory_event(self, event: Event) -> None:
+        if event.path is None:
+            return
+
+        elif event.path.parent not in self._mask_map:
+            warn(f"Not handling directory event in non-recursive path {event.path}")
+
+        elif Mask.CREATE in event.mask or Mask.MOVED_TO in event.mask:
+            # created new folder or folder moved in, add watches
+            mask = self._DIR_MASK
+            stored_mask = self._mask_map.get(event.path)
+            if stored_mask is not None:
+                mask |= stored_mask
+            self.add_recursive_watch(event.path, mask)
+
+        elif Mask.MOVED_FROM in event.mask:
+            event_path = PurePath(event.path)
+            # a folder is moved to another location, remove watch
+            # for this folder and subfolders
+            for watch in self._watches.values():
+                if watch.path == event_path or event_path in watch.path.parents:
+                    self.rm_watch(watch)
+
+
+class RecursiveWatcher:
+    """
+    watch a folder recursively:
+    add a watch when a folder is created/moved in
+    delete a watch when a folder is deleted/moved out
+    this also works for folders moving within the watched folders because both move_from event and move_to event will be caught
+    """
+    def __init__(self, path, mask) -> None:
+        self._path = path
+        self._mask = mask
+
+    def _get_directories_recursive(self, path):
+        """
+        DFS to iterate all paths within
+        """
+        if not path.is_dir():
+            return
+
+        stack = deque()
+        stack.append(path)
+        while stack:
+            curr_path = stack.pop()
+            yield curr_path
+            for subpath in curr_path.iterdir():
+                if subpath.is_dir():
+                    stack.append(subpath)
+
+    async def watch_recursive(self, inotify=None):
+        create_inotify = inotify is None
+        if create_inotify:
+            inotify = Inotify()
+
+        try:
+            mask = (
+                self._mask
+                | Mask.MOVED_FROM
+                | Mask.MOVED_TO
+                | Mask.CREATE
+                | Mask.IGNORED
+            )
+            for directory in self._get_directories_recursive(self._path):
+                inotify.add_watch(directory, mask)
+
+            # Things that can throw this off:
+            #
+            # * Doing two changes on a directory or something before the program
+            #   has a time to handle it (this will also throw off a lot of inotify
+            #   code, though)
+            #
+            # * Trying to watch a path that doesn't exist won't automatically
+            #   create it or anything of the sort.
+
+            async for event in inotify:
+                if Mask.ISDIR in event.mask and event.path is not None:
+                    if Mask.CREATE in event.mask or Mask.MOVED_TO in event.mask:
+                        # created new folder or folder moved in, add watches
+                        for directory in self._get_directories_recursive(event.path):
+                            inotify.add_watch(directory, mask)
+                    if Mask.MOVED_FROM in event.mask:
+                        event_path = PurePath(event.path)
+                        # a folder is moved to another location, remove watch for this folder and subfolders
+                        watches = [
+                            watch
+                            for watch in inotify._watches.values()
+                            if watch.path == event_path
+                            or event_path in watch.path.parents
+                        ]
+                        for watch in watches:
+                            inotify.rm_watch(watch)
+
+                    # DELETE event is not watched/handled here because IGNORED event follows deletion, and handled in asyncinotify
+
+                if event.mask & self._mask:
+                    yield event
+        finally:
+            if create_inotify:
+                inotify.close()

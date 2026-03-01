@@ -1,0 +1,639 @@
+title: ETMS Care Monitor
+views:
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Overview — real-time care monitoring dashboard
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Overview
+    path: overview
+    icon: mdi:home-heart
+    cards:
+      # ── Section: System status bar ──
+      - type: markdown
+        content: "## 🏠 System status"
+
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: binary_sensor.vision_service_online
+            name: Room 1
+            icon: mdi:cctv
+            state_color: true
+          - type: entity
+            entity: binary_sensor.vision_room_2_online
+            name: Room 2
+            icon: mdi:cctv
+            state_color: true
+          - type: entity
+            entity: sensor.vision_person_count
+            name: Room 1
+            icon: mdi:account
+          - type: entity
+            entity: sensor.vision_room_2_person_count
+            name: Room 2
+            icon: mdi:account
+          - type: entity
+            entity: device_tracker.2412dpc0ai
+            name: Watch
+            icon: mdi:watch
+
+      # ── Section: Vital signs ──
+      - type: markdown
+        content: "## ❤️ Vital signs"
+
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            unit: bpm
+            min: 40
+            max: 200
+            needle: true
+            severity:
+              green: 50
+              yellow: 100
+              red: 140
+          - type: gauge
+            entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+            unit: "%"
+            min: 85
+            max: 100
+            needle: true
+            severity:
+              green: 95
+              yellow: 90
+              red: 85
+          - type: gauge
+            entity: sensor.2412dpc0ai_respiratory_rate
+            name: Breathing
+            unit: br/min
+            min: 5
+            max: 40
+            needle: true
+            severity:
+              green: 12
+              yellow: 22
+              red: 30
+
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            icon: mdi:heart-pulse
+          - type: entity
+            entity: sensor.2412dpc0ai_heart_rate_variability
+            name: HRV
+            icon: mdi:heart-flash
+          - type: entity
+            entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+            icon: mdi:heart-outline
+          - type: entity
+            entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+            icon: mdi:lungs
+
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: sensor.2412dpc0ai_respiratory_rate
+            name: Respiratory
+            icon: mdi:weather-windy
+          - type: entity
+            entity: sensor.2412dpc0ai_diastolic_blood_pressure
+            name: BP diastolic
+            icon: mdi:blood-bag
+          - type: entity
+            entity: sensor.2412dpc0ai_systolic_blood_pressure
+            name: BP systolic
+            icon: mdi:blood-bag
+          - type: entity
+            entity: sensor.2412dpc0ai_vo2_max
+            name: VO₂ max
+            icon: mdi:run-fast
+
+      # ── Section: Heart rate trend ──
+      - type: history-graph
+        title: Heart rate trend (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+
+      # ── Section: Vision — rooms side-by-side ──
+      - type: markdown
+        content: "## 📹 Vision monitoring"
+
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### 🟢 Room 1"
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.vision_service_online
+                    state: "on"
+                card:
+                  type: entities
+                  show_header_toggle: false
+                  state_color: true
+                  entities:
+                    - entity: binary_sensor.vision_service_online
+                      name: Camera
+                      icon: mdi:cctv
+                    - entity: sensor.vision_person_count
+                      name: People
+                      icon: mdi:account-multiple
+                    - entity: sensor.vision_latest_event
+                      name: Event
+                      icon: mdi:alert-circle-outline
+                    - entity: sensor.vision_event_severity
+                      name: Severity
+                      icon: mdi:shield-alert-outline
+                    - entity: sensor.vision_event_confidence
+                      name: Confidence
+                      icon: mdi:percent-outline
+                    - entity: sensor.vision_current_zone
+                      name: Zone
+                      icon: mdi:map-marker-radius-outline
+                    - entity: sensor.vision_movement_speed
+                      name: Speed
+                      icon: mdi:speedometer
+                    - entity: sensor.vision_time_stationary
+                      name: Still time
+                      icon: mdi:human-handsdown
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.vision_service_online
+                    state_not: "on"
+                card:
+                  type: markdown
+                  content: >
+                    **⚠️ Camera offline**
+
+
+                    Room 1 camera is not connected.
+                    Start the vision service to begin monitoring.
+
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### 🔵 Room 2"
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.vision_room_2_online
+                    state: "on"
+                card:
+                  type: entities
+                  show_header_toggle: false
+                  state_color: true
+                  entities:
+                    - entity: binary_sensor.vision_room_2_online
+                      name: Camera
+                      icon: mdi:cctv
+                    - entity: sensor.vision_room_2_person_count
+                      name: People
+                      icon: mdi:account-multiple
+                    - entity: sensor.vision_room_2_latest_event
+                      name: Event
+                      icon: mdi:alert-circle-outline
+                    - entity: sensor.vision_room_2_event_severity
+                      name: Severity
+                      icon: mdi:shield-alert-outline
+                    - entity: sensor.vision_room_2_event_confidence
+                      name: Confidence
+                      icon: mdi:percent-outline
+                    - entity: sensor.vision_room_2_current_zone
+                      name: Zone
+                      icon: mdi:map-marker-radius-outline
+                    - entity: sensor.vision_room_2_movement_speed
+                      name: Speed
+                      icon: mdi:speedometer
+                    - entity: sensor.vision_room_2_time_stationary
+                      name: Still time
+                      icon: mdi:human-handsdown
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.vision_room_2_online
+                    state_not: "on"
+                card:
+                  type: markdown
+                  content: >
+                    **⚠️ Camera offline**
+
+
+                    Room 2 camera is not connected.
+                    Start the vision service to begin monitoring.
+
+      # ── Section: Movement detail ──
+      - type: markdown
+        content: "## 🚶 Movement analytics"
+
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Room 1 movement
+                icon: mdi:walk
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: sensor.vision_movement_speed
+                    name: Speed
+                    icon: mdi:speedometer
+                  - entity: sensor.vision_movement_entropy
+                    name: Entropy
+                    icon: mdi:chart-scatter-plot
+                  - entity: sensor.vision_time_stationary
+                    name: Still time
+                    icon: mdi:timer-sand
+                  - entity: sensor.vision_event_person
+                    name: Person ID
+                    icon: mdi:account-circle-outline
+
+          - type: vertical-stack
+            cards:
+              - type: entities
+                title: Room 2 movement
+                icon: mdi:walk
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: sensor.vision_room_2_movement_speed
+                    name: Speed
+                    icon: mdi:speedometer
+                  - entity: sensor.vision_room_2_movement_entropy
+                    name: Entropy
+                    icon: mdi:chart-scatter-plot
+                  - entity: sensor.vision_room_2_time_stationary
+                    name: Still time
+                    icon: mdi:timer-sand
+                  - entity: sensor.vision_room_2_event_person
+                    name: Person ID
+                    icon: mdi:account-circle-outline
+
+      # ── Section: Activity & sleep ──
+      - type: markdown
+        content: "## 🌙 Activity & sleep"
+
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: sensor.2412dpc0ai_detected_activity
+            name: Activity
+            icon: mdi:run
+          - type: entity
+            entity: sensor.2412dpc0ai_sleep_segment
+            name: Sleep stage
+            icon: mdi:power-sleep
+          - type: entity
+            entity: sensor.2412dpc0ai_total_calories_burned
+            name: Calories
+            icon: mdi:fire
+          - type: entity
+            entity: sensor.2412dpc0ai_sleep_duration
+            name: Sleep
+            icon: mdi:clock-outline
+
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: sensor.2412dpc0ai_sleep_confidence
+            name: Sleep confidence
+            icon: mdi:sleep
+          - type: entity
+            entity: sensor.2412dpc0ai_battery_level
+            name: Watch battery
+            icon: mdi:battery
+          - type: entity
+            entity: sensor.2412dpc0ai_battery_state
+            name: Charging
+            icon: mdi:battery-charging
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Alerts — behavioral event log
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Alerts
+    path: alerts
+    icon: mdi:alert-decagram
+    cards:
+      - type: markdown
+        content: "## 🚨 Active alerts"
+
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### Room 1"
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.vision_latest_event
+                    state_not: "unknown"
+                card:
+                  type: entities
+                  show_header_toggle: false
+                  state_color: true
+                  entities:
+                    - entity: sensor.vision_latest_event
+                      name: Event
+                      icon: mdi:alert-circle
+                    - entity: sensor.vision_event_severity
+                      name: Severity
+                      icon: mdi:shield-alert
+                    - entity: sensor.vision_event_confidence
+                      name: Confidence
+                      icon: mdi:percent
+                    - entity: sensor.vision_event_person
+                      name: Person
+                      icon: mdi:account-alert
+
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.vision_latest_event
+                    state: "unknown"
+                card:
+                  type: markdown
+                  content: >
+                    ✅ **No events** — Room 1 is clear.
+
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### Room 2"
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.vision_room_2_latest_event
+                    state_not: "unknown"
+                card:
+                  type: entities
+                  show_header_toggle: false
+                  state_color: true
+                  entities:
+                    - entity: sensor.vision_room_2_latest_event
+                      name: Event
+                      icon: mdi:alert-circle
+                    - entity: sensor.vision_room_2_event_severity
+                      name: Severity
+                      icon: mdi:shield-alert
+                    - entity: sensor.vision_room_2_event_confidence
+                      name: Confidence
+                      icon: mdi:percent
+                    - entity: sensor.vision_room_2_event_person
+                      name: Person
+                      icon: mdi:account-alert
+
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: sensor.vision_room_2_latest_event
+                    state: "unknown"
+                card:
+                  type: markdown
+                  content: >
+                    ✅ **No events** — Room 2 is clear.
+
+      - type: markdown
+        content: "## 📊 Event history"
+
+      - type: history-graph
+        title: Recent events
+        hours_to_show: 24
+        entities:
+          - entity: sensor.vision_latest_event
+            name: Room 1 event
+          - entity: sensor.vision_room_2_latest_event
+            name: Room 2 event
+          - entity: sensor.vision_event_severity
+            name: Room 1 severity
+          - entity: sensor.vision_room_2_event_severity
+            name: Room 2 severity
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Health — detailed health metrics
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Health
+    path: health
+    icon: mdi:heart-pulse
+    cards:
+      - type: markdown
+        content: "## ❤️ Cardiac"
+
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.2412dpc0ai_heart_rate
+            name: Current HR
+            unit: bpm
+            min: 40
+            max: 200
+            needle: true
+            severity:
+              green: 50
+              yellow: 100
+              red: 140
+          - type: gauge
+            entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+            unit: "%"
+            min: 85
+            max: 100
+            needle: true
+            severity:
+              green: 95
+              yellow: 90
+              red: 85
+
+      - type: entities
+        title: Heart metrics
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            icon: mdi:heart-pulse
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting heart rate
+            icon: mdi:heart-outline
+          - entity: sensor.2412dpc0ai_heart_rate_variability
+            name: Heart rate variability
+            icon: mdi:heart-flash
+          - entity: sensor.2412dpc0ai_vo2_max
+            name: VO₂ max
+            icon: mdi:run-fast
+
+      - type: history-graph
+        title: Heart rate (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: HR
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+
+      - type: markdown
+        content: "## 🫁 Respiratory"
+
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.2412dpc0ai_respiratory_rate
+            name: Respiratory rate
+            unit: br/min
+            min: 5
+            max: 40
+            needle: true
+            severity:
+              green: 12
+              yellow: 22
+              red: 30
+          - type: entities
+            title: Blood pressure
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: sensor.2412dpc0ai_systolic_blood_pressure
+                name: Systolic
+                icon: mdi:blood-bag
+              - entity: sensor.2412dpc0ai_diastolic_blood_pressure
+                name: Diastolic
+                icon: mdi:blood-bag
+
+      - type: history-graph
+        title: SpO₂ (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+
+      - type: markdown
+        content: "## 😴 Sleep"
+
+      - type: entities
+        title: Sleep metrics
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.2412dpc0ai_sleep_segment
+            name: Current stage
+            icon: mdi:power-sleep
+          - entity: sensor.2412dpc0ai_sleep_confidence
+            name: Confidence
+            icon: mdi:sleep
+          - entity: sensor.2412dpc0ai_sleep_duration
+            name: Duration
+            icon: mdi:clock-outline
+          - entity: sensor.2412dpc0ai_detected_activity
+            name: Activity
+            icon: mdi:run
+          - entity: sensor.2412dpc0ai_total_calories_burned
+            name: Calories
+            icon: mdi:fire
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Devices — phone & watch details
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Devices
+    path: devices
+    icon: mdi:cellphone-link
+    cards:
+      - type: markdown
+        content: "## 📱 Connected devices"
+
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### 📱 SM-A528B"
+              - type: entities
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: device_tracker.sm_a528b
+                    name: Location
+                    icon: mdi:map-marker
+                  - entity: sensor.sm_a528b_heart_rate
+                    name: Heart rate
+                    icon: mdi:heart-pulse
+                  - entity: sensor.sm_a528b_heart_rate_variability
+                    name: HRV
+                    icon: mdi:heart-flash
+                  - entity: sensor.sm_a528b_resting_heart_rate
+                    name: Resting HR
+                    icon: mdi:heart-outline
+                  - entity: sensor.sm_a528b_battery_level
+                    name: Battery
+                    icon: mdi:battery
+                  - entity: sensor.sm_a528b_battery_state
+                    name: Charging
+                    icon: mdi:battery-charging
+
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### ⌚ Smartwatch"
+              - type: entities
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: device_tracker.2412dpc0ai
+                    name: Location
+                    icon: mdi:map-marker
+                  - entity: sensor.2412dpc0ai_battery_level
+                    name: Battery
+                    icon: mdi:battery
+                  - entity: sensor.2412dpc0ai_battery_state
+                    name: Charging
+                    icon: mdi:battery-charging
+                  - entity: sensor.2412dpc0ai_charger_type
+                    name: Charger
+                    icon: mdi:power-plug
+
+      - type: markdown
+        content: "## 📹 Camera system"
+
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### Room 1 — C270 HD"
+              - type: entities
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: binary_sensor.vision_service_online
+                    name: Status
+                    icon: mdi:cctv
+                  - entity: sensor.vision_person_count
+                    name: People detected
+                    icon: mdi:account-multiple
+
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: "### Room 2 — UVC Camera"
+              - type: entities
+                show_header_toggle: false
+                state_color: true
+                entities:
+                  - entity: binary_sensor.vision_room_2_online
+                    name: Status
+                    icon: mdi:cctv
+                  - entity: sensor.vision_room_2_person_count
+                    name: People detected
+                    icon: mdi:account-multiple

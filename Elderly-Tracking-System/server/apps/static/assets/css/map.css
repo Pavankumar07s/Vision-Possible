@@ -1,0 +1,127 @@
+.map-container {
+    padding-left: 4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bg-primary-gradient;
+    height: 100vh;
+}
+
+.map-container .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bg-primary-gradient;
+    height: 100vh;
+}
+
+.map-container h2{
+    color: black;
+}   
+
+.map {
+    position: relative;
+    height: 80vh;
+    width: 80vh;
+}
+
+.map-container .corridoor-row {
+    height: 34%;
+    align-items: center;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+.map-container .corridoor-row .corridoor{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-container .flat-row {
+    height: 66%;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-top: 0px;
+}
+
+.map-container .flat-row .flat-a,
+.map-container .flat-row .flat-b {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right-style: solid;
+    border-right-color: black;
+    border-right-width: 2px;
+    height: 100%;
+    width: 100%;
+}
+
+.map-container .flat-row .flat-c {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.point { 
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    transform: translate(-50%, -50%); 
+}
+
+.info-wrapper {
+    padding: 0vh;
+}
+
+.info-wrapper .row {
+    height: 50%;
+}
+
+.info-wrapper h2 {
+    text-decoration: underline;
+}
+
+.info-wrapper .legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-wrapper .legend-item .legend-text {
+    font-size: medium;
+    color: black;
+}
+
+.info-wrapper .floor-item {
+    padding-bottom: 1vh;
+    color: black;
+}
+
+.info-wrapper .legend-red-point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    background-color: red;
+    transform: translate(-50%, -50%); 
+}
+
+.info-wrapper .legend-yellow-point { 
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    background-color: yellow;
+    transform: translate(-50%, -50%); 
+}

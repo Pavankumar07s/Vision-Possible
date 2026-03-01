@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+{% block content %}
+
+<br><br><br><br><br><br><br><br>
+<div class="map-container">
+    <!-- Your existing HTML structure -->
+    <div class="info-wrapper col">
+        <div class="json-display">
+            <div id="jsonData">
+                <!-- Dynamically generate JSON data from MongoDB -->
+                {{ documents | tojson }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

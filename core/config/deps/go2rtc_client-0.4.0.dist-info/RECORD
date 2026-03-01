@@ -1,0 +1,14 @@
+go2rtc_client-0.4.0.dist-info/INSTALLER,sha256=5hhM4Q4mYTT9z6QB6PGpUAW81PGNFrYrdXMj4oM_6ak,2
+go2rtc_client-0.4.0.dist-info/METADATA,sha256=SbSJKTgnD6B8iu6Bxt37se_paeuuB--KVIeDbZbsoPg,3083
+go2rtc_client-0.4.0.dist-info/RECORD,,
+go2rtc_client-0.4.0.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+go2rtc_client-0.4.0.dist-info/WHEEL,sha256=WLgqFyCfm_KASv4WHyYy0P3pM_m7J5L9k2skdKLirC8,87
+go2rtc_client-0.4.0.dist-info/licenses/LICENSE,sha256=xx0jnfkXJvxRnG63LTGOxlggYnIysveWIZ6H3PNdCrQ,11357
+go2rtc_client/__init__.py,sha256=nXiEH-HqYbOikmUZsbqxq18O0pZVVAPSUEqhgcAFbjY,219
+go2rtc_client/exceptions.py,sha256=O_VjwlPNl2cMzAfPwm9tTOaVfZj0BhGE93BSw7P1lJA,1813
+go2rtc_client/models.py,sha256=V0tvjpanRgLis-7z26NgtEQtB_3cgcWu2GPLdg_nx5M,1877
+go2rtc_client/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+go2rtc_client/rest.py,sha256=kmZk95y6qOPmpCs1uEdTruP0XbXNBPpalq--m-nrXVs,8121
+go2rtc_client/ws/__init__.py,sha256=-dZHJyT_D0YyVMijtSHJ2HpUYPcUxzOAc9jEUksNl1Y,351
+go2rtc_client/ws/client.py,sha256=bvH5iGXpo1RlVoPUkB6EvK6vpDyinGH33p5Qn1TVuGw,4745
+go2rtc_client/ws/messages.py,sha256=BbDLzSDwvzUl5Py-2taY3Uf4HDNZPL1nvv18q-fTxOo,2714

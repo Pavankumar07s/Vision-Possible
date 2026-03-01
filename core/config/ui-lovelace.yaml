@@ -1,0 +1,1044 @@
+title: ETMS Care Monitor
+views:
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Overview — real-time care monitoring
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Overview
+    path: overview
+    icon: mdi:home-heart
+    cards:
+      # ── System status (compact) ──
+      - type: glance
+        title: System status
+        show_state: true
+        columns: 8
+        entities:
+          - entity: binary_sensor.vision_service_online
+            name: Room 1
+            icon: mdi:cctv
+          - entity: binary_sensor.vision_room_2_online
+            name: Room 2
+            icon: mdi:cctv
+          - entity: binary_sensor.smartguard_service_online
+            name: SmartGuard
+            icon: mdi:brain
+          - entity: binary_sensor.vision_agent_online
+            name: AI Agent
+            icon: mdi:head-cog
+          - entity: binary_sensor.openclaw_online
+            name: OpenClaw
+            icon: mdi:shield-alert
+          - entity: sensor.vision_person_count
+            name: Room 1
+            icon: mdi:account
+          - entity: sensor.vision_room_2_person_count
+            name: Room 2
+            icon: mdi:account
+          - entity: device_tracker.2412dpc0ai
+            name: Watch
+            icon: mdi:watch
+
+      # ── Vital gauges (dynamic — adjusts when data is unavailable) ──
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            unit: bpm
+            min: 40
+            max: 200
+            needle: true
+            severity:
+              green: 50
+              yellow: 100
+              red: 140
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: sensor.2412dpc0ai_oxygen_saturation
+                state_not: "unknown"
+              - condition: state
+                entity: sensor.2412dpc0ai_oxygen_saturation
+                state_not: "unavailable"
+            card:
+              type: gauge
+              entity: sensor.2412dpc0ai_oxygen_saturation
+              name: SpO₂
+              unit: "%"
+              min: 85
+              max: 100
+              needle: true
+              severity:
+                green: 95
+                yellow: 90
+                red: 85
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: sensor.2412dpc0ai_respiratory_rate
+                state_not: "unknown"
+              - condition: state
+                entity: sensor.2412dpc0ai_respiratory_rate
+                state_not: "unavailable"
+            card:
+              type: gauge
+              entity: sensor.2412dpc0ai_respiratory_rate
+              name: Breathing
+              unit: br/min
+              min: 5
+              max: 40
+              needle: true
+              severity:
+                green: 12
+                yellow: 22
+                red: 30
+
+      # ── Vital numbers ──
+      - type: glance
+        title: Vital signs
+        show_state: true
+        columns: 4
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            icon: mdi:heart-pulse
+          - entity: sensor.2412dpc0ai_heart_rate_variability
+            name: HRV
+            icon: mdi:heart-flash
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+            icon: mdi:heart-outline
+          - entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+            icon: mdi:lungs
+
+      - type: glance
+        title: Respiratory & blood pressure
+        show_state: true
+        columns: 4
+        entities:
+          - entity: sensor.2412dpc0ai_respiratory_rate
+            name: Respiratory
+            icon: mdi:weather-windy
+          - entity: sensor.2412dpc0ai_diastolic_blood_pressure
+            name: BP diastolic
+            icon: mdi:blood-bag
+          - entity: sensor.2412dpc0ai_systolic_blood_pressure
+            name: BP systolic
+            icon: mdi:blood-bag
+          - entity: sensor.2412dpc0ai_vo2_max
+            name: VO₂ max
+            icon: mdi:run-fast
+
+      # ── HR trend ──
+      - type: history-graph
+        title: Heart rate trend (24 h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+
+      # ── Room 1 vision ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_service_online
+            state: "on"
+        card:
+          type: entities
+          title: "🟢 Room 1 — live"
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.vision_person_count
+              name: People
+              icon: mdi:account-multiple
+            - entity: sensor.vision_latest_event
+              name: Event
+              icon: mdi:alert-circle-outline
+            - entity: sensor.vision_event_severity
+              name: Severity
+              icon: mdi:shield-alert-outline
+            - entity: sensor.vision_event_confidence
+              name: Confidence
+              icon: mdi:percent-outline
+            - entity: sensor.vision_current_zone
+              name: Zone
+              icon: mdi:map-marker-radius-outline
+            - entity: sensor.vision_movement_speed
+              name: Speed
+              icon: mdi:speedometer
+            - entity: sensor.vision_time_stationary
+              name: Still time
+              icon: mdi:human-handsdown
+
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_service_online
+            state_not: "on"
+        card:
+          type: markdown
+          title: "🟢 Room 1"
+          content: >
+            **⚠️ Camera offline** — Start the vision service to begin monitoring.
+
+      # ── Room 2 vision ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_room_2_online
+            state: "on"
+        card:
+          type: entities
+          title: "🔵 Room 2 — live"
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.vision_room_2_person_count
+              name: People
+              icon: mdi:account-multiple
+            - entity: sensor.vision_room_2_latest_event
+              name: Event
+              icon: mdi:alert-circle-outline
+            - entity: sensor.vision_room_2_event_severity
+              name: Severity
+              icon: mdi:shield-alert-outline
+            - entity: sensor.vision_room_2_event_confidence
+              name: Confidence
+              icon: mdi:percent-outline
+            - entity: sensor.vision_room_2_current_zone
+              name: Zone
+              icon: mdi:map-marker-radius-outline
+            - entity: sensor.vision_room_2_movement_speed
+              name: Speed
+              icon: mdi:speedometer
+            - entity: sensor.vision_room_2_time_stationary
+              name: Still time
+              icon: mdi:human-handsdown
+
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_room_2_online
+            state_not: "on"
+        card:
+          type: markdown
+          title: "🔵 Room 2"
+          content: >
+            **⚠️ Camera offline** — Start the vision service to begin monitoring.
+
+      # ── Movement analytics ──
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: entities
+            title: Room 1 movement
+            show_header_toggle: false
+            entities:
+              - entity: sensor.vision_movement_speed
+                name: Speed
+                icon: mdi:speedometer
+              - entity: sensor.vision_movement_entropy
+                name: Entropy
+                icon: mdi:chart-scatter-plot
+              - entity: sensor.vision_time_stationary
+                name: Still time
+                icon: mdi:timer-sand
+              - entity: sensor.vision_event_person
+                name: Person ID
+                icon: mdi:account-circle-outline
+          - type: entities
+            title: Room 2 movement
+            show_header_toggle: false
+            entities:
+              - entity: sensor.vision_room_2_movement_speed
+                name: Speed
+                icon: mdi:speedometer
+              - entity: sensor.vision_room_2_movement_entropy
+                name: Entropy
+                icon: mdi:chart-scatter-plot
+              - entity: sensor.vision_room_2_time_stationary
+                name: Still time
+                icon: mdi:timer-sand
+              - entity: sensor.vision_room_2_event_person
+                name: Person ID
+                icon: mdi:account-circle-outline
+
+      # ── Activity & sleep ──
+      - type: glance
+        title: Activity & sleep
+        show_state: true
+        columns: 4
+        entities:
+          - entity: sensor.2412dpc0ai_detected_activity
+            name: Activity
+            icon: mdi:run
+          - entity: sensor.2412dpc0ai_sleep_segment
+            name: Sleep stage
+            icon: mdi:power-sleep
+          - entity: sensor.2412dpc0ai_total_calories_burned
+            name: Calories
+            icon: mdi:fire
+          - entity: sensor.2412dpc0ai_sleep_duration
+            name: Sleep
+            icon: mdi:clock-outline
+
+      - type: glance
+        title: Device status
+        show_state: true
+        columns: 3
+        entities:
+          - entity: sensor.2412dpc0ai_sleep_confidence
+            name: Sleep conf.
+            icon: mdi:sleep
+          - entity: sensor.2412dpc0ai_battery_level
+            name: Watch battery
+            icon: mdi:battery
+          - entity: sensor.2412dpc0ai_battery_state
+            name: Charging
+            icon: mdi:battery-charging
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Alerts — behavioral event log
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Alerts
+    path: alerts
+    icon: mdi:alert-decagram
+    cards:
+      # ── Room 1 alerts ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.vision_latest_event
+            state_not: "unknown"
+        card:
+          type: entities
+          title: "🚨 Room 1 alert"
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.vision_latest_event
+              name: Event
+              icon: mdi:alert-circle
+            - entity: sensor.vision_event_severity
+              name: Severity
+              icon: mdi:shield-alert
+            - entity: sensor.vision_event_confidence
+              name: Confidence
+              icon: mdi:percent
+            - entity: sensor.vision_event_person
+              name: Person
+              icon: mdi:account-alert
+
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.vision_latest_event
+            state: "unknown"
+        card:
+          type: markdown
+          title: Room 1
+          content: >
+            ✅ **No events** — Room 1 is clear.
+
+      # ── Room 2 alerts ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.vision_room_2_latest_event
+            state_not: "unknown"
+        card:
+          type: entities
+          title: "🚨 Room 2 alert"
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.vision_room_2_latest_event
+              name: Event
+              icon: mdi:alert-circle
+            - entity: sensor.vision_room_2_event_severity
+              name: Severity
+              icon: mdi:shield-alert
+            - entity: sensor.vision_room_2_event_confidence
+              name: Confidence
+              icon: mdi:percent
+            - entity: sensor.vision_room_2_event_person
+              name: Person
+              icon: mdi:account-alert
+
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.vision_room_2_latest_event
+            state: "unknown"
+        card:
+          type: markdown
+          title: Room 2
+          content: >
+            ✅ **No events** — Room 2 is clear.
+
+      # ── Event history ──
+      - type: history-graph
+        title: Event history (24 h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.vision_latest_event
+            name: Room 1 event
+          - entity: sensor.vision_room_2_latest_event
+            name: Room 2 event
+          - entity: sensor.vision_event_severity
+            name: Room 1 severity
+          - entity: sensor.vision_room_2_event_severity
+            name: Room 2 severity
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Health — detailed health metrics
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Health
+    path: health
+    icon: mdi:heart-pulse
+    cards:
+      # ── Cardiac gauges (dynamic layout) ──
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.2412dpc0ai_heart_rate
+            name: Current HR
+            unit: bpm
+            min: 40
+            max: 200
+            needle: true
+            severity:
+              green: 50
+              yellow: 100
+              red: 140
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: sensor.2412dpc0ai_oxygen_saturation
+                state_not: "unknown"
+              - condition: state
+                entity: sensor.2412dpc0ai_oxygen_saturation
+                state_not: "unavailable"
+            card:
+              type: gauge
+              entity: sensor.2412dpc0ai_oxygen_saturation
+              name: SpO₂
+              unit: "%"
+              min: 85
+              max: 100
+              needle: true
+              severity:
+                green: 95
+                yellow: 90
+                red: 85
+
+      # ── Heart metrics ──
+      - type: entities
+        title: Heart metrics
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: Heart rate
+            icon: mdi:heart-pulse
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting heart rate
+            icon: mdi:heart-outline
+          - entity: sensor.2412dpc0ai_heart_rate_variability
+            name: Heart rate variability
+            icon: mdi:heart-flash
+          - entity: sensor.2412dpc0ai_vo2_max
+            name: VO₂ max
+            icon: mdi:run-fast
+
+      - type: history-graph
+        title: Heart rate (24 h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_heart_rate
+            name: HR
+          - entity: sensor.2412dpc0ai_resting_heart_rate
+            name: Resting HR
+
+      # ── Respiratory (dynamic layout) ──
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: sensor.2412dpc0ai_respiratory_rate
+                state_not: "unknown"
+              - condition: state
+                entity: sensor.2412dpc0ai_respiratory_rate
+                state_not: "unavailable"
+            card:
+              type: gauge
+              entity: sensor.2412dpc0ai_respiratory_rate
+              name: Respiratory rate
+              unit: br/min
+              min: 5
+              max: 40
+              needle: true
+              severity:
+                green: 12
+                yellow: 22
+                red: 30
+          - type: entities
+            title: Blood pressure
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: sensor.2412dpc0ai_systolic_blood_pressure
+                name: Systolic
+                icon: mdi:blood-bag
+              - entity: sensor.2412dpc0ai_diastolic_blood_pressure
+                name: Diastolic
+                icon: mdi:blood-bag
+
+      - type: history-graph
+        title: SpO₂ (24 h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.2412dpc0ai_oxygen_saturation
+            name: SpO₂
+
+      # ── Sleep ──
+      - type: entities
+        title: Sleep metrics
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.2412dpc0ai_sleep_segment
+            name: Current stage
+            icon: mdi:power-sleep
+          - entity: sensor.2412dpc0ai_sleep_confidence
+            name: Confidence
+            icon: mdi:sleep
+          - entity: sensor.2412dpc0ai_sleep_duration
+            name: Duration
+            icon: mdi:clock-outline
+          - entity: sensor.2412dpc0ai_detected_activity
+            name: Activity
+            icon: mdi:run
+          - entity: sensor.2412dpc0ai_total_calories_burned
+            name: Calories
+            icon: mdi:fire
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  SmartGuard — behavioral anomaly detection
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: SmartGuard
+    path: smartguard
+    icon: mdi:brain
+    cards:
+      # ── Service status ──
+      - type: glance
+        title: SmartGuard service
+        show_state: true
+        columns: 4
+        entities:
+          - entity: binary_sensor.smartguard_service_online
+            name: Status
+            icon: mdi:brain
+          - entity: sensor.smartguard_sequences_evaluated
+            name: Sequences
+            icon: mdi:counter
+          - entity: sensor.smartguard_events_received
+            name: Events
+            icon: mdi:inbox-arrow-down
+          - entity: sensor.smartguard_buffer_size
+            name: Buffer
+            icon: mdi:database
+
+      # ── Anomaly gauge ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.smartguard_service_online
+            state: "on"
+        card:
+          type: gauge
+          entity: sensor.smartguard_anomaly_score
+          name: Anomaly score
+          min: 0
+          max: 5
+          needle: true
+          severity:
+            green: 0
+            yellow: 1.5
+            red: 3.0
+
+      # ── Active anomaly alert ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.smartguard_anomaly_detected
+            state: "on"
+        card:
+          type: entities
+          title: "🚨 Behavioral anomaly detected"
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.smartguard_anomaly_score
+              name: Anomaly score
+              icon: mdi:chart-bell-curve
+            - entity: sensor.smartguard_severity
+              name: Severity
+              icon: mdi:shield-alert
+            - entity: sensor.smartguard_threshold
+              name: Threshold
+              icon: mdi:target
+
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.smartguard_anomaly_detected
+            state_not: "on"
+        card:
+          type: markdown
+          title: Behavioral analysis
+          content: >
+            ✅ **Normal behavior** — No anomalies detected in recent activity patterns.
+
+      # ── Anomaly details ──
+      - type: entities
+        title: SmartGuard metrics
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: sensor.smartguard_anomaly_score
+            name: Latest anomaly score
+            icon: mdi:chart-bell-curve
+          - entity: sensor.smartguard_severity
+            name: Severity level
+            icon: mdi:shield-alert
+          - entity: sensor.smartguard_threshold
+            name: Detection threshold
+            icon: mdi:target
+          - entity: sensor.smartguard_batch_anomalies
+            name: Batch anomalies
+            icon: mdi:alert-octagon
+
+      # ── Anomaly trend ──
+      - type: history-graph
+        title: Anomaly score (24 h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.smartguard_anomaly_score
+            name: Anomaly score
+          - entity: sensor.smartguard_threshold
+            name: Threshold
+
+      # ── Service offline ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.smartguard_service_online
+            state_not: "on"
+        card:
+          type: markdown
+          title: SmartGuard
+          content: >
+            **⚠️ Service offline** — Start the SmartGuard service to enable behavioral anomaly detection.
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Devices — phone & watch details
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: Devices
+    path: devices
+    icon: mdi:cellphone-link
+    cards:
+      # ── Phone ──
+      - type: entities
+        title: "📱 SM-A528B"
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: device_tracker.sm_a528b
+            name: Location
+            icon: mdi:map-marker
+          - entity: sensor.sm_a528b_heart_rate
+            name: Heart rate
+            icon: mdi:heart-pulse
+          - entity: sensor.sm_a528b_heart_rate_variability
+            name: HRV
+            icon: mdi:heart-flash
+          - entity: sensor.sm_a528b_resting_heart_rate
+            name: Resting HR
+            icon: mdi:heart-outline
+          - entity: sensor.sm_a528b_battery_level
+            name: Battery
+            icon: mdi:battery
+          - entity: sensor.sm_a528b_battery_state
+            name: Charging
+            icon: mdi:battery-charging
+
+      # ── Smartwatch ──
+      - type: entities
+        title: "⌚ Smartwatch"
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: device_tracker.2412dpc0ai
+            name: Location
+            icon: mdi:map-marker
+          - entity: sensor.2412dpc0ai_battery_level
+            name: Battery
+            icon: mdi:battery
+          - entity: sensor.2412dpc0ai_battery_state
+            name: Charging
+            icon: mdi:battery-charging
+          - entity: sensor.2412dpc0ai_charger_type
+            name: Charger
+            icon: mdi:power-plug
+
+      # ── Cameras ──
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: entities
+            title: Room 1 — C270 HD
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: binary_sensor.vision_service_online
+                name: Status
+                icon: mdi:cctv
+              - entity: sensor.vision_person_count
+                name: People
+                icon: mdi:account-multiple
+          - type: entities
+            title: Room 2 — UVC Camera
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: binary_sensor.vision_room_2_online
+                name: Status
+                icon: mdi:cctv
+              - entity: sensor.vision_room_2_person_count
+                name: People
+                icon: mdi:account-multiple
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  Vision-Agent — AI orchestration layer
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: AI Agent
+    path: ai-agent
+    icon: mdi:head-cog
+    cards:
+      # ── Service status ──
+      - type: glance
+        title: Vision-Agent service
+        show_state: true
+        columns: 4
+        entities:
+          - entity: binary_sensor.vision_agent_online
+            name: Status
+          - entity: sensor.vision_agent_events_processed
+            name: Ingested
+          - entity: sensor.vision_agent_decisions_published
+            name: Decisions
+          - entity: sensor.vision_agent_active_persons
+            name: Persons
+
+      # ── Latest reasoned event (conditional — only when online) ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_agent_online
+            state: "on"
+        card:
+          type: entities
+          title: Latest AI assessment
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - entity: sensor.vision_agent_event_type
+              name: Event type
+              icon: mdi:head-cog
+            - entity: sensor.vision_agent_severity
+              name: Severity
+              icon: mdi:shield-alert
+            - entity: sensor.vision_agent_fused_score
+              name: Fused score
+              icon: mdi:chart-bell-curve-cumulative
+            - entity: sensor.vision_agent_confidence
+              name: Confidence
+              icon: mdi:percent
+            - entity: sensor.vision_agent_provider
+              name: Provider
+              icon: mdi:robot
+
+      # ── Critical alert (conditional — flashing when escalated) ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_agent_critical_alert
+            state: "on"
+        card:
+          type: markdown
+          title: "🚨 CRITICAL ESCALATION"
+          content: >
+            **{{ states('sensor.vision_agent_event_type') }}**
+
+            {{ states('sensor.vision_agent_reason') }}
+
+            **Action:** {{ states('sensor.vision_agent_recommendation') }}
+
+            Fused score: {{ states('sensor.vision_agent_fused_score') }} |
+            Confidence: {{ states('sensor.vision_agent_confidence') }}%
+
+      # ── AI reason + recommendation (markdown card) ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_agent_online
+            state: "on"
+        card:
+          type: markdown
+          title: AI reasoning
+          content: >
+            **Reason:** {{ states('sensor.vision_agent_reason') }}
+
+
+            **Recommendation:** {{ states('sensor.vision_agent_recommendation') }}
+
+
+            *Correlated signals:*
+            {{ state_attr('sensor.vision_agent_event_type', 'correlated_signals') }}
+
+      # ── Batch summary ──
+      - type: entities
+        title: Batch summary
+        show_header_toggle: false
+        entities:
+          - entity: sensor.vision_agent_summary_events
+            name: Events in window
+            icon: mdi:chart-timeline
+
+      # ── Score history graph ──
+      - type: history-graph
+        title: Fused score history
+        hours_to_show: 6
+        entities:
+          - entity: sensor.vision_agent_fused_score
+            name: Fused score
+          - entity: sensor.vision_agent_confidence
+            name: Confidence
+
+      # ── Multimodal convergence status ──
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: entity
+            entity: binary_sensor.vision_service_online
+            name: Vision
+            icon: mdi:cctv
+          - type: entity
+            entity: binary_sensor.smartguard_service_online
+            name: SmartGuard
+            icon: mdi:brain
+          - type: entity
+            entity: binary_sensor.vision_agent_online
+            name: AI Agent
+            icon: mdi:head-cog
+
+      # ── Offline fallback message ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.vision_agent_online
+            state: "off"
+        card:
+          type: markdown
+          content: >
+            **⚠️ Vision-Agent offline** — Start the AI orchestration
+            service to enable LLM reasoning and multimodal fusion.
+
+            ```
+            cd ~/Desktop/Autism/vision-agent
+            python main.py
+            ```
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  #  OpenClaw — emergency orchestration
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - title: OpenClaw
+    path: openclaw
+    icon: mdi:shield-alert
+    cards:
+      # ── Service status + incident overview ──
+      - type: glance
+        title: OpenClaw status
+        show_state: true
+        columns: 4
+        entities:
+          - entity: binary_sensor.openclaw_online
+            name: Service
+            icon: mdi:shield-check
+          - entity: sensor.openclaw_incident_level
+            name: Alert level
+            icon: mdi:alert-circle
+          - entity: sensor.openclaw_incident_state
+            name: State
+            icon: mdi:state-machine
+          - entity: sensor.openclaw_status
+            name: Status
+            icon: mdi:information
+
+      # ── Escalation level gauge ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.openclaw_incident_level_numeric
+            state_not: "unknown"
+          - condition: state
+            entity: sensor.openclaw_incident_level_numeric
+            state_not: "unavailable"
+        card:
+          type: gauge
+          entity: sensor.openclaw_incident_level_numeric
+          name: Escalation level
+          min: 0
+          max: 3
+          needle: true
+          severity:
+            green: 0
+            yellow: 1
+            red: 2
+
+      # ── Active incident details ──
+      - type: entities
+        title: Active incident
+        show_header_toggle: false
+        entities:
+          - entity: sensor.openclaw_incident_id
+            name: Incident ID
+            icon: mdi:identifier
+          - entity: sensor.openclaw_incident_trigger
+            name: Trigger
+            icon: mdi:flash-alert
+          - entity: sensor.openclaw_incident_room
+            name: Room
+            icon: mdi:map-marker
+          - entity: sensor.openclaw_incident_state
+            name: State
+            icon: mdi:state-machine
+          - entity: sensor.openclaw_incident_level
+            name: Level
+            icon: mdi:alert-octagram
+          - entity: sensor.openclaw_last_action
+            name: Last action
+            icon: mdi:run-fast
+
+      # ── Live telemetry during incident ──
+      - type: conditional
+        conditions:
+          - condition: numeric_state
+            entity: sensor.openclaw_incident_level_numeric
+            above: 1
+          - condition: state
+            entity: sensor.openclaw_telemetry_hr
+            state_not: "unknown"
+          - condition: state
+            entity: sensor.openclaw_telemetry_hr
+            state_not: "unavailable"
+        card:
+          type: gauge
+          entity: sensor.openclaw_telemetry_hr
+          name: Live heart rate (telemetry)
+          unit: bpm
+          min: 30
+          max: 220
+          needle: true
+          severity:
+            green: 60
+            yellow: 100
+            red: 140
+
+      # ── Incident timeline ──
+      - type: logbook
+        title: Incident timeline
+        entities:
+          - sensor.openclaw_incident_level
+          - sensor.openclaw_incident_state
+          - sensor.openclaw_last_action
+          - sensor.openclaw_incident_trigger
+        hours_to_show: 24
+
+      # ── Voice confirmation status ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: sensor.openclaw_incident_state
+            state: "VOICE_PENDING"
+        card:
+          type: markdown
+          content: >
+            **🎙️ Voice confirmation pending**
+
+
+            OpenClaw has asked the resident "Are you okay?" via Alexa.
+            Waiting for a voice response within 30 seconds.
+
+
+            If no response is received, the incident will automatically
+            escalate to CRITICAL.
+
+      # ── Service offline warning ──
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: binary_sensor.openclaw_online
+            state: "off"
+        card:
+          type: markdown
+          content: >
+            **⚠️ OpenClaw offline** — The emergency orchestration
+            service is not running. Start it to enable automated
+            escalation and emergency response.
+
+            ```
+            cd ~/Desktop/Autism/openclaw
+            python run.py
+            ```
+
+      # ── Emergency action buttons ──
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: button
+            name: Emergency lights
+            icon: mdi:lightbulb-alert
+            tap_action:
+              action: call-service
+              service: light.turn_on
+              target:
+                entity_id: all
+              data:
+                brightness: 255
+          - type: button
+            name: Silence siren
+            icon: mdi:bell-off
+            tap_action:
+              action: call-service
+              service: switch.turn_off
+              target:
+                entity_id: switch.siren
+          - type: button
+            name: Unlock door
+            icon: mdi:door-open
+            tap_action:
+              action: call-service
+              service: lock.unlock
+              target:
+                entity_id: lock.front_door

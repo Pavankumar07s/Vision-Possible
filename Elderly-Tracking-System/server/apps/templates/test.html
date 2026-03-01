@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<br><br><br><br><br><br><br><br>
+<h2 id="m5_hardware_id">m5_hardware_id: {{ m5_hardware_id }}</h2>
+<br>
+<h2 id="elderly">elderly: {{ elderly }}</h2>
+<br>
+<h2 id="geofenced_area">geofenced_area: {{ geofenced_area }}</h2>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    function updateData() {
+        $.ajax({
+            type: "POST",
+            url: "/test",  // Flask route for handling the POST request
+            success: function(data) {
+                $("#m5_hardware_id").text(data);  // Update the content of the #ip element with the received data
+                $("#elderly").text(data);  
+                $("#geofenced_area").text(data);  
+            }
+        });
+    }
+
+    // Call the updateData function when the page loads
+    $(document).ready(function() {
+        updateData();
+    });
+</script>
+{% endblock javascripts %}

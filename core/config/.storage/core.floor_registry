@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "minor_version": 3,
+  "key": "core.floor_registry",
+  "data": {
+    "floors": [
+      {
+        "aliases": [],
+        "floor_id": "b_flank",
+        "icon": "mdi:ab-testing",
+        "level": 0,
+        "name": "B Flank",
+        "created_at": "2026-02-20T18:28:30.859704+00:00",
+        "modified_at": "2026-02-20T18:28:30.859707+00:00"
+      }
+    ]
+  }
+}

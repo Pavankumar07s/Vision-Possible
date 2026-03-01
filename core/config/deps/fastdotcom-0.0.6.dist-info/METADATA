@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: fastdotcom
+Version: 0.0.6
+Summary: Python API for testing internet speed on Fast.com
+Home-page: https://github.com/nkgilley/fast.com
+Author: Nolan Gilley
+License: MIT
+License-File: LICENSE
+Requires-Dist: requests>=2.0
+Requires-Dist: icmplib>=3.0.0
+Dynamic: author
+Dynamic: home-page
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: summary

@@ -1,0 +1,176 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">User Statistics</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="index.html">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="/elderly-real-time-data">user-statistics</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">User Statistics</h4>
+                        <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" onclick="setRefreshInterval(10)">10s</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" onclick="setRefreshInterval(30)">30s</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" onclick="setRefreshInterval(60)">1min</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <th>M5 Hardware ID</th>
+                                        <th>Elderly</th>
+                                        <th>Geofenced Area</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for document in documents|reverse %}
+                                    <tr>
+                                        <td>{{ document['m5_node_id'] }}</td>
+                                        <td>{{ document['elderly'] }}</td>
+                                        <td>{{ document['geofenced_area'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Location</h4>
+                        <ul class="nav nav-pills nav-secondary" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" onclick="setRefreshInterval(10)">10s</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" onclick="setRefreshInterval(30)">30s</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" onclick="setRefreshInterval(60)">1min</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <th>M5 Hardware ID</th>
+                                        <th>x</th>
+                                        <th>y</th>
+                                        <th>Floor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for location_document in location_documents|reverse %}
+                                    <tr>
+                                        <td>{{ location_document['m5_node_id'] }}</td>
+                                        <td>{{ location_document['x'] }}</td>
+                                        <td>{{ location_document['y'] }}</td>
+                                        <td>{{ location_document['floor'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script>
+    $(document).ready(function() {
+        $('#basic-datatables').DataTable({
+        });
+
+    });
+
+    let refreshTimer; // Variable to hold the timer reference
+    let refreshIntervalSeconds = 10; // Default refresh interval in seconds (10 seconds)
+
+     // Function to set the refresh interval based on user selection
+     function setRefreshInterval(interval) {
+        clearInterval(refreshTimer); // Clear existing timer if any
+        refreshIntervalSeconds = interval;
+        startRefreshTimer();
+    }
+
+    // Function to fetch data
+    function fetchData() {
+        fetch('elderly-real-time-data') // Replace 'real-time-data' with your actual data endpoint URL
+            .then(response => response.json())
+            .then(data => {
+                // Process and display data in the table
+                const table = document.getElementById('data-table');
+                table.innerHTML = ''; // Clear existing table content
+                const headers = Object.keys(data[0]);
+                const headerRow = document.createElement('tr');
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+                table.appendChild(headerRow);
+                data.forEach(rowData => {
+                    const row = document.createElement('tr');
+                    headers.forEach(header => {
+                        const td = document.createElement('td');
+                        td.textContent = rowData[header];
+                        row.appendChild(td);
+                    });
+                    table.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // Function to start the refresh timer based on the selected interval
+    function startRefreshTimer() {
+        refreshTimer = setInterval(fetchData, refreshIntervalSeconds * 1000); // Convert seconds to milliseconds
+    }
+
+    // Fetch data initially
+    fetchData();
+
+    // Start the refresh timer initially
+    startRefreshTimer();
+</script>
+{% endblock javascripts %}

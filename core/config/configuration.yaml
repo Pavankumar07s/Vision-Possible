@@ -1,0 +1,455 @@
+# Minimal configuration for development
+
+# Core integrations
+homeassistant:
+
+# Frontend
+frontend:
+
+# Recorder — stores entity history (needed for history-graph cards)
+recorder:
+  purge_keep_days: 7
+  commit_interval: 5
+
+# History — serves historical data to the frontend
+history:
+
+# Logbook — event log
+logbook:
+
+# Lovelace dashboard (YAML mode)
+lovelace:
+  mode: yaml
+  resources: []
+
+# Enable the web server
+http:
+
+# Enable configuration via the UI
+config:
+
+# Enable the mobile app integration for Companion App
+mobile_app:
+
+# MQTT sensors that SUBSCRIBE to vision-service topics
+mqtt:
+  sensor:
+    # Person count from camera
+    - name: "Vision Person Count"
+      state_topic: "etms/vision/room_1_camera/person_count"
+      value_template: "{{ value_json.count }}"
+      unit_of_measurement: "persons"
+      icon: "mdi:account-group"
+      unique_id: "etms_vision_room1_person_count"
+
+    # Vision service status (online/offline)
+    - name: "Vision Service Status"
+      state_topic: "etms/vision/room_1_camera/status"
+      value_template: "{{ value_json.status }}"
+      icon: "mdi:cctv"
+      unique_id: "etms_vision_room1_status"
+
+    # Latest behavioral event type
+    - name: "Vision Latest Event"
+      state_topic: "etms/vision/room_1_camera/event"
+      value_template: "{{ value_json.event }}"
+      icon: "mdi:alert-circle"
+      unique_id: "etms_vision_room1_latest_event"
+      json_attributes_topic: "etms/vision/room_1_camera/event"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # Event severity
+    - name: "Vision Event Severity"
+      state_topic: "etms/vision/room_1_camera/event"
+      value_template: "{{ value_json.severity }}"
+      icon: "mdi:shield-alert"
+      unique_id: "etms_vision_room1_event_severity"
+
+    # Event person ID
+    - name: "Vision Event Person"
+      state_topic: "etms/vision/room_1_camera/event"
+      value_template: "{{ value_json.person_id }}"
+      icon: "mdi:account-alert"
+      unique_id: "etms_vision_room1_event_person"
+
+    # Event confidence
+    - name: "Vision Event Confidence"
+      state_topic: "etms/vision/room_1_camera/event"
+      value_template: "{{ (value_json.confidence * 100) | round(1) }}"
+      unit_of_measurement: "%"
+      icon: "mdi:percent"
+      unique_id: "etms_vision_room1_event_confidence"
+
+    # Movement speed (latest tracked person)
+    - name: "Vision Movement Speed"
+      state_topic: "etms/vision/room_1_camera/movement"
+      value_template: "{{ value_json.speed }}"
+      unit_of_measurement: "px/s"
+      icon: "mdi:speedometer"
+      unique_id: "etms_vision_room1_movement_speed"
+
+    # Movement entropy (randomness)
+    - name: "Vision Movement Entropy"
+      state_topic: "etms/vision/room_1_camera/movement"
+      value_template: "{{ value_json.movement_entropy }}"
+      icon: "mdi:chart-scatter-plot"
+      unique_id: "etms_vision_room1_movement_entropy"
+
+    # Current zone
+    - name: "Vision Current Zone"
+      state_topic: "etms/vision/room_1_camera/movement"
+      value_template: "{{ value_json.zone if value_json.zone else 'unknown' }}"
+      icon: "mdi:map-marker-radius"
+      unique_id: "etms_vision_room1_zone"
+
+    # Time stationary
+    - name: "Vision Time Stationary"
+      state_topic: "etms/vision/room_1_camera/movement"
+      value_template: "{{ value_json.time_stationary }}"
+      unit_of_measurement: "s"
+      icon: "mdi:human-handsdown"
+      unique_id: "etms_vision_room1_time_stationary"
+
+    # ── Room 2 Camera (UVC Camera /dev/video2) ──
+    - name: "Vision Room 2 Person Count"
+      state_topic: "etms/vision/room_2_camera/person_count"
+      value_template: "{{ value_json.count }}"
+      unit_of_measurement: "persons"
+      icon: "mdi:account-group"
+      unique_id: "etms_vision_room2_person_count"
+
+    - name: "Vision Room 2 Status"
+      state_topic: "etms/vision/room_2_camera/status"
+      value_template: "{{ value_json.status }}"
+      icon: "mdi:cctv"
+      unique_id: "etms_vision_room2_status"
+
+    - name: "Vision Room 2 Latest Event"
+      state_topic: "etms/vision/room_2_camera/event"
+      value_template: "{{ value_json.event }}"
+      icon: "mdi:alert-circle"
+      unique_id: "etms_vision_room2_latest_event"
+      json_attributes_topic: "etms/vision/room_2_camera/event"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    - name: "Vision Room 2 Event Severity"
+      state_topic: "etms/vision/room_2_camera/event"
+      value_template: "{{ value_json.severity }}"
+      icon: "mdi:shield-alert"
+      unique_id: "etms_vision_room2_event_severity"
+
+    - name: "Vision Room 2 Event Confidence"
+      state_topic: "etms/vision/room_2_camera/event"
+      value_template: "{{ (value_json.confidence * 100) | round(1) }}"
+      unit_of_measurement: "%"
+      icon: "mdi:percent"
+      unique_id: "etms_vision_room2_event_confidence"
+
+    - name: "Vision Room 2 Event Person"
+      state_topic: "etms/vision/room_2_camera/event"
+      value_template: "{{ value_json.person_id }}"
+      icon: "mdi:account-alert"
+      unique_id: "etms_vision_room2_event_person"
+
+    - name: "Vision Room 2 Movement Speed"
+      state_topic: "etms/vision/room_2_camera/movement"
+      value_template: "{{ value_json.speed }}"
+      unit_of_measurement: "px/s"
+      icon: "mdi:speedometer"
+      unique_id: "etms_vision_room2_movement_speed"
+
+    - name: "Vision Room 2 Movement Entropy"
+      state_topic: "etms/vision/room_2_camera/movement"
+      value_template: "{{ value_json.movement_entropy }}"
+      icon: "mdi:chart-scatter-plot"
+      unique_id: "etms_vision_room2_movement_entropy"
+
+    - name: "Vision Room 2 Current Zone"
+      state_topic: "etms/vision/room_2_camera/movement"
+      value_template: "{{ value_json.zone if value_json.zone else 'unknown' }}"
+      icon: "mdi:map-marker-radius"
+      unique_id: "etms_vision_room2_zone"
+
+    - name: "Vision Room 2 Time Stationary"
+      state_topic: "etms/vision/room_2_camera/movement"
+      value_template: "{{ value_json.time_stationary }}"
+      unit_of_measurement: "s"
+      icon: "mdi:human-handsdown"
+      unique_id: "etms_vision_room2_time_stationary"
+
+    # ── SmartGuard — behavioral anomaly detection ──
+    - name: "SmartGuard Anomaly Score"
+      state_topic: "etms/smartguard/anomaly"
+      value_template: "{{ value_json.anomaly_score | round(4) }}"
+      icon: "mdi:brain"
+      unique_id: "etms_smartguard_anomaly_score"
+      json_attributes_topic: "etms/smartguard/anomaly"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    - name: "SmartGuard Severity"
+      state_topic: "etms/smartguard/anomaly"
+      value_template: "{{ value_json.severity }}"
+      icon: "mdi:shield-alert"
+      unique_id: "etms_smartguard_severity"
+
+    - name: "SmartGuard Threshold"
+      state_topic: "etms/smartguard/anomaly"
+      value_template: "{{ value_json.threshold | round(4) }}"
+      icon: "mdi:target"
+      unique_id: "etms_smartguard_threshold"
+
+    - name: "SmartGuard Sequences Evaluated"
+      state_topic: "etms/smartguard/status"
+      value_template: "{{ value_json.sequences_evaluated }}"
+      icon: "mdi:counter"
+      unique_id: "etms_smartguard_sequences_evaluated"
+
+    - name: "SmartGuard Events Received"
+      state_topic: "etms/smartguard/status"
+      value_template: "{{ value_json.events_received }}"
+      icon: "mdi:inbox-arrow-down"
+      unique_id: "etms_smartguard_events_received"
+
+    - name: "SmartGuard Buffer Size"
+      state_topic: "etms/smartguard/status"
+      value_template: "{{ value_json.buffer_size }}"
+      icon: "mdi:database"
+      unique_id: "etms_smartguard_buffer_size"
+
+    - name: "SmartGuard Batch Anomalies"
+      state_topic: "etms/smartguard/batch"
+      value_template: "{{ value_json.anomalies_found }}"
+      icon: "mdi:alert-octagon"
+      unique_id: "etms_smartguard_batch_anomalies"
+      json_attributes_topic: "etms/smartguard/batch"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # ── Vision-Agent — AI orchestration layer (reasoned events) ──
+
+    # Reasoned event type (high-level decision from LLM or rule engine)
+    - name: "Vision Agent Event Type"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.event_type }}"
+      icon: "mdi:head-cog"
+      unique_id: "etms_vision_agent_event_type"
+      json_attributes_topic: "etms/vision_agent/reasoned_event"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # Reasoned event severity
+    - name: "Vision Agent Severity"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.severity }}"
+      icon: "mdi:shield-alert"
+      unique_id: "etms_vision_agent_severity"
+
+    # Fused multimodal score (0–1)
+    - name: "Vision Agent Fused Score"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.fused_score | round(3) }}"
+      icon: "mdi:chart-bell-curve-cumulative"
+      unique_id: "etms_vision_agent_fused_score"
+
+    # Confidence
+    - name: "Vision Agent Confidence"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ (value_json.confidence * 100) | round(1) }}"
+      unit_of_measurement: "%"
+      icon: "mdi:percent"
+      unique_id: "etms_vision_agent_confidence"
+
+    # Reason (natural language explanation from LLM)
+    - name: "Vision Agent Reason"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.reason[:250] }}"
+      icon: "mdi:text-box-outline"
+      unique_id: "etms_vision_agent_reason"
+
+    # Recommendation (caregiver action)
+    - name: "Vision Agent Recommendation"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.recommendation[:250] }}"
+      icon: "mdi:hand-pointing-right"
+      unique_id: "etms_vision_agent_recommendation"
+
+    # Provider (gemini / rule_based)
+    - name: "Vision Agent Provider"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.provider }}"
+      icon: "mdi:robot"
+      unique_id: "etms_vision_agent_provider"
+
+    # Service stats — events processed
+    - name: "Vision Agent Events Processed"
+      state_topic: "etms/vision_agent/status"
+      value_template: "{{ value_json.events_processed }}"
+      icon: "mdi:inbox-arrow-down"
+      unique_id: "etms_vision_agent_events_processed"
+
+    # Service stats — decisions published
+    - name: "Vision Agent Decisions Published"
+      state_topic: "etms/vision_agent/status"
+      value_template: "{{ value_json.decisions_published }}"
+      icon: "mdi:export"
+      unique_id: "etms_vision_agent_decisions_published"
+
+    # Service stats — active tracked persons
+    - name: "Vision Agent Active Persons"
+      state_topic: "etms/vision_agent/status"
+      value_template: "{{ value_json.active_persons }}"
+      icon: "mdi:account-multiple"
+      unique_id: "etms_vision_agent_active_persons"
+
+    # Batch summary — events in window
+    - name: "Vision Agent Summary Events"
+      state_topic: "etms/vision_agent/summary"
+      value_template: "{{ value_json.events_in_window }}"
+      icon: "mdi:chart-timeline"
+      unique_id: "etms_vision_agent_summary_events"
+      json_attributes_topic: "etms/vision_agent/summary"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # ── OpenClaw MQTT sensors ──
+
+    # Current incident level (text name)
+    - name: "OpenClaw Incident Level"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.level_name }}"
+      icon: "mdi:shield-alert-outline"
+      unique_id: "etms_openclaw_incident_level"
+      json_attributes_topic: "etms/openclaw/incident"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # Current incident level (numeric 0-3 for gauges)
+    - name: "OpenClaw Incident Level Numeric"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.level | int(0) }}"
+      icon: "mdi:shield-alert-outline"
+      unique_id: "etms_openclaw_incident_level_numeric"
+
+    # Incident ID
+    - name: "OpenClaw Incident ID"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.id }}"
+      icon: "mdi:identifier"
+      unique_id: "etms_openclaw_incident_id"
+
+    # Incident state
+    - name: "OpenClaw Incident State"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.state }}"
+      icon: "mdi:state-machine"
+      unique_id: "etms_openclaw_incident_state"
+
+    # Incident trigger
+    - name: "OpenClaw Incident Trigger"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.trigger_event }}"
+      icon: "mdi:flash-alert"
+      unique_id: "etms_openclaw_incident_trigger"
+
+    # Incident room
+    - name: "OpenClaw Incident Room"
+      state_topic: "etms/openclaw/incident"
+      value_template: "{{ value_json.room }}"
+      icon: "mdi:floor-plan"
+      unique_id: "etms_openclaw_incident_room"
+
+    # Last dispatched action
+    - name: "OpenClaw Last Action"
+      state_topic: "etms/openclaw/action"
+      value_template: "{{ value_json.action }}"
+      icon: "mdi:run-fast"
+      unique_id: "etms_openclaw_last_action"
+      json_attributes_topic: "etms/openclaw/action"
+      json_attributes_template: >
+        {{ value_json | tojson }}
+
+    # Live telemetry heart rate
+    - name: "OpenClaw Telemetry HR"
+      state_topic: "etms/openclaw/telemetry"
+      value_template: "{{ value_json.health.latest | default(0) | float(0) }}"
+      unit_of_measurement: "bpm"
+      icon: "mdi:heart-pulse"
+      unique_id: "etms_openclaw_telemetry_hr"
+
+    # Service status
+    - name: "OpenClaw Status"
+      state_topic: "etms/openclaw/status"
+      value_template: "{{ value_json.state }}"
+      icon: "mdi:server"
+      unique_id: "etms_openclaw_status"
+
+  binary_sensor:
+    # Vision service online/offline — Room 1
+    - name: "Vision Service Online"
+      state_topic: "etms/vision/room_1_camera/status"
+      value_template: "{{ value_json.status }}"
+      payload_on: "online"
+      payload_off: "offline"
+      device_class: connectivity
+      unique_id: "etms_vision_room1_online"
+
+    # Vision service online/offline — Room 2
+    - name: "Vision Room 2 Online"
+      state_topic: "etms/vision/room_2_camera/status"
+      value_template: "{{ value_json.status }}"
+      payload_on: "online"
+      payload_off: "offline"
+      device_class: connectivity
+      unique_id: "etms_vision_room2_online"
+
+    # SmartGuard service online/offline
+    - name: "SmartGuard Service Online"
+      state_topic: "etms/smartguard/status"
+      value_template: "{{ value_json.status }}"
+      payload_on: "online"
+      payload_off: "offline"
+      device_class: connectivity
+      unique_id: "etms_smartguard_online"
+
+    # SmartGuard anomaly detected (binary)
+    - name: "SmartGuard Anomaly Detected"
+      state_topic: "etms/smartguard/anomaly"
+      value_template: "{{ value_json.is_anomaly }}"
+      payload_on: "True"
+      payload_off: "False"
+      device_class: problem
+      unique_id: "etms_smartguard_anomaly_detected"
+
+    # ── Vision-Agent — AI orchestration layer ──
+    - name: "Vision Agent Online"
+      state_topic: "etms/vision_agent/status"
+      value_template: "{{ value_json.status }}"
+      payload_on: "online"
+      payload_off: "offline"
+      device_class: connectivity
+      unique_id: "etms_vision_agent_online"
+
+    # Vision-Agent escalated critical alert
+    - name: "Vision Agent Critical Alert"
+      state_topic: "etms/vision_agent/reasoned_event"
+      value_template: "{{ value_json.escalated }}"
+      payload_on: "True"
+      payload_off: "False"
+      device_class: problem
+      unique_id: "etms_vision_agent_critical"
+
+    # ── OpenClaw — emergency orchestration ──
+    - name: "OpenClaw Online"
+      state_topic: "etms/openclaw/status"
+      value_template: "{{ value_json.state }}"
+      payload_on: "online"
+      payload_off: "offline"
+      device_class: connectivity
+      unique_id: "etms_openclaw_online"
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

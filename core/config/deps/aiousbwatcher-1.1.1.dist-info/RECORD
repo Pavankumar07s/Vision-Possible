@@ -1,0 +1,10 @@
+aiousbwatcher-1.1.1.dist-info/INSTALLER,sha256=5hhM4Q4mYTT9z6QB6PGpUAW81PGNFrYrdXMj4oM_6ak,2
+aiousbwatcher-1.1.1.dist-info/LICENSE,sha256=RUGe2_CtMzT4w4mguJRtt-DVZT801Al0uIVtz1LriaM,1072
+aiousbwatcher-1.1.1.dist-info/METADATA,sha256=8tF9vi48s27lH4PynU2VYcZ3qPlDgvDwDnMqMtfH9no,4161
+aiousbwatcher-1.1.1.dist-info/RECORD,,
+aiousbwatcher-1.1.1.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+aiousbwatcher-1.1.1.dist-info/WHEEL,sha256=In9FTNxeP60KnTkGw7wk6mJPYd_dQSjEZmXdBdMCI-8,91
+aiousbwatcher-1.1.1.dist-info/top_level.txt,sha256=uSR-0PZ9bzG-Zq-GEMGOASvhobbdLiEDm9IIip3DC1o,14
+aiousbwatcher/__init__.py,sha256=vAL06OqddARAPyBhHbFAGVg2SwOZpvebsb-Dfnv14Gc,138
+aiousbwatcher/impl.py,sha256=h68f8fplVmeqCuQY-hwTdOnvqLPIhM4Q83hzCN9vBbU,3441
+aiousbwatcher/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0

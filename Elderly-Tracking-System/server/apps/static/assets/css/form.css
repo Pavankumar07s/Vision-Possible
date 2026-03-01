@@ -1,0 +1,14 @@
+.button-wrapper {
+    padding-left: 2vh;
+    padding-top: 1vh;
+}
+
+.form-button {
+    width: 10vh;
+}
+
+.form-button:disabled {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    border: 1px solid #aaaaaa !important;
+}

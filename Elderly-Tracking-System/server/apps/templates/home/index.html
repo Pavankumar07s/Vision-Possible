@@ -1,0 +1,382 @@
+{% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/map.css" />
+{% endblock stylesheets %} {% block content %}
+
+<div class="content">
+  <div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+      <div
+        class="d-flex align-items-left align-items-md-center flex-column flex-md-row"
+      >
+        <div>
+          <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-inner mt--5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-head-row">
+              <div class="card-title">User Statistics</div>
+              <div class="card-tools">
+                <a
+                  href="#"
+                  class="btn btn-info btn-border btn-round btn-sm mr-2"
+                >
+                  <span class="btn-label">
+                    <i class="fa fa-pencil"></i>
+                  </span>
+                  Export
+                </a>
+                <a href="#" class="btn btn-info btn-border btn-round btn-sm">
+                  <span class="btn-label">
+                    <i class="fa fa-print"></i>
+                  </span>
+                  Print
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="map-container">
+              <div class="row">
+                <div class="map-wrapper col">
+                  <div id="map" class="map">
+                    <div class="corridoor-row row">
+                      <div id="corridoor" class="corridoor col">
+                        <h2>Corridor</h2>
+                      </div>
+                    </div>
+                    <div class="flat-row row">
+                      <div id="flatA" class="flat-a col">
+                        <h2>Flat A</h2>
+                      </div>
+                      <div id="flatB" class="flat-b col">
+                        <h2>Flat B</h2>
+                      </div>
+                      <div id="flatC" class="flat-c col">
+                        <h2>Flat C</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="info-wrapper col">
+                  <div class="legend-row row">
+                    <h2>Legend</h2>
+                    <legend>
+                      <div class="legend-item">
+                        <div class="col-md-1">
+                          <div class="legend-red-point"></div>
+                        </div>
+                        <span class="legend-text">Elderly Tracker</span>
+                      </div>
+                      <div class="legend-item">
+                        <div class="col-md-1">
+                          <div class="legend-yellow-point"></div>
+                        </div>
+                        <span class="legend-text">Elderly Location</span>
+                      </div>
+                    </legend>
+                    <div class="floor-item">
+                      <span>Current floor:</span>
+                      <span></span>
+                    </div>
+                  </div>
+                  <div class="dropdown-row row">
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-info btn-border btn-round btn-sm mr-2 dropdown-toggle"
+                        type="button"
+                        id="elderlydropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <span id="selectedElderly">Select Elderly</span>
+                      </button>
+                      <div
+                        class="elderly dropdown-menu"
+                        aria-labelledby="elderlydropdownMenuButton"
+                      >
+                        <!-- Dropdown items will be populated here -->
+                      </div>
+                      <button
+                        id="refreshDropdown"
+                        class="btn btn-warning btn-border btn-round btn-sm"
+                      >
+                        Refresh
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
+
+  <!-- Specific Page JS goes HERE  -->
+  {% block javascripts %}
+
+  <!-- Atlantis DEMO methods, don't include it in your project! -->
+  <script src="/static/assets/js/setting-demo.js"></script>
+  <!--<script src="/static/assets/js/demo.js"></script>-->
+
+  <script type="text/javascript">
+    const mapElement = document.getElementById("map");
+
+    const originalMapWidth = 30;
+    const originalMapHeight = 20;
+    const currentMapWidth = mapElement.offsetWidth;
+    const currentMapHeight = mapElement.offsetHeight;
+    const scaleX = currentMapWidth / originalMapWidth;
+    const scaleY = currentMapHeight / originalMapHeight;
+
+    let corridoorCutOff = currentMapHeight * 0.34;
+    let flatACutOff = currentMapWidth * 0.33;
+    let flatBCutOff = currentMapWidth * 0.66;
+
+    const areas = {
+      corridoor: { x1: 0, y1: 0, x2: currentMapWidth, y2: corridoorCutOff },
+      flatA: {
+        x1: 0,
+        y1: corridoorCutOff,
+        x2: flatACutOff,
+        y2: currentMapHeight,
+      },
+      flatB: {
+        x1: flatACutOff,
+        y1: corridoorCutOff,
+        x2: flatBCutOff,
+        y2: currentMapHeight,
+      },
+      flatC: {
+        x1: flatBCutOff,
+        y1: corridoorCutOff,
+        x2: currentMapWidth,
+        y2: currentMapHeight,
+      },
+    };
+
+    function isPointInsideArea(point, area) {
+      return (
+        point.x >= area.x1 &&
+        point.x <= area.x2 &&
+        point.y >= area.y1 &&
+        point.y <= area.y2
+      );
+    }
+
+    function changeAreaBackground(areaElement) {
+      areaElement.style.backgroundColor = "yellow";
+    }
+
+    function resetBackground(areas) {
+      for (const areaName in areas) {
+        const areaElement = document.getElementById(`${areaName}`);
+        areaElement.style.backgroundColor = "transparent";
+      }
+    }
+
+    function clearPoints() {
+      document.querySelectorAll(".point").forEach((point) => point.remove());
+    }
+
+    function displayElderlyPoints(elderlyKey) {
+      resetBackground(areas);
+      clearPoints();
+      fetch("/map-data")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+
+          let points = data[elderlyKey];
+
+          if (points) {
+            const floorElement = document.querySelector(
+              ".floor-item span:last-child"
+            );
+            floorElement.textContent = `${points[0].floor}`;
+
+            points.forEach((point) => {
+              const scaledX = point.x * scaleX;
+              const scaledY = point.y * scaleY;
+
+              const pointElement = document.createElement("div");
+              pointElement.classList.add("point");
+              pointElement.style.left = `${scaledX}px`;
+              pointElement.style.top = `${scaledY}px`;
+              pointElement.title = point.label;
+              mapElement.appendChild(pointElement);
+
+              for (const areaName in areas) {
+                const area = areas[areaName];
+                if (
+                  scaledX >= area.x1 &&
+                  scaledX <= area.x2 &&
+                  scaledY >= area.y1 &&
+                  scaledY <= area.y2
+                ) {
+                  const areaElement = document.getElementById(`${areaName}`);
+                  changeAreaBackground(areaElement);
+                }
+              }
+            });
+          }
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }
+
+    function populateDropdown() {
+      fetch("/map-data")
+        .then((response) => response.json())
+        .then((data) => {
+          const dropdownMenu = document.querySelector(".elderly.dropdown-menu");
+          dropdownMenu.innerHTML = ""; // Clear current items
+          Object.keys(data).forEach((key) => {
+            const item = data[key][0];
+            const dropdownItem = document.createElement("a");
+            dropdownItem.setAttribute("class", "elderly dropdown-item");
+            dropdownItem.setAttribute("data-elderly", key);
+            dropdownItem.textContent = item.label;
+            dropdownMenu.appendChild(dropdownItem);
+
+            dropdownItem.addEventListener("click", function () {
+              document.getElementById("selectedElderly").textContent =
+                this.textContent;
+              let elderlyKey = this.getAttribute("data-elderly");
+              displayElderlyPoints(elderlyKey);
+            });
+          });
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    }
+
+    // Call populateDropdown on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      populateDropdown();
+    });
+
+    // Refresh button functionality
+    document
+      .getElementById("refreshDropdown")
+      .addEventListener("click", function () {
+        populateDropdown(); // Re-populate the dropdown on click
+      });
+  </script>
+
+  <script>
+    Circles.create({
+      id: "circles-1",
+      radius: 45,
+      value: 60,
+      maxValue: 100,
+      width: 7,
+      text: 5,
+      colors: ["#f1f1f1", "#FF9E27"],
+      duration: 400,
+      wrpClass: "circles-wrp",
+      textClass: "circles-text",
+      styleWrapper: true,
+      styleText: true,
+    });
+
+    Circles.create({
+      id: "circles-2",
+      radius: 45,
+      value: 70,
+      maxValue: 100,
+      width: 7,
+      text: 36,
+      colors: ["#f1f1f1", "#2BB930"],
+      duration: 400,
+      wrpClass: "circles-wrp",
+      textClass: "circles-text",
+      styleWrapper: true,
+      styleText: true,
+    });
+
+    Circles.create({
+      id: "circles-3",
+      radius: 45,
+      value: 40,
+      maxValue: 100,
+      width: 7,
+      text: 12,
+      colors: ["#f1f1f1", "#F25961"],
+      duration: 400,
+      wrpClass: "circles-wrp",
+      textClass: "circles-text",
+      styleWrapper: true,
+      styleText: true,
+    });
+
+    var totalIncomeChart = document
+      .getElementById("totalIncomeChart")
+      .getContext("2d");
+
+    var mytotalIncomeChart = new Chart(totalIncomeChart, {
+      type: "bar",
+      data: {
+        labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
+        datasets: [
+          {
+            label: "Total Income",
+            backgroundColor: "#ff9e27",
+            borderColor: "rgb(23, 125, 255)",
+            data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false,
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                display: false, //this will remove only the label
+              },
+              gridLines: {
+                drawBorder: false,
+                display: false,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                drawBorder: false,
+                display: false,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    $("#lineChart").sparkline([105, 103, 123, 100, 95, 105, 115], {
+      type: "line",
+      height: "70",
+      width: "100%",
+      lineWidth: "2",
+      lineColor: "#ffa534",
+      fillColor: "rgba(255, 165, 52, .14)",
+    });
+  </script>
+
+  {% endblock javascripts %}
+</div>

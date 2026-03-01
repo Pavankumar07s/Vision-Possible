@@ -1,0 +1,712 @@
+# =============================================
+# MQTT Automations for Device: 2412DPC0AI
+# Publishes health sensor data to MQTT topics
+# for AI engine consumption
+# =============================================
+
+# Heart Rate to MQTT
+- id: 2412dpc0ai_heart_rate_mqtt
+  alias: "Publish 2412DPC0AI Heart Rate to MQTT"
+  description: "Publishes heart rate data to MQTT for AI engine"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_heart_rate
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/heart_rate"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_heart_rate') | float(0) }},
+           "unit": "bpm",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Heart Rate Variability to MQTT
+- id: 2412dpc0ai_hrv_mqtt
+  alias: "Publish 2412DPC0AI HRV to MQTT"
+  description: "Publishes HRV for stress monitoring"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_heart_rate_variability
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/hrv"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_heart_rate_variability') | float(0) }},
+           "unit": "ms",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Resting Heart Rate to MQTT
+- id: 2412dpc0ai_resting_hr_mqtt
+  alias: "Publish 2412DPC0AI Resting Heart Rate to MQTT"
+  description: "Publishes resting HR for baseline calculations"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_resting_heart_rate
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/resting_heart_rate"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_resting_heart_rate') | float(0) }},
+           "unit": "bpm",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Oxygen Saturation to MQTT
+- id: 2412dpc0ai_o2_mqtt
+  alias: "Publish 2412DPC0AI Oxygen Saturation to MQTT"
+  description: "Publishes SpO2 for critical health event detection"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_oxygen_saturation
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/oxygen_saturation"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_oxygen_saturation') | float(0) }},
+           "unit": "percent",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Respiratory Rate to MQTT
+- id: 2412dpc0ai_respiratory_mqtt
+  alias: "Publish 2412DPC0AI Respiratory Rate to MQTT"
+  description: "Publishes breathing rate for anomaly detection"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_respiratory_rate
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/respiratory_rate"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_respiratory_rate') | float(0) }},
+           "unit": "breaths_per_minute",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Sleep Duration to MQTT
+- id: 2412dpc0ai_sleep_mqtt
+  alias: "Publish 2412DPC0AI Sleep Duration to MQTT"
+  description: "Publishes sleep data for pattern analysis"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_sleep_duration
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/sleep_duration"
+        payload: >
+          {"value": "{{ states('sensor.2412dpc0ai_sleep_duration') }}",
+           "unit": "minutes",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Blood Pressure (Systolic) to MQTT
+- id: 2412dpc0ai_systolic_bp_mqtt
+  alias: "Publish 2412DPC0AI Systolic Blood Pressure to MQTT"
+  description: "Publishes systolic BP for cardiovascular monitoring"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_systolic_blood_pressure
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/systolic_blood_pressure"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_systolic_blood_pressure') | float(0) }},
+           "unit": "mmHg",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Blood Pressure (Diastolic) to MQTT
+- id: 2412dpc0ai_diastolic_bp_mqtt
+  alias: "Publish 2412DPC0AI Diastolic Blood Pressure to MQTT"
+  description: "Publishes diastolic BP for cardiovascular monitoring"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_diastolic_blood_pressure
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/diastolic_blood_pressure"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_diastolic_blood_pressure') | float(0) }},
+           "unit": "mmHg",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# VO2 Max to MQTT
+- id: 2412dpc0ai_vo2max_mqtt
+  alias: "Publish 2412DPC0AI VO2 Max to MQTT"
+  description: "Publishes VO2 max for fitness tracking"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_vo2_max
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/vo2_max"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_vo2_max') | float(0) }},
+           "unit": "mL/kg/min",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+
+# Total Calories Burned to MQTT
+- id: 2412dpc0ai_calories_mqtt
+  alias: "Publish 2412DPC0AI Calories Burned to MQTT"
+  description: "Publishes calories for activity correlation"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.2412dpc0ai_total_calories_burned
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable'] }}"
+
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/floor/1/mobile/7/total_calories_burned"
+        payload: >
+          {"value": {{ states('sensor.2412dpc0ai_total_calories_burned') | float(0) }},
+           "unit": "kcal",
+           "timestamp": "{{ now().isoformat() }}",
+           "device": "2412DPC0AI"}
+        retain: false
+        qos: 1
+# =============================================
+# Vision Service Event Automations
+# Listens to MQTT events from the YOLO pipeline
+# and triggers HA notifications / alerts
+# =============================================
+
+# Wandering detected → notify
+- id: vision_wandering_alert
+  alias: "Vision: Wandering Detected"
+  description: "Alerts when vision service detects wandering behavior"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "WANDERING_DETECTED"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ Wandering Detected"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          is showing wandering behavior
+          (confidence: {{ state_attr('sensor.vision_latest_event', 'confidence') }}).
+          Details: {{ state_attr('sensor.vision_latest_event', 'details') }}
+        notification_id: "vision_wandering"
+
+# Zone violation → notify
+- id: vision_zone_violation_alert
+  alias: "Vision: Zone Violation"
+  description: "Alerts when someone enters a restricted zone or leaves a safe zone"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "ZONE_VIOLATION"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🚨 Zone Violation"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          has violated zone boundary.
+          Zone: {{ state_attr('sensor.vision_latest_event', 'zone') }}
+          Severity: {{ state_attr('sensor.vision_latest_event', 'severity') }}
+        notification_id: "vision_zone"
+
+# Fall suspected → critical alert
+- id: vision_fall_alert
+  alias: "Vision: Fall Suspected"
+  description: "Critical alert when a fall is suspected"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "FALL_SUSPECTED"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🆘 FALL DETECTED"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          may have fallen!
+          Confidence: {{ state_attr('sensor.vision_latest_event', 'confidence') }}
+          Immediate attention required.
+        notification_id: "vision_fall"
+
+# Gait instability → notify
+- id: vision_gait_alert
+  alias: "Vision: Gait Instability"
+  description: "Alerts when unsteady gait is detected via pose analysis"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "GAIT_INSTABILITY"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ Unsteady Gait Detected"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          is showing gait instability.
+          Stability score: {{ state_attr('sensor.vision_latest_event', 'details') }}
+        notification_id: "vision_gait"
+
+# Erratic movement → notify
+- id: vision_erratic_alert
+  alias: "Vision: Erratic Movement"
+  description: "Alerts when erratic movement patterns are detected"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "ERRATIC_MOVEMENT"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ Erratic Movement Detected"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          is moving erratically.
+          Details: {{ state_attr('sensor.vision_latest_event', 'details') }}
+        notification_id: "vision_erratic"
+
+# Inactivity → notify
+- id: vision_inactivity_alert
+  alias: "Vision: Inactivity Alert"
+  description: "Alerts when prolonged inactivity is detected"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_latest_event
+      to: "INACTIVITY_ALERT"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ Inactivity Alert"
+        message: >
+          Person {{ state_attr('sensor.vision_latest_event', 'person_id') }}
+          has been stationary for an extended period.
+          Time stationary: {{ states('sensor.vision_time_stationary') }}s
+        notification_id: "vision_inactivity"
+
+# Vision service goes offline → warn
+- id: vision_service_offline
+  alias: "Vision: Service Offline"
+  description: "Warns when the vision service disconnects"
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.vision_service_online
+      to: "off"
+      for: "00:00:30"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "📹 Vision Service Offline"
+        message: >
+          The vision monitoring service (room_1_camera) has gone offline.
+          Check the camera and service logs.
+        notification_id: "vision_offline"
+
+# =============================================
+# Vision-Agent (AI Orchestration Layer)
+# =============================================
+
+# Vision-Agent critical escalation → emergency alert
+- id: vision_agent_critical_alert
+  alias: "Vision-Agent: Critical Escalation"
+  description: "Fires when the AI orchestrator confirms a critical event"
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.vision_agent_critical_alert
+      to: "on"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🚨 AI Critical Alert"
+        message: >
+          Vision-Agent confirmed a critical event:
+          {{ states('sensor.vision_agent_event_type') }}
+
+          Reason: {{ states('sensor.vision_agent_reason') }}
+
+          Recommendation: {{ states('sensor.vision_agent_recommendation') }}
+
+          Fused score: {{ states('sensor.vision_agent_fused_score') }}
+          Confidence: {{ states('sensor.vision_agent_confidence') }}%
+          Correlated signals: {{ state_attr('sensor.vision_agent_event_type', 'correlated_signals') }}
+        notification_id: "vision_agent_critical"
+
+# Vision-Agent high severity → warning
+- id: vision_agent_high_alert
+  alias: "Vision-Agent: High Severity Warning"
+  description: "Fires when AI orchestrator produces a high-severity event"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_agent_severity
+      to: "high"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "⚠️ AI High Severity Warning"
+        message: >
+          Vision-Agent detected: {{ states('sensor.vision_agent_event_type') }}
+
+          {{ states('sensor.vision_agent_reason') }}
+
+          Action: {{ states('sensor.vision_agent_recommendation') }}
+        notification_id: "vision_agent_high"
+
+# Vision-Agent multimodal convergence → notify when multiple signals agree
+- id: vision_agent_multimodal_alert
+  alias: "Vision-Agent: Multimodal Convergence"
+  description: "Fires when vision + smartguard + health all signal concern"
+
+  trigger:
+    - platform: state
+      entity_id: sensor.vision_agent_event_type
+
+  condition:
+    - condition: template
+      value_template: >
+        {% set signals = state_attr('sensor.vision_agent_event_type', 'correlated_signals') %}
+        {{ signals is not none and signals | length >= 3 }}
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🔴 Multimodal Alert — Multiple Systems Agree"
+        message: >
+          Multiple independent systems have converged on a concern:
+          {{ states('sensor.vision_agent_event_type') }}
+
+          Signals: {{ state_attr('sensor.vision_agent_event_type', 'correlated_signals') }}
+          Fused score: {{ states('sensor.vision_agent_fused_score') }}
+
+          {{ states('sensor.vision_agent_reason') }}
+
+          Recommended action: {{ states('sensor.vision_agent_recommendation') }}
+        notification_id: "vision_agent_multimodal"
+
+# Vision-Agent offline → service health check
+- id: vision_agent_offline
+  alias: "Vision-Agent: Service Offline"
+  description: "Alert when the AI orchestration service goes offline"
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.vision_agent_online
+      to: "off"
+      for: "00:00:30"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🧠 Vision-Agent Offline"
+        message: >
+          The AI orchestration service has gone offline.
+          Reasoned event analysis is unavailable until it returns.
+        notification_id: "vision_agent_offline"
+
+# =============================================
+# OpenClaw Emergency Orchestration Automations
+# =============================================
+
+# ── Alexa Voice Confirmation ──
+# When OpenClaw requests a voice check, play TTS prompt
+# on Alexa and listen for response
+- id: openclaw_voice_check
+  alias: "OpenClaw: Alexa Voice Confirmation"
+  description: "Play voice check prompt on Alexa when OpenClaw requests one"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/voice/request"
+
+  action:
+    # Send TTS prompt via Alexa
+    - service: notify.alexa_media
+      data:
+        target: media_player.alexa_sala_s_echo_dot
+        message: >
+          {{ trigger.payload_json.message | default('Attention. I detected a possible safety concern. Are you okay? Please say I am fine, or ask for help.') }}
+        data:
+          type: tts
+
+# ── OpenClaw Incident Critical Alert ──
+- id: openclaw_critical_incident
+  alias: "OpenClaw: Critical Incident Alert"
+  description: "Persistent notification for CRITICAL level incidents"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/openclaw/incident"
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.level_name == 'CRITICAL' }}"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: >
+          🚨 CRITICAL: {{ trigger.payload_json.trigger_event | replace('_', ' ') | title }}
+        message: >
+          Incident {{ trigger.payload_json.id }} — {{ trigger.payload_json.state }}
+
+          Room: {{ trigger.payload_json.room }}
+          Level: {{ trigger.payload_json.level_name }}
+          Escalations: {{ trigger.payload_json.escalation_count }}
+          Duration: {{ trigger.payload_json.duration_seconds | round(0) }}s
+        notification_id: "openclaw_critical_{{ trigger.payload_json.id }}"
+
+# ── OpenClaw High-Risk Alert ──
+- id: openclaw_high_risk_incident
+  alias: "OpenClaw: High-Risk Incident"
+  description: "Alert for HIGH_RISK level incidents"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/openclaw/incident"
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.level_name == 'HIGH_RISK' }}"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: >
+          ⚠️ HIGH RISK: {{ trigger.payload_json.trigger_event | replace('_', ' ') | title }}
+        message: >
+          Incident {{ trigger.payload_json.id }}
+
+          Room: {{ trigger.payload_json.room }}
+          Voice confirmation requested — waiting for response.
+        notification_id: "openclaw_highrisk_{{ trigger.payload_json.id }}"
+
+# ── OpenClaw Incident Resolved ──
+- id: openclaw_incident_resolved
+  alias: "OpenClaw: Incident Resolved"
+  description: "Dismiss alerts when incident is resolved"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/openclaw/incident"
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.state == 'resolved' }}"
+
+  action:
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: "openclaw_critical_{{ trigger.payload_json.id }}"
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: "openclaw_highrisk_{{ trigger.payload_json.id }}"
+    - service: persistent_notification.create
+      data:
+        title: "✅ Incident Resolved"
+        message: >
+          Incident {{ trigger.payload_json.id }} resolved: {{ trigger.payload_json.resolution }}
+          Duration: {{ trigger.payload_json.duration_seconds | round(0) }}s
+        notification_id: "openclaw_resolved_{{ trigger.payload_json.id }}"
+
+# ── OpenClaw Emergency Lights ──
+- id: openclaw_emergency_lights
+  alias: "OpenClaw: Emergency Lighting"
+  description: "Turn on lights when critical incident occurs"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/openclaw/action"
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.action == 'activate_lights' }}"
+
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 255
+      target:
+        entity_id: all
+
+# ── OpenClaw Service Offline ──
+- id: openclaw_offline
+  alias: "OpenClaw: Service Offline"
+  description: "Alert when OpenClaw goes offline"
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.openclaw_online
+      to: "off"
+      for: "00:00:30"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "🔴 OpenClaw Offline"
+        message: >
+          The emergency orchestration service has gone offline.
+          Automated safety response is unavailable.
+        notification_id: "openclaw_offline"
+
+# ── Daily Report Notification ──
+- id: openclaw_daily_report
+  alias: "OpenClaw: Daily Report"
+  description: "Show daily report when published"
+
+  trigger:
+    - platform: mqtt
+      topic: "etms/openclaw/daily_report"
+
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "📊 ETMS Daily Report"
+        message: >
+          {{ trigger.payload_json.resident }} — Daily Summary
+
+          Incidents today: {{ trigger.payload_json.incidents.total }}
+          Critical: {{ trigger.payload_json.incidents.critical }}
+          Resolved: {{ trigger.payload_json.incidents.resolved }}
+
+          Latest HR: {{ trigger.payload_json.health_summary.heart_rate_trend.latest | default('N/A') }} bpm
+          SpO2: {{ trigger.payload_json.health_summary.spo2_latest | default('N/A') }}%
+          Steps: {{ trigger.payload_json.health_summary.steps | default('N/A') }}
+
+          Location: {{ trigger.payload_json.location_summary.room | default('unknown') }}
+
+# ──────────────────────────────────────────────────────────
+# 10. Alexa voice response → MQTT bridge
+#     Monitors last_called_summary changes on the Echo Dot
+#     and publishes them to etms/openclaw/voice_response so
+#     OpenClaw can detect the user's spoken reply without
+#     relying solely on its own REST polling loop.
+# ──────────────────────────────────────────────────────────
+- id: "etms_alexa_voice_response_mqtt"
+  alias: "ETMS Alexa Voice Response to MQTT"
+  description: >
+    Bridges Alexa voice interactions to MQTT so OpenClaw can
+    react to user responses faster than REST polling allows.
+  trigger:
+    - platform: state
+      entity_id: media_player.alexa_sala_s_echo_dot
+      attribute: last_called_summary
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.to_state.attributes.last_called_summary
+           not in [None, '', 'unavailable', 'unknown'] }}
+  action:
+    - service: mqtt.publish
+      data:
+        topic: "etms/openclaw/voice_response"
+        payload: >
+          {
+            "summary": "{{ trigger.to_state.attributes.last_called_summary | default('') }}",
+            "timestamp": "{{ trigger.to_state.attributes.last_called_timestamp | default('') }}",
+            "entity_id": "{{ trigger.entity_id }}"
+          }
+        retain: false
+        notification_id: "openclaw_daily_report"

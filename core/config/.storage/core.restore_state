@@ -1,0 +1,874 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "core.restore_state",
+  "data": [
+    {
+      "state": {"entity_id":"person.pavan_kumar","state":"not_home","attributes":{"editable":true,"id":"pavan_kumar","device_trackers":["device_tracker.sm_a528b","device_tracker.2412dpc0ai"],"latitude":18.6048701,"longitude":73.8755722,"gps_accuracy":100,"source":"device_tracker.2412dpc0ai","user_id":"fcb69a9c840f4d00a4fc027322fac942","friendly_name":"PAVAN KUMAR"},"last_changed":"2026-02-28T17:03:22.911693+00:00","last_reported":"2026-02-28T17:03:28.237162+00:00","last_updated":"2026-02-28T17:03:28.237162+00:00","context":{"id":"01KJJK90ZDZ1VZX2FE6PH4HGB0","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_heart_rate_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_heart_rate_mqtt","last_triggered":"2026-02-28T09:01:01.254108+00:00","mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Heart Rate to MQTT"},"last_changed":"2026-02-28T17:03:23.346328+00:00","last_reported":"2026-02-28T17:03:23.346328+00:00","last_updated":"2026-02-28T17:03:23.346328+00:00","context":{"id":"01KJJK8W6JGYRMXCJ1X0SVY93V","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_hrv_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_hrv_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI HRV to MQTT"},"last_changed":"2026-02-28T17:03:23.346429+00:00","last_reported":"2026-02-28T17:03:23.346429+00:00","last_updated":"2026-02-28T17:03:23.346429+00:00","context":{"id":"01KJJK8W6J3AW9F4TRPX7457VW","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_resting_heart_rate_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_resting_hr_mqtt","last_triggered":"2026-02-28T08:44:14.654706+00:00","mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Resting Heart Rate to MQTT"},"last_changed":"2026-02-28T17:03:23.346504+00:00","last_reported":"2026-02-28T17:03:23.346504+00:00","last_updated":"2026-02-28T17:03:23.346504+00:00","context":{"id":"01KJJK8W6JMFZ5HK616G1CMC59","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_oxygen_saturation_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_o2_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Oxygen Saturation to MQTT"},"last_changed":"2026-02-28T17:03:23.346570+00:00","last_reported":"2026-02-28T17:03:23.346570+00:00","last_updated":"2026-02-28T17:03:23.346570+00:00","context":{"id":"01KJJK8W6JJBZ0G27B0786BR67","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_respiratory_rate_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_respiratory_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Respiratory Rate to MQTT"},"last_changed":"2026-02-28T17:03:23.346635+00:00","last_reported":"2026-02-28T17:03:23.346635+00:00","last_updated":"2026-02-28T17:03:23.346635+00:00","context":{"id":"01KJJK8W6JWNYG64XPF15CKZV3","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_sleep_duration_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_sleep_mqtt","last_triggered":"2026-02-28T08:44:14.655466+00:00","mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Sleep Duration to MQTT"},"last_changed":"2026-02-28T17:03:23.346703+00:00","last_reported":"2026-02-28T17:03:23.346703+00:00","last_updated":"2026-02-28T17:03:23.346703+00:00","context":{"id":"01KJJK8W6JACXZR9MT64RXQD9G","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_systolic_blood_pressure_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_systolic_bp_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Systolic Blood Pressure to MQTT"},"last_changed":"2026-02-28T17:03:23.346761+00:00","last_reported":"2026-02-28T17:03:23.346761+00:00","last_updated":"2026-02-28T17:03:23.346761+00:00","context":{"id":"01KJJK8W6J99RWP1KJX3ET3C27","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_diastolic_blood_pressure_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_diastolic_bp_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Diastolic Blood Pressure to MQTT"},"last_changed":"2026-02-28T17:03:23.346823+00:00","last_reported":"2026-02-28T17:03:23.346823+00:00","last_updated":"2026-02-28T17:03:23.346823+00:00","context":{"id":"01KJJK8W6JHFJXK720J4CBWM8F","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_vo2_max_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_vo2max_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI VO2 Max to MQTT"},"last_changed":"2026-02-28T17:03:23.346885+00:00","last_reported":"2026-02-28T17:03:23.346885+00:00","last_updated":"2026-02-28T17:03:23.346885+00:00","context":{"id":"01KJJK8W6J47CJRK2GXTJ8XZQ1","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_2412dpc0ai_calories_burned_to_mqtt","state":"on","attributes":{"id":"2412dpc0ai_calories_mqtt","last_triggered":"2026-02-28T08:44:14.656103+00:00","mode":"single","current":0,"friendly_name":"Publish 2412DPC0AI Calories Burned to MQTT"},"last_changed":"2026-02-28T17:03:23.346949+00:00","last_reported":"2026-02-28T17:03:23.346949+00:00","last_updated":"2026-02-28T17:03:23.346949+00:00","context":{"id":"01KJJK8W6JMX4K6N0WVCP4SR24","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_wandering_detected","state":"on","attributes":{"id":"vision_wandering_alert","last_triggered":"2026-02-28T16:52:30.559434+00:00","mode":"single","current":0,"friendly_name":"Vision: Wandering Detected"},"last_changed":"2026-02-28T17:03:23.347007+00:00","last_reported":"2026-02-28T17:03:23.347007+00:00","last_updated":"2026-02-28T17:03:23.347007+00:00","context":{"id":"01KJJK8W6K382D0NK4CHTCK76D","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_zone_violation","state":"on","attributes":{"id":"vision_zone_violation_alert","last_triggered":"2026-02-28T17:05:11.774396+00:00","mode":"single","current":0,"friendly_name":"Vision: Zone Violation"},"last_changed":"2026-02-28T17:03:23.347063+00:00","last_reported":"2026-02-28T17:05:11.775009+00:00","last_updated":"2026-02-28T17:05:11.775009+00:00","context":{"id":"01KJJKC62YQR7YVSVGZ5DWZ2VR","parent_id":"01KJJKC62XS47XTFBG3C1X93RE","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_fall_suspected","state":"on","attributes":{"id":"vision_fall_alert","last_triggered":"2026-02-27T18:34:12.797815+00:00","mode":"single","current":0,"friendly_name":"Vision: Fall Suspected"},"last_changed":"2026-02-28T17:03:23.347121+00:00","last_reported":"2026-02-28T17:03:23.347121+00:00","last_updated":"2026-02-28T17:03:23.347121+00:00","context":{"id":"01KJJK8W6KHAKXVJA5DGRR8DD1","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_gait_instability","state":"on","attributes":{"id":"vision_gait_alert","last_triggered":"2026-02-27T18:34:12.530200+00:00","mode":"single","current":0,"friendly_name":"Vision: Gait Instability"},"last_changed":"2026-02-28T17:03:23.347179+00:00","last_reported":"2026-02-28T17:03:23.347179+00:00","last_updated":"2026-02-28T17:03:23.347179+00:00","context":{"id":"01KJJK8W6KJ8WMT3J63W55K4BF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_erratic_movement","state":"on","attributes":{"id":"vision_erratic_alert","last_triggered":"2026-02-28T17:05:05.706646+00:00","mode":"single","current":0,"friendly_name":"Vision: Erratic Movement"},"last_changed":"2026-02-28T17:03:23.347238+00:00","last_reported":"2026-02-28T17:05:05.708627+00:00","last_updated":"2026-02-28T17:05:05.708627+00:00","context":{"id":"01KJJKC05AAHCAGXG3DC0ZJAYT","parent_id":"01KJJKC05AAAA1GZPNB80G5X8H","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_inactivity_alert","state":"on","attributes":{"id":"vision_inactivity_alert","last_triggered":null,"mode":"single","current":0,"friendly_name":"Vision: Inactivity Alert"},"last_changed":"2026-02-28T17:03:23.347293+00:00","last_reported":"2026-02-28T17:03:23.347293+00:00","last_updated":"2026-02-28T17:03:23.347293+00:00","context":{"id":"01KJJK8W6KZ6FBY22SM031STE7","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_service_offline","state":"on","attributes":{"id":"vision_service_offline","last_triggered":"2026-02-28T16:28:46.866817+00:00","mode":"single","current":0,"friendly_name":"Vision: Service Offline"},"last_changed":"2026-02-28T17:03:23.347347+00:00","last_reported":"2026-02-28T17:03:23.347347+00:00","last_updated":"2026-02-28T17:03:23.347347+00:00","context":{"id":"01KJJK8W6KD7AP34CH61PE3CW3","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_agent_critical_escalation","state":"on","attributes":{"id":"vision_agent_critical_alert","last_triggered":"2026-02-27T16:56:56.918669+00:00","mode":"single","current":0,"friendly_name":"Vision-Agent: Critical Escalation"},"last_changed":"2026-02-28T17:03:23.347406+00:00","last_reported":"2026-02-28T17:03:23.347406+00:00","last_updated":"2026-02-28T17:03:23.347406+00:00","context":{"id":"01KJJK8W6K12B6QPZ4KFVG1K5X","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_agent_high_severity_warning","state":"on","attributes":{"id":"vision_agent_high_alert","last_triggered":"2026-02-28T17:04:29.924040+00:00","mode":"single","current":0,"friendly_name":"Vision-Agent: High Severity Warning"},"last_changed":"2026-02-28T17:03:23.347460+00:00","last_reported":"2026-02-28T17:04:29.924410+00:00","last_updated":"2026-02-28T17:04:29.924410+00:00","context":{"id":"01KJJKAX73S5DJ6MN96T5G359X","parent_id":"01KJJKAX73SWBN9W804SZT5GEX","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_agent_multimodal_convergence","state":"on","attributes":{"id":"vision_agent_multimodal_alert","last_triggered":"2026-02-28T17:06:10.592147+00:00","mode":"single","current":0,"friendly_name":"Vision-Agent: Multimodal Convergence"},"last_changed":"2026-02-28T17:03:23.347515+00:00","last_reported":"2026-02-28T17:06:10.592983+00:00","last_updated":"2026-02-28T17:06:10.592983+00:00","context":{"id":"01KJJKDZGZ56T4SYPP38PTTXGT","parent_id":"01KJJKDZGZYQ6AYBGEMKQ5PK5Q","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.vision_agent_service_offline","state":"on","attributes":{"id":"vision_agent_offline","last_triggered":"2026-02-28T16:28:50.034278+00:00","mode":"single","current":0,"friendly_name":"Vision-Agent: Service Offline"},"last_changed":"2026-02-28T17:03:23.347575+00:00","last_reported":"2026-02-28T17:03:23.347575+00:00","last_updated":"2026-02-28T17:03:23.347575+00:00","context":{"id":"01KJJK8W6KDY9BVGNNH8AY5MHY","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_alexa_voice_confirmation","state":"on","attributes":{"id":"openclaw_voice_check","last_triggered":null,"mode":"single","current":0,"friendly_name":"OpenClaw: Alexa Voice Confirmation"},"last_changed":"2026-02-28T17:03:23.347632+00:00","last_reported":"2026-02-28T17:03:23.347632+00:00","last_updated":"2026-02-28T17:03:23.347632+00:00","context":{"id":"01KJJK8W6KY7B1PACNFMD2XFN6","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_critical_incident_alert","state":"on","attributes":{"id":"openclaw_critical_incident","last_triggered":"2026-02-28T17:05:41.802075+00:00","mode":"single","current":0,"friendly_name":"OpenClaw: Critical Incident Alert"},"last_changed":"2026-02-28T17:03:23.347688+00:00","last_reported":"2026-02-28T17:05:41.802700+00:00","last_updated":"2026-02-28T17:05:41.802700+00:00","context":{"id":"01KJJKD3D975XRMR7KR8G276PX","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_high_risk_incident","state":"on","attributes":{"id":"openclaw_high_risk_incident","last_triggered":"2026-02-28T17:05:53.503795+00:00","mode":"single","current":0,"friendly_name":"OpenClaw: High-Risk Incident"},"last_changed":"2026-02-28T17:03:23.347744+00:00","last_reported":"2026-02-28T17:05:53.504096+00:00","last_updated":"2026-02-28T17:05:53.504096+00:00","context":{"id":"01KJJKDETZZN9NCS1TPP9G9AF7","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_incident_resolved","state":"on","attributes":{"id":"openclaw_incident_resolved","last_triggered":"2026-02-28T17:05:53.502677+00:00","mode":"single","current":0,"friendly_name":"OpenClaw: Incident Resolved"},"last_changed":"2026-02-28T17:03:23.347805+00:00","last_reported":"2026-02-28T17:05:53.503377+00:00","last_updated":"2026-02-28T17:05:53.503377+00:00","context":{"id":"01KJJKDETYS9VYK0CN8BFHH6PS","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_emergency_lighting","state":"on","attributes":{"id":"openclaw_emergency_lights","last_triggered":null,"mode":"single","current":0,"friendly_name":"OpenClaw: Emergency Lighting"},"last_changed":"2026-02-28T17:03:23.347862+00:00","last_reported":"2026-02-28T17:03:23.347862+00:00","last_updated":"2026-02-28T17:03:23.347862+00:00","context":{"id":"01KJJK8W6K4EGJ5198J6C67BJE","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_service_offline","state":"on","attributes":{"id":"openclaw_offline","last_triggered":"2026-02-28T16:28:48.479239+00:00","mode":"single","current":0,"friendly_name":"OpenClaw: Service Offline"},"last_changed":"2026-02-28T17:03:23.347918+00:00","last_reported":"2026-02-28T17:03:23.347918+00:00","last_updated":"2026-02-28T17:03:23.347918+00:00","context":{"id":"01KJJK8W6K5940ZSA8KVWWGRRY","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.openclaw_daily_report","state":"on","attributes":{"id":"openclaw_daily_report","last_triggered":null,"mode":"single","current":0,"friendly_name":"OpenClaw: Daily Report"},"last_changed":"2026-02-28T17:03:23.347970+00:00","last_reported":"2026-02-28T17:03:23.347970+00:00","last_updated":"2026-02-28T17:03:23.347970+00:00","context":{"id":"01KJJK8W6KTDQERCXJEJ5WBSP2","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.etms_alexa_voice_response_to_mqtt","state":"on","attributes":{"id":"etms_alexa_voice_response_mqtt","last_triggered":"2026-02-28T17:05:51.786137+00:00","mode":"single","current":0,"friendly_name":"ETMS Alexa Voice Response to MQTT"},"last_changed":"2026-02-28T17:03:23.348024+00:00","last_reported":"2026-02-28T17:05:51.786786+00:00","last_updated":"2026-02-28T17:05:51.786786+00:00","context":{"id":"01KJJKDD59YWC5003GXD8SP48D","parent_id":"01KJJKDD57HVKRRWC2TT7HGB2T","user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"device_tracker.sm_a528b","state":"not_home","attributes":{"source_type":"gps","latitude":18.6048883,"longitude":73.8756437,"gps_accuracy":56,"altitude":524.0,"course":0,"speed":0,"vertical_accuracy":4,"friendly_name":"SM-A528B"},"last_changed":"2026-02-28T17:03:23.588915+00:00","last_reported":"2026-02-28T17:03:23.588915+00:00","last_updated":"2026-02-28T17:03:23.588915+00:00","context":{"id":"01KJJK8WE40C6PY9R0ZXW0WW2P","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_battery_level","state":"48","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"battery","icon":"mdi:battery-40","friendly_name":"SM-A528B Battery level"},"last_changed":"2026-02-28T17:03:23.589420+00:00","last_reported":"2026-02-28T17:03:23.589420+00:00","last_updated":"2026-02-28T17:03:23.589420+00:00","context":{"id":"01KJJK8WE5S2QWBNQAYRFCH49Y","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 48,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_battery_state","state":"discharging","attributes":{"options":["charging","discharging","full","not_charging"],"device_class":"enum","icon":"mdi:battery-minus","friendly_name":"SM-A528B Battery state"},"last_changed":"2026-02-28T17:03:23.589586+00:00","last_reported":"2026-02-28T17:03:23.589586+00:00","last_updated":"2026-02-28T17:03:23.589586+00:00","context":{"id":"01KJJK8WE5H15AX2HD8WFPQSVB","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "discharging",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_charger_type","state":"none","attributes":{"options":["ac","usb","wireless","dock","none"],"device_class":"enum","icon":"mdi:battery","friendly_name":"SM-A528B Charger type"},"last_changed":"2026-02-28T17:03:23.589736+00:00","last_reported":"2026-02-28T17:03:23.589736+00:00","last_updated":"2026-02-28T17:03:23.589736+00:00","context":{"id":"01KJJK8WE5EF2SKS3BCKRM3QTS","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "none",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_heart_rate","state":"unknown","attributes":{"unit_of_measurement":"bpm","icon":"mdi:heart-pulse","friendly_name":"SM-A528B Heart rate"},"last_changed":"2026-02-28T17:03:23.589942+00:00","last_reported":"2026-02-28T17:03:23.589942+00:00","last_updated":"2026-02-28T17:03:23.589942+00:00","context":{"id":"01KJJK8WE5C5SHTPXQW9KHD19R","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_heart_rate_variability","state":"unknown","attributes":{"unit_of_measurement":"ms","device_class":"duration","icon":"mdi:heart-pulse","friendly_name":"SM-A528B Heart rate variability"},"last_changed":"2026-02-28T17:03:23.590122+00:00","last_reported":"2026-02-28T17:03:23.590122+00:00","last_updated":"2026-02-28T17:03:23.590122+00:00","context":{"id":"01KJJK8WE6SYCJC0GR99H8VYJS","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "ms"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.sm_a528b_resting_heart_rate","state":"unknown","attributes":{"unit_of_measurement":"bpm","icon":"mdi:heart-pulse","friendly_name":"SM-A528B Resting heart rate"},"last_changed":"2026-02-28T17:03:23.590268+00:00","last_reported":"2026-02-28T17:03:23.590268+00:00","last_updated":"2026-02-28T17:03:23.590268+00:00","context":{"id":"01KJJK8WE6250TGPC6VQJB311S","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"device_tracker.2412dpc0ai","state":"not_home","attributes":{"source_type":"gps","latitude":18.6048701,"longitude":73.8755722,"gps_accuracy":100,"altitude":522.0,"course":0,"speed":0,"vertical_accuracy":100,"friendly_name":"2412DPC0AI"},"last_changed":"2026-02-28T17:03:23.590746+00:00","last_reported":"2026-02-28T17:03:23.590746+00:00","last_updated":"2026-02-28T17:03:23.590746+00:00","context":{"id":"01KJJK8WE61K3A8TJTFNE3NPK8","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_detected_activity","state":"still","attributes":{"options":["in_vehicle","on_bicycle","on_foot","still","tilting","walking","running"],"still":100,"device_class":"enum","icon":"mdi:human-male","friendly_name":"2412DPC0AI Detected activity"},"last_changed":"2026-02-28T17:03:23.591257+00:00","last_reported":"2026-02-28T17:03:23.591257+00:00","last_updated":"2026-02-28T17:03:23.591257+00:00","context":{"id":"01KJJK8WE77E295EV3ECD0EDGZ","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "still",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_sleep_confidence","state":"8","attributes":{"state_class":"measurement","light":6,"motion":6,"timestamp":1772269203000,"unit_of_measurement":"%","icon":"mdi:sleep","friendly_name":"2412DPC0AI Sleep confidence"},"last_changed":"2026-02-28T17:03:23.591403+00:00","last_reported":"2026-02-28T17:03:23.591403+00:00","last_updated":"2026-02-28T17:03:23.591403+00:00","context":{"id":"01KJJK8WE78H2HFF79WDS330GV","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 8,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_sleep_segment","state":"7920000.0","attributes":{"end":1772225002638,"start":1772217082638,"status":"successful","unit_of_measurement":"ms","device_class":"duration","icon":"mdi:sleep","friendly_name":"2412DPC0AI Sleep segment"},"last_changed":"2026-02-28T17:03:23.591566+00:00","last_reported":"2026-02-28T17:03:23.591566+00:00","last_updated":"2026-02-28T17:03:23.591566+00:00","context":{"id":"01KJJK8WE7A8FH2WCEW1844829","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 7920000.0,
+        "native_unit_of_measurement": "ms"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_battery_level","state":"88","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"battery","icon":"mdi:battery-80","friendly_name":"2412DPC0AI Battery level"},"last_changed":"2026-02-28T17:03:23.591716+00:00","last_reported":"2026-02-28T17:03:23.591716+00:00","last_updated":"2026-02-28T17:03:23.591716+00:00","context":{"id":"01KJJK8WE7YANT63N0J0R2D070","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 88,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_battery_state","state":"discharging","attributes":{"options":["charging","discharging","full","not_charging"],"device_class":"enum","icon":"mdi:battery-minus","friendly_name":"2412DPC0AI Battery state"},"last_changed":"2026-02-28T17:03:23.591913+00:00","last_reported":"2026-02-28T17:03:23.591913+00:00","last_updated":"2026-02-28T17:03:23.591913+00:00","context":{"id":"01KJJK8WE7BTCEZXN080RNAZPG","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "discharging",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_charger_type","state":"none","attributes":{"options":["ac","usb","wireless","dock","none"],"device_class":"enum","icon":"mdi:battery","friendly_name":"2412DPC0AI Charger type"},"last_changed":"2026-02-28T17:03:23.592079+00:00","last_reported":"2026-02-28T17:03:23.592079+00:00","last_updated":"2026-02-28T17:03:23.592079+00:00","context":{"id":"01KJJK8WE8HE75NZP0BC9ZMKJP","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "none",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_active_calories_burned","state":"unknown","attributes":{"unit_of_measurement":"kcal","device_class":"energy","icon":"mdi:fire","friendly_name":"2412DPC0AI Active calories burned"},"last_changed":"2026-02-28T17:03:23.592322+00:00","last_reported":"2026-02-28T17:03:23.592322+00:00","last_updated":"2026-02-28T17:03:23.592322+00:00","context":{"id":"01KJJK8WE8N1MFE147NSXGCGF0","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "kcal"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_blood_glucose","state":"unknown","attributes":{"unit_of_measurement":"mg/dL","device_class":"blood_glucose_concentration","icon":"mdi:diabetes","friendly_name":"2412DPC0AI Blood glucose"},"last_changed":"2026-02-28T17:03:23.592485+00:00","last_reported":"2026-02-28T17:03:23.592485+00:00","last_updated":"2026-02-28T17:03:23.592485+00:00","context":{"id":"01KJJK8WE81K0R3Q328Q1M9HTV","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "mg/dL"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_body_fat","state":"unknown","attributes":{"unit_of_measurement":"%","icon":"mdi:scale-bathroom","friendly_name":"2412DPC0AI Body fat"},"last_changed":"2026-02-28T17:03:23.592625+00:00","last_reported":"2026-02-28T17:03:23.592625+00:00","last_updated":"2026-02-28T17:03:23.592625+00:00","context":{"id":"01KJJK8WE82Q5G6S8ES40YYYJ6","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_diastolic_blood_pressure","state":"unknown","attributes":{"unit_of_measurement":"mmHg","device_class":"pressure","icon":"mdi:heart-pulse","friendly_name":"2412DPC0AI Diastolic blood pressure"},"last_changed":"2026-02-28T17:03:23.592782+00:00","last_reported":"2026-02-28T17:03:23.592782+00:00","last_updated":"2026-02-28T17:03:23.592782+00:00","context":{"id":"01KJJK8WE8JFEXNM48YCVTWZ8G","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "mmHg"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_daily_distance","state":"1281.5222","attributes":{"state_class":"total_increasing","endTime":"2026-02-28T09:04:00.111Z","sources":["com.google.android.apps.fitness"],"unit_of_measurement":"m","device_class":"distance","icon":"mdi:map-marker-distance","friendly_name":"2412DPC0AI Daily distance"},"last_changed":"2026-02-28T17:03:23.592960+00:00","last_reported":"2026-02-28T17:03:23.592960+00:00","last_updated":"2026-02-28T17:03:23.592960+00:00","context":{"id":"01KJJK8WE83SCKC75FF4TVQ4F2","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 1281.5222,
+        "native_unit_of_measurement": "m"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_daily_elevation_gained","state":"0","attributes":{"state_class":"total_increasing","endTime":"2026-02-28T08:26:03.865Z","sources":[],"unit_of_measurement":"m","device_class":"distance","icon":"mdi:elevation-rise","friendly_name":"2412DPC0AI Daily elevation gained"},"last_changed":"2026-02-28T17:03:23.593134+00:00","last_reported":"2026-02-28T17:03:23.593134+00:00","last_updated":"2026-02-28T17:03:23.593134+00:00","context":{"id":"01KJJK8WE93TWYDJ9F2ZHPZB8N","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 0,
+        "native_unit_of_measurement": "m"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_daily_floors","state":"0","attributes":{"state_class":"total_increasing","endTime":"2026-02-28T08:34:45.373Z","sources":[],"unit_of_measurement":"floors","icon":"mdi:stairs","friendly_name":"2412DPC0AI Daily floors"},"last_changed":"2026-02-28T17:03:23.593281+00:00","last_reported":"2026-02-28T17:03:23.593281+00:00","last_updated":"2026-02-28T17:03:23.593281+00:00","context":{"id":"01KJJK8WE997YMHP7AFNFEAV23","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 0,
+        "native_unit_of_measurement": "floors"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_heart_rate","state":"106.0","attributes":{"date":"2026-02-28T08:55:00Z","source":"com.google.android.apps.fitness","unit_of_measurement":"bpm","icon":"mdi:heart-pulse","friendly_name":"2412DPC0AI Heart rate"},"last_changed":"2026-02-28T17:03:23.593427+00:00","last_reported":"2026-02-28T17:03:23.593427+00:00","last_updated":"2026-02-28T17:03:23.593427+00:00","context":{"id":"01KJJK8WE978W05KTASHVGAZG8","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 106.0,
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_heart_rate_variability","state":"unknown","attributes":{"unit_of_measurement":"ms","device_class":"duration","icon":"mdi:heart-pulse","friendly_name":"2412DPC0AI Heart rate variability"},"last_changed":"2026-02-28T17:03:23.593579+00:00","last_reported":"2026-02-28T17:03:23.593579+00:00","last_updated":"2026-02-28T17:03:23.593579+00:00","context":{"id":"01KJJK8WE93DTP6YY7SGKG1XB9","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "ms"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_oxygen_saturation","state":"unknown","attributes":{"unit_of_measurement":"%","icon":"mdi:sleep","friendly_name":"2412DPC0AI Oxygen saturation"},"last_changed":"2026-02-28T17:03:23.593714+00:00","last_reported":"2026-02-28T17:03:23.593714+00:00","last_updated":"2026-02-28T17:03:23.593714+00:00","context":{"id":"01KJJK8WE9PF916S3T3PVQM08J","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_respiratory_rate","state":"unknown","attributes":{"unit_of_measurement":"bpm","icon":"mdi:account-voice","friendly_name":"2412DPC0AI Respiratory rate"},"last_changed":"2026-02-28T17:03:23.593853+00:00","last_reported":"2026-02-28T17:03:23.593853+00:00","last_updated":"2026-02-28T17:03:23.593853+00:00","context":{"id":"01KJJK8WE9T3PRZW1EZEGYVZZD","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_resting_heart_rate","state":"66.0","attributes":{"date":"2026-02-27T19:00:00Z","source":"com.google.android.apps.fitness","unit_of_measurement":"bpm","icon":"mdi:heart-pulse","friendly_name":"2412DPC0AI Resting heart rate"},"last_changed":"2026-02-28T17:03:23.593992+00:00","last_reported":"2026-02-28T17:03:23.593992+00:00","last_updated":"2026-02-28T17:03:23.593992+00:00","context":{"id":"01KJJK8WE9DTZ36KDSD5J2BPP4","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 66.0,
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_sleep_duration","state":"165.0","attributes":{"endTime":"2026-02-26T23:45:00Z","sources":"com.google.android.apps.fitness","unit_of_measurement":"min","device_class":"duration","icon":"mdi:sleep","friendly_name":"2412DPC0AI Sleep duration"},"last_changed":"2026-02-28T17:03:23.594162+00:00","last_reported":"2026-02-28T17:03:23.594162+00:00","last_updated":"2026-02-28T17:03:23.594162+00:00","context":{"id":"01KJJK8WEAA6A09FA59K49A0D9","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 165.0,
+        "native_unit_of_measurement": "min"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_daily_steps","state":"2036.0","attributes":{"state_class":"total_increasing","endTime":"2026-02-28T09:04:00.207Z","sources":["android","com.google.android.apps.fitness"],"unit_of_measurement":"steps","icon":"mdi:walk","friendly_name":"2412DPC0AI Daily steps"},"last_changed":"2026-02-28T17:03:23.594306+00:00","last_reported":"2026-02-28T17:03:23.594306+00:00","last_updated":"2026-02-28T17:03:23.594306+00:00","context":{"id":"01KJJK8WEAG0CEB4P2QY2XC15W","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 2036.0,
+        "native_unit_of_measurement": "steps"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_systolic_blood_pressure","state":"unknown","attributes":{"unit_of_measurement":"mmHg","device_class":"pressure","icon":"mdi:heart-pulse","friendly_name":"2412DPC0AI Systolic blood pressure"},"last_changed":"2026-02-28T17:03:23.594451+00:00","last_reported":"2026-02-28T17:03:23.594451+00:00","last_updated":"2026-02-28T17:03:23.594451+00:00","context":{"id":"01KJJK8WEA51AJT0QX53HFES6Z","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "mmHg"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_total_calories_burned","state":"1675.48","attributes":{"state_class":"total_increasing","endTime":"2026-02-28T08:24:31.825Z","sources":["com.google.android.apps.fitness"],"unit_of_measurement":"kcal","device_class":"energy","icon":"mdi:fire","friendly_name":"2412DPC0AI Total calories burned"},"last_changed":"2026-02-28T17:03:23.594602+00:00","last_reported":"2026-02-28T17:03:23.594602+00:00","last_updated":"2026-02-28T17:03:23.594602+00:00","context":{"id":"01KJJK8WEA66M63C48RSDMV8R1","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": 1675.48,
+        "native_unit_of_measurement": "kcal"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_vo2_max","state":"unknown","attributes":{"unit_of_measurement":"mL/kg/min","icon":"mdi:heart","friendly_name":"2412DPC0AI VO2 max"},"last_changed":"2026-02-28T17:03:23.594737+00:00","last_reported":"2026-02-28T17:03:23.594737+00:00","last_updated":"2026-02-28T17:03:23.594737+00:00","context":{"id":"01KJJK8WEA32XXB0ZAKFSDSE6E","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "mL/kg/min"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.2412dpc0ai_weight","state":"unknown","attributes":{"unit_of_measurement":"g","device_class":"weight","icon":"mdi:scale-bathroom","friendly_name":"2412DPC0AI Weight"},"last_changed":"2026-02-28T17:03:23.594892+00:00","last_reported":"2026-02-28T17:03:23.594892+00:00","last_updated":"2026-02-28T17:03:23.594892+00:00","context":{"id":"01KJJK8WEA9MBM4F2EQJY2CQFD","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": "g"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"update.hacs_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"2.0.5","in_progress":false,"latest_version":"2.0.5","release_summary":null,"release_url":"https://github.com/hacs/integration/releases/2.0.5","skipped_version":null,"title":null,"update_percentage":null,"entity_picture":"https://brands.home-assistant.io/_/hacs/icon.png","friendly_name":"HACS update","supported_features":23},"last_changed":"2026-02-28T17:03:23.601138+00:00","last_reported":"2026-02-28T17:03:23.601138+00:00","last_updated":"2026-02-28T17:03:23.601138+00:00","context":{"id":"01KJJK8WEHG7XMPXGMSQCDXZ7T","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"update.alexa_media_player_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"v5.14.0","in_progress":false,"latest_version":"v5.14.0","release_summary":null,"release_url":"https://github.com/alandtse/alexa_media_player/releases/v5.14.0","skipped_version":null,"title":null,"update_percentage":null,"entity_picture":"https://brands.home-assistant.io/_/alexa_media/icon.png","friendly_name":"Alexa Media Player update","supported_features":23},"last_changed":"2026-02-28T17:03:23.601287+00:00","last_reported":"2026-02-28T17:03:23.601287+00:00","last_updated":"2026-02-28T17:03:23.601287+00:00","context":{"id":"01KJJK8WEHNEBFTAMGJV2H43S0","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"event.backup","state":"2026-02-20T19:12:02.121+00:00","attributes":{"event_types":["completed","failed","in_progress"],"event_type":"failed","backup_stage":null,"failed_reason":"backup_manager_error","friendly_name":"Backup"},"last_changed":"2026-02-28T17:03:23.673887+00:00","last_reported":"2026-02-28T17:03:23.673887+00:00","last_updated":"2026-02-28T17:03:23.673887+00:00","context":{"id":"01KJJK8WGSTRSS23XQ7ZZCQNGV","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": "failed",
+        "last_event_attributes": {
+          "backup_stage": null,
+          "failed_reason": "backup_manager_error"
+        }
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_person_count","state":"1","attributes":{"unit_of_measurement":"persons","icon":"mdi:account-group","friendly_name":"Vision Person Count"},"last_changed":"2026-02-28T17:06:13.387604+00:00","last_reported":"2026-02-28T17:06:13.387604+00:00","last_updated":"2026-02-28T17:06:13.387604+00:00","context":{"id":"01KJJKE28BV3TZFRQDVNRSYVX2","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "1",
+        "native_unit_of_measurement": "persons"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_service_status","state":"offline","attributes":{"icon":"mdi:cctv","friendly_name":"Vision Service Status"},"last_changed":"2026-02-28T17:06:19.053509+00:00","last_reported":"2026-02-28T17:06:19.053509+00:00","last_updated":"2026-02-28T17:06:19.053509+00:00","context":{"id":"01KJJKE7SDSQQ32WFJJB1QQ32A","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "offline",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_latest_event","state":"ZONE_VIOLATION","attributes":{"confidence":0.95,"details":{"camera_id":"room_1_camera","movement_speed":111.16,"position":[268.60789489746094,340.1659469604492],"violated_zone":"zone_4"},"device_id":"room_1_camera","event":"ZONE_VIOLATION","person_id":1,"severity":"warning","timestamp":1772298370.5867925,"zone":"zone_4","icon":"mdi:camera","friendly_name":"Vision Latest Event"},"last_changed":"2026-02-28T17:05:11.773949+00:00","last_reported":"2026-02-28T17:06:10.589547+00:00","last_updated":"2026-02-28T17:06:10.589547+00:00","context":{"id":"01KJJKDZGX83HWPMDNPNZR9JST","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "ZONE_VIOLATION",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_event_severity","state":"warning","attributes":{"icon":"mdi:security","friendly_name":"Vision Event Severity"},"last_changed":"2026-02-28T17:04:18.843478+00:00","last_reported":"2026-02-28T17:04:18.843478+00:00","last_updated":"2026-02-28T17:04:18.843478+00:00","context":{"id":"01KJJKAJCVYE65PH2GWTATEP56","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "warning",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_event_person","state":"1","attributes":{"icon":"mdi:account-alert","friendly_name":"Vision Event Person"},"last_changed":"2026-02-28T17:04:18.843591+00:00","last_reported":"2026-02-28T17:04:18.843591+00:00","last_updated":"2026-02-28T17:04:18.843591+00:00","context":{"id":"01KJJKAJCVKERM33ZS45B8P289","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "1",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_event_confidence","state":"95.0","attributes":{"unit_of_measurement":"%","icon":"mdi:percent","friendly_name":"Vision Event Confidence"},"last_changed":"2026-02-28T17:05:11.770988+00:00","last_reported":"2026-02-28T17:05:11.770988+00:00","last_updated":"2026-02-28T17:05:11.770988+00:00","context":{"id":"01KJJKC62TT7WSYBE6QRZKMRBC","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "95.0",
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_movement_speed","state":"3.66","attributes":{"unit_of_measurement":"px/s","icon":"mdi:speedometer","friendly_name":"Vision Movement Speed"},"last_changed":"2026-02-28T17:06:14.467983+00:00","last_reported":"2026-02-28T17:06:14.467983+00:00","last_updated":"2026-02-28T17:06:14.467983+00:00","context":{"id":"01KJJKE3A34A9GS33EZAKW6WVG","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "3.66",
+        "native_unit_of_measurement": "px/s"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_movement_entropy","state":"0.834","attributes":{"icon":"mdi:chart-scatter-plot","friendly_name":"Vision Movement Entropy"},"last_changed":"2026-02-28T17:06:14.467877+00:00","last_reported":"2026-02-28T17:06:14.467877+00:00","last_updated":"2026-02-28T17:06:14.467877+00:00","context":{"id":"01KJJKE3A37QGHYHW21FMXAP0K","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0.834",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_current_zone","state":"zone_5","attributes":{"icon":"mdi:map-marker-radius","friendly_name":"Vision Current Zone"},"last_changed":"2026-02-28T17:06:14.468022+00:00","last_reported":"2026-02-28T17:06:14.468022+00:00","last_updated":"2026-02-28T17:06:14.468022+00:00","context":{"id":"01KJJKE3A4ZY606GJKEW5EBMVH","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "zone_5",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_time_stationary","state":"2.6","attributes":{"unit_of_measurement":"s","icon":"mdi:human-handsdown","friendly_name":"Vision Time Stationary"},"last_changed":"2026-02-28T17:06:14.468051+00:00","last_reported":"2026-02-28T17:06:14.468051+00:00","last_updated":"2026-02-28T17:06:14.468051+00:00","context":{"id":"01KJJKE3A40T6VNMV883Y6YE0D","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "2.6",
+        "native_unit_of_measurement": "s"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_person_count","state":"0","attributes":{"unit_of_measurement":"persons","icon":"mdi:account-group","friendly_name":"Vision Room 2 Person Count"},"last_changed":"2026-02-28T17:06:13.122809+00:00","last_reported":"2026-02-28T17:06:13.122809+00:00","last_updated":"2026-02-28T17:06:13.122809+00:00","context":{"id":"01KJJKE202CB8G20JVDPQE839H","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0",
+        "native_unit_of_measurement": "persons"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_status","state":"offline","attributes":{"icon":"mdi:cctv","friendly_name":"Vision Room 2 Status"},"last_changed":"2026-02-28T17:06:19.054941+00:00","last_reported":"2026-02-28T17:06:19.054941+00:00","last_updated":"2026-02-28T17:06:19.054941+00:00","context":{"id":"01KJJKE7SE6QE3CRR6C5EGTYXH","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "offline",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_latest_event","state":"ERRATIC_MOVEMENT","attributes":{"confidence":0.99,"details":{"camera_id":"room_2_camera","current_speed":34.64,"direction_changes":31,"movement_entropy":0.88,"speed_variation":20.49},"device_id":"room_2_camera","event":"ERRATIC_MOVEMENT","person_id":1,"severity":"warning","timestamp":1772298348.9616296,"zone":"","icon":"mdi:camera","friendly_name":"Vision Room 2 Latest Event"},"last_changed":"2026-02-28T17:05:48.962825+00:00","last_reported":"2026-02-28T17:05:48.962825+00:00","last_updated":"2026-02-28T17:05:48.962825+00:00","context":{"id":"01KJJKDAD2TPEYHZG1V0RSDTFC","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "ERRATIC_MOVEMENT",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_event_severity","state":"warning","attributes":{"icon":"mdi:security","friendly_name":"Vision Room 2 Event Severity"},"last_changed":"2026-02-28T17:05:18.954700+00:00","last_reported":"2026-02-28T17:05:18.954700+00:00","last_updated":"2026-02-28T17:05:18.954700+00:00","context":{"id":"01KJJKCD3AAVD1EFDMZS4T93P8","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "warning",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_event_confidence","state":"99.0","attributes":{"unit_of_measurement":"%","icon":"mdi:percent","friendly_name":"Vision Room 2 Event Confidence"},"last_changed":"2026-02-28T17:05:48.962696+00:00","last_reported":"2026-02-28T17:05:48.962696+00:00","last_updated":"2026-02-28T17:05:48.962696+00:00","context":{"id":"01KJJKDAD2TB0NRW57YFT6Z2BQ","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "99.0",
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_event_person","state":"1","attributes":{"icon":"mdi:account-alert","friendly_name":"Vision Room 2 Event Person"},"last_changed":"2026-02-28T17:05:18.954867+00:00","last_reported":"2026-02-28T17:05:18.954867+00:00","last_updated":"2026-02-28T17:05:18.954867+00:00","context":{"id":"01KJJKCD3A22E3NXR12DPW81HY","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "1",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_movement_speed","state":"63.41","attributes":{"unit_of_measurement":"px/s","icon":"mdi:speedometer","friendly_name":"Vision Room 2 Movement Speed"},"last_changed":"2026-02-28T17:06:09.448613+00:00","last_reported":"2026-02-28T17:06:09.448613+00:00","last_updated":"2026-02-28T17:06:09.448613+00:00","context":{"id":"01KJJKDYD89NR3P3ZMP8K8QKM4","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "63.41",
+        "native_unit_of_measurement": "px/s"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_movement_entropy","state":"0.877","attributes":{"icon":"mdi:chart-scatter-plot","friendly_name":"Vision Room 2 Movement Entropy"},"last_changed":"2026-02-28T17:06:09.448217+00:00","last_reported":"2026-02-28T17:06:09.448217+00:00","last_updated":"2026-02-28T17:06:09.448217+00:00","context":{"id":"01KJJKDYD8SR7QJRSDQTC77E8N","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0.877",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_current_zone","state":"unknown","attributes":{"icon":"mdi:map-marker-radius","friendly_name":"Vision Room 2 Current Zone"},"last_changed":"2026-02-28T17:03:23.708316+00:00","last_reported":"2026-02-28T17:03:23.708316+00:00","last_updated":"2026-02-28T17:03:23.708316+00:00","context":{"id":"01KJJK8WHWV8CDQBW52WXTZ7HJ","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "unknown",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_room_2_time_stationary","state":"39.2","attributes":{"unit_of_measurement":"s","icon":"mdi:human-handsdown","friendly_name":"Vision Room 2 Time Stationary"},"last_changed":"2026-02-28T17:06:09.448536+00:00","last_reported":"2026-02-28T17:06:09.448536+00:00","last_updated":"2026-02-28T17:06:09.448536+00:00","context":{"id":"01KJJKDYD8RVRPXXSAPT0ZX21A","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "39.2",
+        "native_unit_of_measurement": "s"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_anomaly_score","state":"0.669","attributes":{"anomaly_score":0.668987,"event_count":12,"is_anomaly":true,"per_event_loss":[0.624333,0.704314,0.622925,0.703809,0.624398,0.625546,0.726273,0.626135,0.704035,0.728106],"sequence_id":19,"severity":"critical","threshold":0.00021543737675528974,"timestamp":1772298318.9510956,"icon":"mdi:brain","friendly_name":"SmartGuard Anomaly Score"},"last_changed":"2026-02-28T17:05:18.968949+00:00","last_reported":"2026-02-28T17:05:18.968949+00:00","last_updated":"2026-02-28T17:05:18.968949+00:00","context":{"id":"01KJJKCD3RV7XDAAVMBR0A9Z3S","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0.669",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_severity","state":"critical","attributes":{"icon":"mdi:shield-alert","friendly_name":"SmartGuard Severity"},"last_changed":"2026-02-28T17:04:19.065391+00:00","last_reported":"2026-02-28T17:04:19.065391+00:00","last_updated":"2026-02-28T17:04:19.065391+00:00","context":{"id":"01KJJKAJKSXXRBHDDTTH4VZK0D","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "critical",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_threshold","state":"0.0002","attributes":{"icon":"mdi:target","friendly_name":"SmartGuard Threshold"},"last_changed":"2026-02-28T17:04:19.065236+00:00","last_reported":"2026-02-28T17:04:19.065236+00:00","last_updated":"2026-02-28T17:04:19.065236+00:00","context":{"id":"01KJJKAJKSD1A4H5P570C21PV9","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0.0002",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_sequences_evaluated","state":"38","attributes":{"icon":"mdi:counter","friendly_name":"SmartGuard Sequences Evaluated"},"last_changed":"2026-02-28T17:06:23.184625+00:00","last_reported":"2026-02-28T17:06:23.184625+00:00","last_updated":"2026-02-28T17:06:23.184625+00:00","context":{"id":"01KJJKEBTGBMNPCAMTFF12WC9D","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "38",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_events_received","state":"34","attributes":{"icon":"mdi:inbox-arrow-down","friendly_name":"SmartGuard Events Received"},"last_changed":"2026-02-28T17:06:23.184532+00:00","last_reported":"2026-02-28T17:06:23.184532+00:00","last_updated":"2026-02-28T17:06:23.184532+00:00","context":{"id":"01KJJKEBTGQJA9XJQEXYZS8GRZ","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "34",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_buffer_size","state":"11","attributes":{"icon":"mdi:database","friendly_name":"SmartGuard Buffer Size"},"last_changed":"2026-02-28T17:06:23.184648+00:00","last_reported":"2026-02-28T17:06:23.184648+00:00","last_updated":"2026-02-28T17:06:23.184648+00:00","context":{"id":"01KJJKEBTGDBTPA8W9QFHJ0AKV","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "11",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.smartguard_batch_anomalies","state":"0","attributes":{"anomalies_found":0,"scores":[0.674569],"sequences_evaluated":1,"timestamp":1772298368.1794198,"icon":"mdi:alert-octagon","friendly_name":"SmartGuard Batch Anomalies"},"last_changed":"2026-02-28T17:05:08.079774+00:00","last_reported":"2026-02-28T17:06:08.180592+00:00","last_updated":"2026-02-28T17:06:08.180592+00:00","context":{"id":"01KJJKDX5MVTKKK7B442SH1SQ9","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_event_type","state":"ZONE_VIOLATION","attributes":{"confidence":0.85,"correlated_signals":["vision","smartguard","temporal_pattern"],"escalated":false,"event_type":"ZONE_VIOLATION","fused_score":0.708,"provider":"rule_based","reason":"ZONE_VIOLATION detected via vision analysis.","recommendation":"Monitor the situation. SmartGuard has also flagged this period as anomalous.","severity":"high","timestamp":1772298370.5893316,"icon":"mdi:head-cog","friendly_name":"Vision Agent Event Type"},"last_changed":"2026-02-28T17:06:10.591715+00:00","last_reported":"2026-02-28T17:06:10.591715+00:00","last_updated":"2026-02-28T17:06:10.591715+00:00","context":{"id":"01KJJKDZGZYQ6AYBGEMKQ5PK5Q","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "ZONE_VIOLATION",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_severity","state":"high","attributes":{"icon":"mdi:shield-alert","friendly_name":"Vision Agent Severity"},"last_changed":"2026-02-28T17:04:29.923224+00:00","last_reported":"2026-02-28T17:04:29.923224+00:00","last_updated":"2026-02-28T17:04:29.923224+00:00","context":{"id":"01KJJKAX73SWBN9W804SZT5GEX","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "high",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_fused_score","state":"0.708","attributes":{"icon":"mdi:chart-bell-curve-cumulative","friendly_name":"Vision Agent Fused Score"},"last_changed":"2026-02-28T17:06:10.591523+00:00","last_reported":"2026-02-28T17:06:10.591523+00:00","last_updated":"2026-02-28T17:06:10.591523+00:00","context":{"id":"01KJJKDZGZ2QF6EMYVKA0A941V","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0.708",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_confidence","state":"85.0","attributes":{"unit_of_measurement":"%","icon":"mdi:percent","friendly_name":"Vision Agent Confidence"},"last_changed":"2026-02-28T17:05:48.965558+00:00","last_reported":"2026-02-28T17:05:48.965558+00:00","last_updated":"2026-02-28T17:05:48.965558+00:00","context":{"id":"01KJJKDAD57K2GSVME24S5KMYT","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "85.0",
+        "native_unit_of_measurement": "%"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_reason","state":"ZONE_VIOLATION detected via vision analysis.","attributes":{"icon":"mdi:text-box-outline","friendly_name":"Vision Agent Reason"},"last_changed":"2026-02-28T17:06:10.591673+00:00","last_reported":"2026-02-28T17:06:10.591673+00:00","last_updated":"2026-02-28T17:06:10.591673+00:00","context":{"id":"01KJJKDZGZX8042BE514XH85AG","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "ZONE_VIOLATION detected via vision analysis.",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_recommendation","state":"Monitor the situation. SmartGuard has also flagged this period as anomalous.","attributes":{"icon":"mdi:hand-pointing-right","friendly_name":"Vision Agent Recommendation"},"last_changed":"2026-02-28T17:06:10.591629+00:00","last_reported":"2026-02-28T17:06:10.591629+00:00","last_updated":"2026-02-28T17:06:10.591629+00:00","context":{"id":"01KJJKDZGZEQEBW4QPGBMRA52F","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "Monitor the situation. SmartGuard has also flagged this period as anomalous.",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_provider","state":"rule_based","attributes":{"icon":"mdi:robot","friendly_name":"Vision Agent Provider"},"last_changed":"2026-02-28T17:05:48.965497+00:00","last_reported":"2026-02-28T17:05:48.965497+00:00","last_updated":"2026-02-28T17:05:48.965497+00:00","context":{"id":"01KJJKDAD5K71RCV43RW5AS8EP","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "rule_based",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_events_processed","state":"","attributes":{"icon":"mdi:inbox-arrow-down","friendly_name":"Vision Agent Events Processed"},"last_changed":"2026-02-28T17:06:32.864442+00:00","last_reported":"2026-02-28T17:06:32.864442+00:00","last_updated":"2026-02-28T17:06:32.864442+00:00","context":{"id":"01KJJKEN90GMVC3EV42CWRW1RS","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_decisions_published","state":"","attributes":{"icon":"mdi:export","friendly_name":"Vision Agent Decisions Published"},"last_changed":"2026-02-28T17:06:32.864346+00:00","last_reported":"2026-02-28T17:06:32.864346+00:00","last_updated":"2026-02-28T17:06:32.864346+00:00","context":{"id":"01KJJKEN90G4ZXWF29JAD8F067","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_active_persons","state":"","attributes":{"icon":"mdi:account-multiple","friendly_name":"Vision Agent Active Persons"},"last_changed":"2026-02-28T17:06:32.864542+00:00","last_reported":"2026-02-28T17:06:32.864542+00:00","last_updated":"2026-02-28T17:06:32.864542+00:00","context":{"id":"01KJJKEN908SAXN3KH2D3ET8SN","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.vision_agent_summary_events","state":"10","attributes":{"active_persons":2,"anomalies_in_window":2,"events_in_window":10,"health_alerts_in_window":0,"source_counts":{"smartguard":12,"vision":2129},"timestamp":1772298376.8334215,"window_seconds":60,"icon":"mdi:chart-timeline","friendly_name":"Vision Agent Summary Events"},"last_changed":"2026-02-28T17:04:16.823593+00:00","last_reported":"2026-02-28T17:06:16.834150+00:00","last_updated":"2026-02-28T17:06:16.834150+00:00","context":{"id":"01KJJKE5M2774QX5QT7SEZM4T3","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "10",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_level","state":"HIGH_RISK","attributes":{"_ts":1772298353.5011187,"actions_dispatched":["notify_caregiver","voice_check","activate_lights"],"created_at":1772298329.293616,"duration_seconds":22.814697742462158,"escalation_count":1,"floor":1,"id":"8d55d0f9","level":2,"level_name":"HIGH_RISK","person_id":"","resolution":"voice_confirmed_ok","resolved_at":1772298352.1083138,"room":"","timeline":[{"details":{"person_id":"","source":"vision_agent","trigger":"MULTI_SIGNAL_ALERT"},"event":"incident_created","timestamp":1772298329.2936456},{"details":{"actions":["notify_caregiver","voice_check","activate_lights"],"from_level":"MONITOR","reasons":["No movement detected for 140s"],"to_level":"HIGH_RISK"},"event":"escalated","timestamp":1772298329.2952678},{"details":{},"event":"voice_confirmation_requested","timestamp":1772298329.295274},{"details":{"response":"ok"},"event":"voice_response_received","timestamp":1772298352.1081183},{"details":{"resolution":"voice_confirmed_ok"},"event":"resolved","timestamp":1772298352.108315}],"trigger_event":"MULTI_SIGNAL_ALERT","trigger_source":"vision_agent","voice_response":"ok","icon":"mdi:shield-alert-outline","friendly_name":"OpenClaw Incident Level"},"last_changed":"2026-02-28T17:05:41.806373+00:00","last_reported":"2026-02-28T17:05:53.504412+00:00","last_updated":"2026-02-28T17:05:53.504412+00:00","context":{"id":"01KJJKDEV06A44XP7H2E5V81N6","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "HIGH_RISK",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_level_numeric","state":"2","attributes":{"icon":"mdi:shield-alert-outline","friendly_name":"OpenClaw Incident Level Numeric"},"last_changed":"2026-02-28T17:05:41.806448+00:00","last_reported":"2026-02-28T17:05:41.806448+00:00","last_updated":"2026-02-28T17:05:41.806448+00:00","context":{"id":"01KJJKD3DE2P6NYMACHKNMT7KK","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "2",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_id","state":"8d55d0f9","attributes":{"icon":"mdi:identifier","friendly_name":"OpenClaw Incident ID"},"last_changed":"2026-02-28T17:05:41.806421+00:00","last_reported":"2026-02-28T17:05:41.806421+00:00","last_updated":"2026-02-28T17:05:41.806421+00:00","context":{"id":"01KJJKD3DERT6K8MWY88Y2SQ52","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "8d55d0f9",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_state","state":"resolved","attributes":{"icon":"mdi:state-machine","friendly_name":"OpenClaw Incident State"},"last_changed":"2026-02-28T17:05:53.504357+00:00","last_reported":"2026-02-28T17:05:53.504357+00:00","last_updated":"2026-02-28T17:05:53.504357+00:00","context":{"id":"01KJJKDEV0C9SZW5KN01WFD5DH","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "resolved",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_trigger","state":"MULTI_SIGNAL_ALERT","attributes":{"icon":"mdi:flash-alert","friendly_name":"OpenClaw Incident Trigger"},"last_changed":"2026-02-28T17:05:41.806500+00:00","last_reported":"2026-02-28T17:05:41.806500+00:00","last_updated":"2026-02-28T17:05:41.806500+00:00","context":{"id":"01KJJKD3DEQEFE8V3SR5BXXJT2","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "MULTI_SIGNAL_ALERT",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_incident_room","state":"","attributes":{"icon":"mdi:floor-plan","friendly_name":"OpenClaw Incident Room"},"last_changed":"2026-02-28T17:04:29.943722+00:00","last_reported":"2026-02-28T17:04:29.943722+00:00","last_updated":"2026-02-28T17:04:29.943722+00:00","context":{"id":"01KJJKAX7QGSGYJE0MRCV7RZEK","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_last_action","state":"unknown","attributes":{"icon":"mdi:run-fast","friendly_name":"OpenClaw Last Action"},"last_changed":"2026-02-28T17:03:23.708762+00:00","last_reported":"2026-02-28T17:03:23.708762+00:00","last_updated":"2026-02-28T17:03:23.708762+00:00","context":{"id":"01KJJK8WHWYJPVEJR142736RSV","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": null,
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_telemetry_hr","state":"0","attributes":{"unit_of_measurement":"bpm","icon":"mdi:heart-pulse","friendly_name":"OpenClaw Telemetry HR"},"last_changed":"2026-02-28T17:05:26.735570+00:00","last_reported":"2026-02-28T17:05:26.735570+00:00","last_updated":"2026-02-28T17:05:26.735570+00:00","context":{"id":"01KJJKCMPFE9FB882ADYHYB1B2","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "0",
+        "native_unit_of_measurement": "bpm"
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"sensor.openclaw_status","state":"offline","attributes":{"icon":"mdi:server","friendly_name":"OpenClaw Status"},"last_changed":"2026-02-28T17:06:30.046264+00:00","last_reported":"2026-02-28T17:06:30.046264+00:00","last_updated":"2026-02-28T17:06:30.046264+00:00","context":{"id":"01KJJKEJGYV6Q22TXBXS2EDTSZ","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "native_value": "offline",
+        "native_unit_of_measurement": null
+      },
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.vision_service_online","state":"off","attributes":{"device_class":"connectivity","friendly_name":"Vision Service Online"},"last_changed":"2026-02-28T17:06:19.053418+00:00","last_reported":"2026-02-28T17:06:19.053418+00:00","last_updated":"2026-02-28T17:06:19.053418+00:00","context":{"id":"01KJJKE7SD1ZS2GF03N5NBMPPQ","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.vision_room_2_online","state":"off","attributes":{"device_class":"connectivity","friendly_name":"Vision Room 2 Online"},"last_changed":"2026-02-28T17:06:19.055017+00:00","last_reported":"2026-02-28T17:06:19.055017+00:00","last_updated":"2026-02-28T17:06:19.055017+00:00","context":{"id":"01KJJKE7SFCXEGCEAVKX77NSN3","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.smartguard_service_online","state":"off","attributes":{"device_class":"connectivity","friendly_name":"SmartGuard Service Online"},"last_changed":"2026-02-28T17:06:23.184595+00:00","last_reported":"2026-02-28T17:06:23.184595+00:00","last_updated":"2026-02-28T17:06:23.184595+00:00","context":{"id":"01KJJKEBTGYQD0XVGEKGKAQ8PX","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.smartguard_anomaly_detected","state":"on","attributes":{"device_class":"problem","friendly_name":"SmartGuard Anomaly Detected"},"last_changed":"2026-02-28T17:04:19.065360+00:00","last_reported":"2026-02-28T17:04:19.065360+00:00","last_updated":"2026-02-28T17:04:19.065360+00:00","context":{"id":"01KJJKAJKSASP8XC67B6ZH3RAS","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.vision_agent_online","state":"off","attributes":{"device_class":"connectivity","friendly_name":"Vision Agent Online"},"last_changed":"2026-02-28T17:06:32.864506+00:00","last_reported":"2026-02-28T17:06:32.864506+00:00","last_updated":"2026-02-28T17:06:32.864506+00:00","context":{"id":"01KJJKEN90BBN29K5YZH1DC6TW","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.vision_agent_critical_alert","state":"off","attributes":{"device_class":"problem","friendly_name":"Vision Agent Critical Alert"},"last_changed":"2026-02-28T17:04:18.855903+00:00","last_reported":"2026-02-28T17:04:18.855903+00:00","last_updated":"2026-02-28T17:04:18.855903+00:00","context":{"id":"01KJJKAJD748FS97JK37WC2995","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"binary_sensor.openclaw_online","state":"off","attributes":{"device_class":"connectivity","friendly_name":"OpenClaw Online"},"last_changed":"2026-02-28T17:06:30.046358+00:00","last_reported":"2026-02-28T17:06:30.046358+00:00","last_updated":"2026-02-28T17:06:30.046358+00:00","context":{"id":"01KJJKEJGYC1QQPK3VP1MJ0QZ5","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.google_translate_en_com","state":"unknown","attributes":{"friendly_name":"Google Translate en com"},"last_changed":"2026-02-28T17:03:23.724832+00:00","last_reported":"2026-02-28T17:03:23.724832+00:00","last_updated":"2026-02-28T17:03:23.724832+00:00","context":{"id":"01KJJK8WJCF4E5WMDGGXJDM3AK","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-28T17:06:34.129205+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_heart_rate_to_mqtt","state":"on","attributes":{"id":"health_connect_heart_rate_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish Heart Rate to MQTT"},"last_changed":"2026-02-22T07:51:13.854143+00:00","last_reported":"2026-02-22T07:51:13.854143+00:00","last_updated":"2026-02-22T07:51:13.854143+00:00","context":{"id":"01KJ259H5Y27BF2SWF8EK6E283","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_hrv_to_mqtt","state":"on","attributes":{"id":"health_connect_hrv_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish HRV to MQTT"},"last_changed":"2026-02-22T07:51:13.854245+00:00","last_reported":"2026-02-22T07:51:13.854245+00:00","last_updated":"2026-02-22T07:51:13.854245+00:00","context":{"id":"01KJ259H5YEJPHKYE1N6R2EB20","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_oxygen_saturation_to_mqtt","state":"on","attributes":{"id":"health_connect_o2_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish Oxygen Saturation to MQTT"},"last_changed":"2026-02-22T07:51:13.854315+00:00","last_reported":"2026-02-22T07:51:13.854315+00:00","last_updated":"2026-02-22T07:51:13.854315+00:00","context":{"id":"01KJ259H5Y9BV6HZ2JGR96SRDB","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_respiratory_rate_to_mqtt","state":"on","attributes":{"id":"health_connect_respiratory_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish Respiratory Rate to MQTT"},"last_changed":"2026-02-22T07:51:13.854379+00:00","last_reported":"2026-02-22T07:51:13.854379+00:00","last_updated":"2026-02-22T07:51:13.854379+00:00","context":{"id":"01KJ259H5YSB9A1F7T689ZZP84","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_steps_to_mqtt","state":"on","attributes":{"id":"health_connect_steps_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish Steps to MQTT"},"last_changed":"2026-02-22T07:51:13.854440+00:00","last_reported":"2026-02-22T07:51:13.854440+00:00","last_updated":"2026-02-22T07:51:13.854440+00:00","context":{"id":"01KJ259H5YFFYRSEQE463VZ49M","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    },
+    {
+      "state": {"entity_id":"automation.publish_resting_heart_rate_to_mqtt","state":"on","attributes":{"id":"health_connect_resting_hr_mqtt","last_triggered":null,"mode":"single","current":0,"friendly_name":"Publish Resting Heart Rate to MQTT"},"last_changed":"2026-02-22T07:51:13.854500+00:00","last_reported":"2026-02-22T07:51:13.854500+00:00","last_updated":"2026-02-22T07:51:13.854500+00:00","context":{"id":"01KJ259H5Y6HZ7ZHHRKKTZ6YW9","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-02-22T08:06:20.852150+00:00"
+    }
+  ]
+}

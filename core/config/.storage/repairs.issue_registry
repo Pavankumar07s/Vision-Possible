@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "repairs.issue_registry",
+  "data": {
+    "issues": [
+      {
+        "created": "2026-02-20T19:12:02.122018+00:00",
+        "dismissed_version": "2026.3.0.dev0",
+        "domain": "backup",
+        "is_persistent": true,
+        "issue_id": "automatic_backup_failed",
+        "breaks_in_ha_version": null,
+        "data": null,
+        "is_fixable": false,
+        "issue_domain": null,
+        "learn_more_url": "homeassistant://config/backup",
+        "severity": "warning",
+        "translation_key": "automatic_backup_failed_create",
+        "translation_placeholders": null
+      },
+      {
+        "created": "2026-02-21T21:07:02.344589+00:00",
+        "dismissed_version": "2026.3.0.dev0",
+        "domain": "lovelace",
+        "is_persistent": false,
+        "issue_id": "yaml_mode_deprecated"
+      },
+      {
+        "created": "2026-02-25T19:19:00.011972+00:00",
+        "dismissed_version": null,
+        "domain": "hacs",
+        "is_persistent": false,
+        "issue_id": "restart_required_139664351_tags/v5.11.0"
+      }
+    ]
+  }
+}

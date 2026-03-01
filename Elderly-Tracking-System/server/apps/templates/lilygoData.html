@@ -1,0 +1,111 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Real Time</h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+						<a href="index.html">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="/lilygo-data">real-time</a>
+					</li>
+				</ul>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Elderly M5</div>
+						</div>
+						<div class="card-body">
+							<table class="table mt-3">
+								<thead>
+                                    <tr>
+                                        <th>M5 Hardware ID</th>
+                                        <th>Elderly</th>
+                                        <th>Geofenced Area</th>
+                                    </tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="m5_hardware_id">{{ m5_hardware_id }}</td>
+										<td id="elderly">{{ elderly }}</td>
+										<td id="geofenced_area">{{ geofenced_area }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+                <!-- RIGHT SIDE -->
+				<div class="col-md-6">
+                    <div class="card">
+						<div class="card-header">
+							<div class="card-title">Location</div>
+						</div>
+						<div class="card-body">
+							<table class="table mt-3">
+								<thead>
+                                    <tr>
+                                        <th>M5 Hardware ID</th>
+                                        <th>X</th>
+                                        <th>Y</th>
+                                        <th>Floor</th>
+                                    </tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="m5_hardware_id">{{ m5_hardware_id }}</td>
+										<td id="x">{{ x }}</td>
+										<td id="y">{{ y }}</td>
+										<td id="floor">{{ floor }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    function updateData() {
+        $.ajax({
+            type: "POST",
+            url: "/lilygo-data",  // Flask route for handling the POST request
+            success: function(lilygoData) {
+                $("#m5_hardware_id").text(lilygoData);  // Update the content of the #ip element with the received data
+                $("#elderly").text(lilygoData);  
+                $("#geofenced_area").text(lilygoData);  
+                $("#x").text(lilygoData);  
+                $("#y").text(lilygoData);  
+                $("#floor").text(lilygoData);  
+                $("#timestamp").text(lilygoData);  
+            }
+        });
+    }
+
+    // Call the updateData function when the page loads
+    $(document).ready(function() {
+        updateData();
+    });
+</script>
+{% endblock javascripts %}

@@ -1,0 +1,101 @@
+# ──────────────────────────────────────────────────────
+#  SmartGuard Microservice — Configuration
+# ──────────────────────────────────────────────────────
+
+mqtt:
+  broker: "localhost"
+  port: 1883
+  username: "mqtt_user"
+  password: "Pavan@2005"
+  client_id: "smartguard-service"
+
+  # Topics to SUBSCRIBE (Home Assistant state changes)
+  subscribe_topics:
+    - "homeassistant/+/+/state"        # HA state changes
+    - "etms/smartthings/+/event"       # SmartThings device events
+    - "etms/vision/+/event"            # Vision service events
+    - "etms/vision/+/movement"         # Vision movement data
+
+  # Topics to PUBLISH (anomaly results)
+  publish_prefix: "etms/smartguard"
+
+# SmartGuard model parameters
+model:
+  vocab_size: 300             # Vocabulary size for our ETMS dictionary
+  d_model: 256                # Embedding dimension
+  nhead: 8                    # Number of attention heads
+  num_layers: 2               # Transformer layers
+  mask_strategy: "loss_guided"
+  mask_ratio: 0.2
+  mask_step: 4
+  saved_model_path: "saved_models/smartguard_etms.pth"
+
+# Sequence assembly
+assembler:
+  sequence_length: 10         # Number of events per sequence (SmartGuard default)
+  max_buffer_minutes: 60      # Max time window for one sequence
+  flush_interval_seconds: 30  # How often to check for full sequences
+  min_events_to_infer: 5      # Minimum events needed to run inference
+
+# Anomaly detection
+inference:
+  threshold_percentile: 80    # Percentile for anomaly threshold
+  threshold_value: null       # Override with a fixed threshold (set after training)
+  cooldown_seconds: 60        # Min time between consecutive alerts
+  severity_levels:
+    low: 0.5
+    medium: 0.7
+    high: 0.85
+    critical: 0.95
+
+# Training
+training:
+  epochs: 60
+  batch_size: 1024
+  learning_rate: 0.001
+  early_stop_patience: 100
+  seed: 2023
+  min_training_sequences: 500  # Don't train until we have enough data
+
+# Data persistence
+storage:
+  checkpoint_dir: "data/checkpoints"
+  model_checkpoint: "data/checkpoints/best_model.pt"
+  threshold_file: "data/checkpoints/model_meta.json"
+  vocab_file: "data/vocab.json"
+  sequence_db: "data/sequences.json"
+  event_log: "data/event_log.jsonl"
+  training_data: "data/training_sequences.pkl"
+
+# Device dictionary — maps HA entity IDs to SmartGuard vocabulary
+# This gets auto-populated as new devices are discovered.
+# You can pre-populate with your known SmartThings devices.
+device_catalog:
+  # SmartThings devices (auto-discovered via HA)
+  # Format: "entity_id" → { device_type, actions }
+  # light.living_room:
+  #   type: "Light"
+  #   actions: ["switch on", "switch off", "setLevel", "setColor"]
+
+  # Vision events are treated as virtual devices
+  vision_events:
+    type: "VisionSensor"
+    actions:
+      - "fall_detected"
+      - "wandering"
+      - "erratic_movement"
+      - "prolonged_inactivity"
+      - "rapid_movement"
+      - "zone_transition"
+      - "unusual_posture"
+      - "night_wandering"
+
+  # Wearable events
+  wearable:
+    type: "HealthSensor"
+    actions:
+      - "heart_rate_high"
+      - "heart_rate_low"
+      - "spo2_low"
+      - "activity_change"
+      - "sleep_stage_change"

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "core.labs",
+  "data": {
+    "preview_feature_status": [
+      {
+        "domain": "frontend",
+        "preview_feature": "winter_mode"
+      }
+    ]
+  }
+}

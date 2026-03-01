@@ -1,0 +1,1664 @@
+2026-02-25 13:25:04 [vision_agent] INFO  ============================================================
+2026-02-25 13:25:04 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-25 13:25:04 [vision_agent] INFO  ============================================================
+2026-02-25 13:25:04 [src.reasoning] INFO  ReasoningEngine initialized (provider=gemini, model=gemini-2.0-flash-lite, rpm=20)
+2026-02-25 13:25:04 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-25 13:25:04 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-25 13:25:05 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-25 13:28:54 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-25 13:28:54 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.285 escalated=False
+2026-02-25 13:29:18 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-25 13:29:18 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.307 escalated=False
+2026-02-25 13:31:45 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-25 13:31:45 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.216 escalated=False
+2026-02-25 13:31:51 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-25 13:31:51 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-25 13:31:52 [src.reasoning] INFO  Gemini client initialized (model=gemini-2.0-flash-lite)
+2026-02-25 13:31:52 [google_genai.models] INFO  AFC is enabled with max remote calls: 10.
+2026-02-25 13:31:53 [httpx] INFO  HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-02-25 13:31:53 [src.reasoning] ERROR  Gemini reasoning failed: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 3.331492042s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}
+Traceback (most recent call last):
+  File "/home/pavan/Desktop/Autism/vision-agent/src/reasoning/__init__.py", line 141, in reason
+    response = client.models.generate_content(
+        model=self.model,
+    ...<4 lines>...
+        },
+    )
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/models.py", line 5621, in generate_content
+    response = self._generate_content(
+        model=model, contents=contents, config=parsed_config
+    )
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/models.py", line 4283, in _generate_content
+    response = self._api_client.request(
+        'post', path, request_dict, http_options
+    )
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/_api_client.py", line 1396, in request
+    response = self._request(http_request, http_options, stream=False)
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/_api_client.py", line 1232, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/tenacity/__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/tenacity/__init__.py", line 371, in iter
+    result = action(retry_state)
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/tenacity/__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ~~~~~~~~~~~~~~~~~^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/tenacity/__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/concurrent/futures/_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/concurrent/futures/_base.py", line 395, in __get_result
+    raise self._exception
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/tenacity/__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/_api_client.py", line 1209, in _request_once
+    errors.APIError.raise_for_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/errors.py", line 134, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pavan/miniconda3/envs/vision-agent/lib/python3.14/site-packages/google/genai/errors.py", line 159, in raise_error
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-lite\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-lite\nPlease retry in 3.331492042s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'model': 'gemini-2.0-flash-lite', 'location': 'global'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}
+2026-02-25 13:31:53 [src.reasoning] INFO  LLM reasoning: LLM_ERROR (1552 ms)
+2026-02-25 13:31:53 [src.mqtt_adapter] INFO  Published reasoned event: LLM_ERROR severity=low
+2026-02-25 13:31:53 [vision_agent] INFO  Decision: LLM_ERROR severity=low fused=0.300 escalated=False
+2026-02-25 13:34:40 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-25 13:34:40 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-25 13:34:40 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-25 13:34:40 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-25 13:56:36 [vision_agent] INFO  ============================================================
+2026-02-25 13:56:36 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-25 13:56:36 [vision_agent] INFO  ============================================================
+2026-02-25 13:56:36 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-25 13:56:36 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-25 13:56:36 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-25 13:56:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-25 13:56:37 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-25 13:58:24 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-25 13:58:24 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-25 13:58:40 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-25 13:58:40 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.350 escalated=False
+2026-02-25 13:58:48 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-25 13:58:48 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-25 13:58:51 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-25 13:58:51 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.256 escalated=False
+2026-02-25 13:58:53 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-25 13:59:06 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (13621 ms)
+2026-02-25 13:59:06 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-25 13:59:06 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.262 escalated=False
+2026-02-25 13:59:15 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8372 ms)
+2026-02-25 13:59:15 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-25 13:59:15 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-25 13:59:15 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-25 13:59:15 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-25 13:59:15 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-25 13:59:15 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-25 13:59:15 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.637 escalated=False
+2026-02-25 13:59:51 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-25 13:59:51 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-25 14:00:07 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9211 ms)
+2026-02-25 14:00:07 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-25 14:00:07 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-25 14:00:21 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-25 14:00:21 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-25 14:00:41 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7906 ms)
+2026-02-25 14:00:41 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-25 14:00:41 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.588 escalated=False
+2026-02-25 14:00:49 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-25 14:00:49 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.576 escalated=False
+2026-02-25 14:01:59 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-25 14:01:59 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-25 14:02:07 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7858 ms)
+2026-02-25 14:02:07 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-25 14:02:07 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-25 14:06:09 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-25 14:06:09 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-25 14:06:09 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-25 14:06:09 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-26 00:13:54 [vision_agent] INFO  ============================================================
+2026-02-26 00:13:54 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-26 00:13:54 [vision_agent] INFO  ============================================================
+2026-02-26 00:13:54 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-26 00:13:54 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-26 00:13:54 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-26 00:13:54 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-26 00:13:55 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-26 00:25:08 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-26 00:25:08 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-26 00:25:14 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-26 00:25:14 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-26 00:25:31 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-26 00:25:31 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-26 00:27:17 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-26 00:27:17 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-26 00:27:17 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-26 00:27:17 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-26 23:16:33 [vision_agent] INFO  ============================================================
+2026-02-26 23:16:33 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-26 23:16:33 [vision_agent] INFO  ============================================================
+2026-02-26 23:16:33 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-26 23:16:33 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-26 23:16:33 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-26 23:16:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-26 23:16:34 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-26 23:18:23 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-26 23:18:35 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (12744 ms)
+2026-02-26 23:18:35 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-26 23:18:35 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-26 23:18:35 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-26 23:18:35 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.646 escalated=False
+2026-02-26 23:19:13 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-26 23:19:13 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-26 23:20:40 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7266 ms)
+2026-02-26 23:20:40 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-26 23:20:40 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-26 23:22:09 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-26 23:22:09 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-26 23:22:17 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7885 ms)
+2026-02-26 23:22:17 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-26 23:22:17 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-26 23:22:21 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-26 23:22:21 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.646 escalated=False
+2026-02-26 23:22:31 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-26 23:22:31 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-26 23:22:49 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-26 23:22:49 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-26 23:23:01 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-26 23:23:01 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-26 23:23:17 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6858 ms)
+2026-02-26 23:23:17 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-26 23:23:17 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-26 23:23:17 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-26 23:25:13 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-26 23:25:13 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-26 23:25:13 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-26 23:25:13 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-26 23:34:31 [vision_agent] INFO  ============================================================
+2026-02-26 23:34:31 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-26 23:34:31 [vision_agent] INFO  ============================================================
+2026-02-26 23:34:31 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-26 23:34:31 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-26 23:34:31 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-26 23:34:31 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-26 23:34:32 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 00:16:14 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 00:16:14 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 00:16:14 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 00:16:14 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 01:45:22 [vision_agent] INFO  ============================================================
+2026-02-27 01:45:22 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 01:45:22 [vision_agent] INFO  ============================================================
+2026-02-27 01:45:22 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 01:45:22 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 01:45:22 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 01:45:22 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 01:45:23 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 01:46:41 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 01:46:41 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 01:46:49 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 01:46:49 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.213 escalated=False
+2026-02-27 01:47:19 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 01:47:19 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.370 escalated=False
+2026-02-27 01:48:09 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 01:48:09 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-27 01:48:09 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=low
+2026-02-27 01:48:09 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=low fused=0.300 escalated=False
+2026-02-27 01:48:10 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 01:48:20 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10437 ms)
+2026-02-27 01:48:20 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 01:48:20 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 01:48:29 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 01:48:29 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 01:48:33 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 01:48:33 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 01:50:00 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7558 ms)
+2026-02-27 01:50:00 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 01:50:00 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 01:51:33 [src.reasoning] WARNING  Ollama request timed out after 30s
+2026-02-27 01:51:33 [src.reasoning] WARNING  LLM failed (LLM_TIMEOUT, 30010 ms) — falling back to rules
+2026-02-27 01:51:33 [src.mqtt_adapter] INFO  Published reasoned event: RULE_BASED_ASSESSMENT severity=low
+2026-02-27 01:51:33 [vision_agent] INFO  Decision: RULE_BASED_ASSESSMENT severity=low fused=0.325 escalated=False
+2026-02-27 01:52:03 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 01:52:03 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-27 01:52:12 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7134 ms)
+2026-02-27 01:52:12 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-27 01:52:12 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 01:52:12 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 01:52:22 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 01:52:22 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 01:52:22 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 01:52:22 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 11:40:02 [vision_agent] INFO  ============================================================
+2026-02-27 11:40:02 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 11:40:02 [vision_agent] INFO  ============================================================
+2026-02-27 11:40:02 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 11:40:02 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 11:40:02 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 11:40:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 11:40:03 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 11:40:05 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 11:40:05 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 11:40:05 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 11:40:05 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 11:42:24 [vision_agent] INFO  ============================================================
+2026-02-27 11:42:24 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 11:42:24 [vision_agent] INFO  ============================================================
+2026-02-27 11:42:24 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 11:42:24 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 11:42:24 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 11:42:24 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 11:42:25 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 11:44:17 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 11:44:17 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.219 escalated=False
+2026-02-27 11:44:41 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 11:44:50 [src.reasoning] INFO  LLM reasoning: FALL_RISK (8827 ms)
+2026-02-27 11:44:50 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 11:44:50 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 11:44:50 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 11:44:50 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 11:44:50 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.252 escalated=False
+2026-02-27 11:44:50 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 11:44:50 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-27 11:44:50 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 11:44:50 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.301 escalated=False
+2026-02-27 11:44:58 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8209 ms)
+2026-02-27 11:44:58 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 11:44:58 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 11:45:14 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 11:45:14 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-27 11:45:38 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 11:45:38 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 11:45:46 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7747 ms)
+2026-02-27 11:45:46 [src.decision_scorer] WARNING  CRITICAL escalation confirmed for MULTI_SIGNAL_ALERT
+2026-02-27 11:45:46 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=critical
+2026-02-27 11:45:46 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=critical fused=0.588 escalated=True
+2026-02-27 11:45:46 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 11:45:46 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.578 escalated=False
+2026-02-27 11:45:54 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6823 ms)
+2026-02-27 11:45:54 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 11:45:54 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 11:46:05 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 11:46:05 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 11:46:05 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 11:46:05 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 13:13:34 [vision_agent] INFO  ============================================================
+2026-02-27 13:13:34 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 13:13:34 [vision_agent] INFO  ============================================================
+2026-02-27 13:13:34 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 13:13:34 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 13:13:34 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 13:13:34 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 13:13:35 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 13:18:08 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 13:18:08 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.193 escalated=False
+2026-02-27 13:18:26 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 13:18:26 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-27 13:18:26 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 13:18:26 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-27 13:18:28 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 13:18:28 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-27 13:18:58 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 13:18:58 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-27 13:18:58 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 13:19:07 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8650 ms)
+2026-02-27 13:19:07 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 13:19:07 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 13:19:07 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 13:19:07 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.583 escalated=False
+2026-02-27 13:19:28 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 13:19:28 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 13:19:28 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 13:19:28 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 13:33:41 [vision_agent] INFO  ============================================================
+2026-02-27 13:33:41 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 13:33:41 [vision_agent] INFO  ============================================================
+2026-02-27 13:33:41 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 13:33:41 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 13:33:41 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 13:33:41 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 13:33:42 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 13:34:23 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 13:34:23 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 13:35:39 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 13:35:39 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.324 escalated=False
+2026-02-27 13:36:01 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 13:36:10 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8878 ms)
+2026-02-27 13:36:10 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 13:36:10 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 13:37:17 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 13:37:17 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 13:37:17 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 13:37:17 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 21:04:30 [vision_agent] INFO  ============================================================
+2026-02-27 21:04:30 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 21:04:30 [vision_agent] INFO  ============================================================
+2026-02-27 21:04:30 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 21:04:30 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 21:04:30 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 21:04:30 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 21:04:31 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 21:09:57 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 21:10:04 [src.reasoning] INFO  LLM reasoning: FALL_RISK (7799 ms)
+2026-02-27 21:10:05 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 21:10:05 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 21:10:05 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 21:11:44 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 21:11:44 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.244 escalated=False
+2026-02-27 21:11:48 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 21:11:48 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-27 21:11:56 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7527 ms)
+2026-02-27 21:11:56 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:11:56 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 21:12:18 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 21:12:18 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 21:12:57 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7212 ms)
+2026-02-27 21:12:57 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:12:57 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 21:13:58 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7497 ms)
+2026-02-27 21:13:58 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:13:58 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 21:14:59 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 21:14:59 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 21:14:59 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 21:14:59 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 21:35:21 [vision_agent] INFO  ============================================================
+2026-02-27 21:35:21 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 21:35:21 [vision_agent] INFO  ============================================================
+2026-02-27 21:35:21 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 21:35:21 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 21:35:21 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 21:35:21 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 21:35:22 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 21:36:02 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 21:36:02 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.211 escalated=False
+2026-02-27 21:36:14 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 21:36:14 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-27 21:36:26 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 21:36:26 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 21:37:15 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 21:37:15 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-27 21:37:15 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 21:37:15 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-27 21:37:15 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 21:37:25 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9285 ms)
+2026-02-27 21:37:25 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:37:25 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 21:37:25 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 21:37:25 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 21:38:19 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-27 21:38:19 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-27 21:38:27 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7499 ms)
+2026-02-27 21:38:27 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:38:27 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 21:38:27 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 21:38:27 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 21:38:27 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-27 21:38:27 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-27 21:38:31 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 21:38:31 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-27 21:38:38 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:38:38 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.574 escalated=False
+2026-02-27 21:40:19 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 21:40:19 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 21:40:19 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 21:40:19 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 21:53:43 [vision_agent] INFO  ============================================================
+2026-02-27 21:53:43 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 21:53:43 [vision_agent] INFO  ============================================================
+2026-02-27 21:53:43 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 21:53:43 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 21:53:43 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 21:53:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 21:53:44 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 21:54:37 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 21:54:54 [src.reasoning] INFO  LLM reasoning: FALL_RISK (17421 ms)
+2026-02-27 21:54:54 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 21:54:54 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 21:54:54 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 21:54:54 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 21:54:54 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.257 escalated=False
+2026-02-27 21:54:57 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 21:54:57 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 21:55:24 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (24923 ms)
+2026-02-27 21:55:24 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:55:24 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 21:56:19 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7651 ms)
+2026-02-27 21:56:19 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:56:19 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 21:56:19 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:56:19 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.565 escalated=False
+2026-02-27 21:56:23 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 21:56:23 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.576 escalated=False
+2026-02-27 21:56:31 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7778 ms)
+2026-02-27 21:56:31 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:56:31 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.562 escalated=False
+2026-02-27 21:56:49 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:56:49 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.675 escalated=False
+2026-02-27 21:56:54 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 21:56:54 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-27 21:56:54 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:56:54 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.588 escalated=False
+2026-02-27 21:57:19 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8228 ms)
+2026-02-27 21:57:19 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:57:19 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 21:57:19 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:57:19 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.700 escalated=False
+2026-02-27 21:57:49 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:57:49 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.725 escalated=False
+2026-02-27 21:58:20 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8023 ms)
+2026-02-27 21:58:20 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:58:20 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.375 escalated=False
+2026-02-27 21:58:20 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:58:20 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.750 escalated=False
+2026-02-27 21:58:50 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:58:50 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.750 escalated=False
+2026-02-27 21:59:21 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7645 ms)
+2026-02-27 21:59:21 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:59:21 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-27 21:59:21 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 21:59:21 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.750 escalated=False
+2026-02-27 21:59:38 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8391 ms)
+2026-02-27 21:59:38 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-27 21:59:38 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 21:59:38 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.662 escalated=False
+2026-02-27 21:59:52 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 21:59:52 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 21:59:52 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 21:59:52 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 22:17:36 [vision_agent] INFO  ============================================================
+2026-02-27 22:17:36 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 22:17:36 [vision_agent] INFO  ============================================================
+2026-02-27 22:17:36 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 22:17:36 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 22:17:36 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 22:17:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 22:17:37 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 22:18:23 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 22:18:32 [src.reasoning] INFO  LLM reasoning: FALL_RISK (8785 ms)
+2026-02-27 22:18:32 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 22:18:32 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 22:18:32 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 22:18:32 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 22:18:32 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.318 escalated=False
+2026-02-27 22:18:32 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 22:18:32 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.287 escalated=False
+2026-02-27 22:18:45 [src.reasoning] INFO  LLM reasoning: FALL_RISK (6962 ms)
+2026-02-27 22:18:45 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 22:18:45 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.300 escalated=False
+2026-02-27 22:19:40 [src.reasoning] INFO  LLM reasoning: FALL_RISK (7540 ms)
+2026-02-27 22:19:40 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 22:19:40 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.562 escalated=False
+2026-02-27 22:19:40 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 22:19:40 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.252 escalated=False
+2026-02-27 22:19:48 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7483 ms)
+2026-02-27 22:19:48 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:19:48 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 22:20:02 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:20:02 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.646 escalated=False
+2026-02-27 22:20:04 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:20:04 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.589 escalated=False
+2026-02-27 22:20:05 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 22:20:05 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.588 escalated=False
+2026-02-27 22:21:09 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8684 ms)
+2026-02-27 22:21:09 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:21:09 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 22:21:10 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:21:10 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.666 escalated=False
+2026-02-27 22:24:44 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7499 ms)
+2026-02-27 22:24:44 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:24:44 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 22:25:05 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:25:05 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.593 escalated=False
+2026-02-27 22:25:26 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:25:26 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.606 escalated=False
+2026-02-27 22:25:32 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:25:32 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.685 escalated=False
+2026-02-27 22:25:44 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6852 ms)
+2026-02-27 22:25:44 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:25:44 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-27 22:25:51 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7379 ms)
+2026-02-27 22:25:51 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:25:51 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.613 escalated=False
+2026-02-27 22:26:04 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:26:04 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.700 escalated=False
+2026-02-27 22:26:49 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8238 ms)
+2026-02-27 22:26:49 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-27 22:26:49 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:26:49 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.312 escalated=False
+2026-02-27 22:26:56 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7343 ms)
+2026-02-27 22:26:56 [src.decision_scorer] WARNING  CRITICAL escalation confirmed for MULTI_SIGNAL_ALERT
+2026-02-27 22:26:56 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=critical
+2026-02-27 22:26:56 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=critical fused=0.350 escalated=True
+2026-02-27 22:26:56 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:26:56 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.683 escalated=False
+2026-02-27 22:27:13 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:27:13 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.725 escalated=False
+2026-02-27 22:27:32 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:27:32 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.628 escalated=False
+2026-02-27 22:27:53 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6869 ms)
+2026-02-27 22:27:53 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:27:53 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-27 22:28:22 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 22:28:22 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 22:28:22 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 22:28:22 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 22:28:50 [vision_agent] INFO  ============================================================
+2026-02-27 22:28:50 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 22:28:50 [vision_agent] INFO  ============================================================
+2026-02-27 22:28:50 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 22:28:50 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 22:28:50 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 22:28:50 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 22:28:51 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 22:30:00 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 22:30:00 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.335 escalated=False
+2026-02-27 22:30:05 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 22:30:05 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.246 escalated=False
+2026-02-27 22:30:11 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 22:30:22 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10861 ms)
+2026-02-27 22:30:22 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:30:22 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-27 22:30:29 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7417 ms)
+2026-02-27 22:30:29 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:30:29 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.562 escalated=False
+2026-02-27 22:30:31 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:30:31 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.671 escalated=False
+2026-02-27 22:32:09 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7781 ms)
+2026-02-27 22:32:09 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:32:09 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 22:32:09 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:32:09 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.628 escalated=False
+2026-02-27 22:32:33 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:32:33 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.697 escalated=False
+2026-02-27 22:32:35 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 22:32:35 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.686 escalated=False
+2026-02-27 22:33:16 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8093 ms)
+2026-02-27 22:33:16 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:33:16 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.375 escalated=False
+2026-02-27 22:33:25 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 22:33:25 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 22:33:25 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 22:33:25 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 22:50:49 [vision_agent] INFO  ============================================================
+2026-02-27 22:50:49 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 22:50:49 [vision_agent] INFO  ============================================================
+2026-02-27 22:50:49 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 22:50:49 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 22:50:49 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 22:50:49 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 22:50:50 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 22:51:38 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 22:51:38 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 22:51:55 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 22:51:55 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.252 escalated=False
+2026-02-27 22:52:21 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 22:52:21 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.272 escalated=False
+2026-02-27 22:52:22 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 22:52:31 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9092 ms)
+2026-02-27 22:52:31 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:52:31 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 22:52:31 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:52:31 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-27 22:53:32 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6766 ms)
+2026-02-27 22:53:32 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 22:53:32 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 22:54:10 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 22:54:10 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.697 escalated=False
+2026-02-27 22:58:09 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 22:58:09 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 22:58:09 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 22:58:09 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:05:35 [vision_agent] INFO  ============================================================
+2026-02-27 23:05:35 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:05:35 [vision_agent] INFO  ============================================================
+2026-02-27 23:05:35 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:05:35 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:05:35 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:05:35 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:05:36 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:06:11 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 23:06:20 [src.reasoning] INFO  LLM reasoning: FALL_RISK (9214 ms)
+2026-02-27 23:06:20 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 23:06:20 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 23:06:20 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 23:06:27 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:06:27 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 23:06:58 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:06:58 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-27 23:07:29 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:07:29 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.396 escalated=False
+2026-02-27 23:07:37 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7603 ms)
+2026-02-27 23:07:37 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:07:37 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-27 23:14:38 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:14:38 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:14:38 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:14:38 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:21:27 [vision_agent] INFO  ============================================================
+2026-02-27 23:21:27 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:21:27 [vision_agent] INFO  ============================================================
+2026-02-27 23:21:27 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:21:27 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:21:27 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:21:27 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:21:28 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:22:05 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:22:05 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.214 escalated=False
+2026-02-27 23:22:29 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 23:22:29 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.274 escalated=False
+2026-02-27 23:22:31 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 23:22:39 [src.reasoning] INFO  LLM reasoning: FALL_RISK (8156 ms)
+2026-02-27 23:22:39 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 23:22:39 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 23:22:39 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 23:22:39 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:22:39 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.280 escalated=False
+2026-02-27 23:22:51 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6640 ms)
+2026-02-27 23:22:51 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:22:51 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:22:55 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:22:55 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.582 escalated=False
+2026-02-27 23:23:52 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7112 ms)
+2026-02-27 23:23:52 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-27 23:23:52 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:23:52 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-27 23:24:54 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9014 ms)
+2026-02-27 23:24:54 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:24:54 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-27 23:26:39 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7935 ms)
+2026-02-27 23:26:39 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:26:39 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-27 23:26:39 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:26:39 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.653 escalated=False
+2026-02-27 23:27:15 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:27:15 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.746 escalated=False
+2026-02-27 23:27:28 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:27:28 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.681 escalated=False
+2026-02-27 23:27:39 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7165 ms)
+2026-02-27 23:27:39 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-27 23:27:39 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:27:39 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-27 23:27:50 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:27:50 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.746 escalated=False
+2026-02-27 23:27:55 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 23:27:55 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.645 escalated=False
+2026-02-27 23:28:21 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 23:28:21 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.673 escalated=False
+2026-02-27 23:28:22 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:28:22 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.746 escalated=False
+2026-02-27 23:28:40 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6741 ms)
+2026-02-27 23:28:40 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:28:40 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-27 23:29:13 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:29:13 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.706 escalated=False
+2026-02-27 23:29:43 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8649 ms)
+2026-02-27 23:29:43 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:29:43 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-27 23:30:40 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:30:40 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:30:40 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:30:40 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:31:13 [vision_agent] INFO  ============================================================
+2026-02-27 23:31:13 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:31:13 [vision_agent] INFO  ============================================================
+2026-02-27 23:31:13 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:31:13 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:31:13 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:31:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:31:14 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:34:22 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:34:22 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.248 escalated=False
+2026-02-27 23:34:44 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:34:44 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:34:44 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:34:44 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:35:38 [vision_agent] INFO  ============================================================
+2026-02-27 23:35:38 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:35:38 [vision_agent] INFO  ============================================================
+2026-02-27 23:35:38 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:35:38 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:35:38 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:35:38 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:35:39 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:36:58 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:36:58 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.227 escalated=False
+2026-02-27 23:37:12 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:37:12 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-27 23:37:12 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 23:37:22 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9988 ms)
+2026-02-27 23:37:22 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:37:22 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:37:38 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-27 23:37:38 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.604 escalated=False
+2026-02-27 23:38:00 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 23:38:00 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.647 escalated=False
+2026-02-27 23:38:14 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:38:14 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-27 23:38:21 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7134 ms)
+2026-02-27 23:38:21 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:38:21 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:38:52 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 23:38:52 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.667 escalated=False
+2026-02-27 23:39:25 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7867 ms)
+2026-02-27 23:39:25 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:39:25 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:39:25 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-27 23:39:25 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.648 escalated=False
+2026-02-27 23:39:36 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:39:36 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:39:36 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:39:36 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:41:33 [vision_agent] INFO  ============================================================
+2026-02-27 23:41:33 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:41:33 [vision_agent] INFO  ============================================================
+2026-02-27 23:41:33 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:41:33 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:41:33 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:41:33 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:41:34 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:49:36 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 23:49:36 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.248 escalated=False
+2026-02-27 23:49:56 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:49:56 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-27 23:50:21 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 23:50:21 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.288 escalated=False
+2026-02-27 23:50:34 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 23:50:48 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (14150 ms)
+2026-02-27 23:50:48 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:50:48 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:50:48 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-27 23:50:48 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.601 escalated=False
+2026-02-27 23:50:52 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:50:52 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.646 escalated=False
+2026-02-27 23:51:42 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7147 ms)
+2026-02-27 23:51:42 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:51:42 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:51:42 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-27 23:51:42 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.601 escalated=False
+2026-02-27 23:51:57 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:51:57 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:51:57 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:51:57 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:52:20 [vision_agent] INFO  ============================================================
+2026-02-27 23:52:20 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:52:20 [vision_agent] INFO  ============================================================
+2026-02-27 23:52:20 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:52:20 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:52:20 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:52:20 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:52:21 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-27 23:55:26 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-27 23:55:34 [src.reasoning] INFO  LLM reasoning: FALL_RISK (8198 ms)
+2026-02-27 23:55:34 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_RISK
+2026-02-27 23:55:34 [src.mqtt_adapter] INFO  Published reasoned event: FALL_RISK severity=high
+2026-02-27 23:55:34 [vision_agent] INFO  Decision: FALL_RISK severity=high fused=0.262 escalated=False
+2026-02-27 23:55:34 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-27 23:55:34 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.259 escalated=False
+2026-02-27 23:55:34 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:55:34 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.220 escalated=False
+2026-02-27 23:56:02 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-27 23:56:02 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.338 escalated=False
+2026-02-27 23:56:26 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7873 ms)
+2026-02-27 23:56:26 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-27 23:56:26 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-27 23:56:38 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-27 23:56:38 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.556 escalated=False
+2026-02-27 23:56:58 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-27 23:56:58 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-27 23:56:58 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-27 23:56:58 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-27 23:57:29 [vision_agent] INFO  ============================================================
+2026-02-27 23:57:29 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-27 23:57:29 [vision_agent] INFO  ============================================================
+2026-02-27 23:57:29 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-27 23:57:29 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-27 23:57:29 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-27 23:57:29 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-27 23:57:30 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 00:01:11 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 00:01:11 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.312 escalated=False
+2026-02-28 00:01:23 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 00:01:23 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.240 escalated=False
+2026-02-28 00:01:34 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 00:01:44 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9216 ms)
+2026-02-28 00:01:44 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:01:44 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.287 escalated=False
+2026-02-28 00:01:49 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 00:01:49 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 00:01:49 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 00:01:49 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 00:02:17 [vision_agent] INFO  ============================================================
+2026-02-28 00:02:17 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 00:02:17 [vision_agent] INFO  ============================================================
+2026-02-28 00:02:17 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 00:02:17 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 00:02:17 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 00:02:17 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 00:02:18 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 00:04:02 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 00:04:02 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.346 escalated=False
+2026-02-28 00:04:12 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-28 00:04:12 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.252 escalated=False
+2026-02-28 00:04:12 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 00:04:21 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9158 ms)
+2026-02-28 00:04:21 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:04:21 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.262 escalated=False
+2026-02-28 00:04:25 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 00:04:25 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.371 escalated=False
+2026-02-28 00:04:35 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7674 ms)
+2026-02-28 00:04:35 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:04:35 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 00:05:23 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 00:05:23 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.635 escalated=False
+2026-02-28 00:05:37 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9168 ms)
+2026-02-28 00:05:37 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:05:37 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-28 00:05:51 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 00:05:51 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.619 escalated=False
+2026-02-28 00:06:16 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 00:06:16 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.640 escalated=False
+2026-02-28 00:06:37 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9064 ms)
+2026-02-28 00:06:37 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:06:37 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.375 escalated=False
+2026-02-28 00:06:46 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 00:06:46 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.642 escalated=False
+2026-02-28 00:07:24 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 00:07:24 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.635 escalated=False
+2026-02-28 00:07:37 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9492 ms)
+2026-02-28 00:07:37 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:07:37 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.375 escalated=False
+2026-02-28 00:07:47 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9629 ms)
+2026-02-28 00:07:47 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 00:07:47 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.637 escalated=False
+2026-02-28 00:07:57 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 00:07:57 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 00:07:57 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 00:07:57 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 21:00:36 [vision_agent] INFO  ============================================================
+2026-02-28 21:00:36 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 21:00:36 [vision_agent] INFO  ============================================================
+2026-02-28 21:00:36 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 21:00:36 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 21:00:36 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 21:00:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 21:00:37 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 21:07:47 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:07:47 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 21:11:54 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:11:54 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-28 21:12:04 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 21:12:04 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.347 escalated=False
+2026-02-28 21:13:34 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:13:34 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.382 escalated=False
+2026-02-28 21:13:35 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 21:13:45 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10566 ms)
+2026-02-28 21:13:45 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:13:45 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-28 21:13:51 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 21:13:51 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.708 escalated=False
+2026-02-28 21:14:05 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6802 ms)
+2026-02-28 21:14:05 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:14:05 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.637 escalated=False
+2026-02-28 21:14:05 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:14:05 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.661 escalated=False
+2026-02-28 21:14:11 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 21:14:11 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.722 escalated=False
+2026-02-28 21:14:22 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 21:14:22 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 21:14:22 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 21:14:22 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 21:14:39 [vision_agent] INFO  ============================================================
+2026-02-28 21:14:39 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 21:14:39 [vision_agent] INFO  ============================================================
+2026-02-28 21:14:39 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 21:14:39 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 21:14:39 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 21:14:39 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 21:14:40 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 21:15:03 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:15:03 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 21:15:09 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-28 21:15:09 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.246 escalated=False
+2026-02-28 21:15:09 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 21:15:22 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (13137 ms)
+2026-02-28 21:15:22 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:15:22 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.262 escalated=False
+2026-02-28 21:15:22 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 21:15:22 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.219 escalated=False
+2026-02-28 21:15:30 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7546 ms)
+2026-02-28 21:15:30 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:15:30 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 21:15:39 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:15:39 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.592 escalated=False
+2026-02-28 21:15:44 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 21:15:44 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-28 21:16:09 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:16:09 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.610 escalated=False
+2026-02-28 21:16:22 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6870 ms)
+2026-02-28 21:16:22 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:16:22 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-28 21:16:40 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:16:40 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.626 escalated=False
+2026-02-28 21:17:10 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7310 ms)
+2026-02-28 21:17:10 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-28 21:17:10 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:17:10 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.637 escalated=False
+2026-02-28 21:17:10 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:17:10 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.671 escalated=False
+2026-02-28 21:17:23 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6310 ms)
+2026-02-28 21:17:23 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:17:23 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.400 escalated=False
+2026-02-28 21:17:23 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 21:17:23 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.678 escalated=False
+2026-02-28 21:17:42 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 21:17:42 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 21:17:42 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 21:17:42 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 21:17:43 [vision_agent] INFO  ============================================================
+2026-02-28 21:17:43 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 21:17:43 [vision_agent] INFO  ============================================================
+2026-02-28 21:17:43 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 21:17:43 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 21:17:43 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 21:17:43 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 21:17:44 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 21:18:06 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:18:06 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 21:18:17 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 21:18:27 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10107 ms)
+2026-02-28 21:18:27 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for MULTI_SIGNAL_ALERT
+2026-02-28 21:18:27 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:18:27 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 21:18:27 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=medium
+2026-02-28 21:18:27 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=medium fused=0.563 escalated=False
+2026-02-28 21:18:37 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 21:18:37 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 21:18:53 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 21:18:53 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.671 escalated=False
+2026-02-28 21:19:22 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-28 21:19:22 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.306 escalated=False
+2026-02-28 21:19:31 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8665 ms)
+2026-02-28 21:19:31 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:19:31 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 21:19:39 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7815 ms)
+2026-02-28 21:19:39 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:19:39 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.588 escalated=False
+2026-02-28 21:19:39 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 21:19:39 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.558 escalated=False
+2026-02-28 21:19:53 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 21:19:53 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.574 escalated=False
+2026-02-28 21:19:54 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:19:54 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.588 escalated=False
+2026-02-28 21:19:56 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 21:19:56 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-28 21:20:17 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 21:20:17 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 21:20:17 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 21:20:17 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 21:52:09 [vision_agent] INFO  ============================================================
+2026-02-28 21:52:09 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 21:52:09 [vision_agent] INFO  ============================================================
+2026-02-28 21:52:09 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 21:52:09 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 21:52:09 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 21:52:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 21:52:10 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 21:53:22 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:53:22 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 21:53:25 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-28 21:53:25 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.349 escalated=False
+2026-02-28 21:53:25 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 21:53:56 [src.reasoning] WARNING  Ollama request timed out after 30s
+2026-02-28 21:53:56 [src.reasoning] WARNING  LLM failed (LLM_TIMEOUT, 30117 ms) — falling back to rules
+2026-02-28 21:53:56 [src.decision_scorer] INFO  Critical pending: 1/2 confirmations for FALL_SUSPECTED
+2026-02-28 21:53:56 [src.mqtt_adapter] INFO  Published reasoned event: FALL_SUSPECTED severity=high
+2026-02-28 21:53:56 [vision_agent] INFO  Decision: FALL_SUSPECTED severity=high fused=0.262 escalated=False
+2026-02-28 21:53:56 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 21:53:56 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.263 escalated=False
+2026-02-28 21:55:00 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (14644 ms)
+2026-02-28 21:55:00 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:55:00 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 21:55:11 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 21:55:11 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 21:57:17 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8500 ms)
+2026-02-28 21:57:17 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 21:57:17 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 21:57:36 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 21:57:36 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 21:58:20 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 21:58:20 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 21:58:20 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 21:58:20 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 21:59:09 [vision_agent] INFO  ============================================================
+2026-02-28 21:59:09 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 21:59:09 [vision_agent] INFO  ============================================================
+2026-02-28 21:59:09 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 21:59:09 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 21:59:09 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 21:59:09 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 21:59:10 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 21:59:42 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 21:59:42 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 21:59:58 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=low
+2026-02-28 21:59:58 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=low fused=0.251 escalated=False
+2026-02-28 21:59:58 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:00:06 [src.reasoning] INFO  LLM reasoning: WANDERING_PATTERN (8612 ms)
+2026-02-28 22:00:06 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_PATTERN severity=high
+2026-02-28 22:00:06 [vision_agent] INFO  Decision: WANDERING_PATTERN severity=high fused=0.300 escalated=False
+2026-02-28 22:00:10 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:00:10 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 22:00:23 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=medium
+2026-02-28 22:00:23 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=medium fused=0.562 escalated=False
+2026-02-28 22:00:40 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:00:40 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 22:00:41 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:00:41 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 22:01:05 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6930 ms)
+2026-02-28 22:01:05 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:01:05 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 22:01:13 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 22:01:13 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-28 22:02:55 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 22:02:56 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-28 22:03:03 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7891 ms)
+2026-02-28 22:03:03 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:03:03 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 22:03:08 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:03:08 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:03:08 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:03:08 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:04:13 [vision_agent] INFO  ============================================================
+2026-02-28 22:04:13 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:04:13 [vision_agent] INFO  ============================================================
+2026-02-28 22:04:13 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:04:13 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:04:13 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:04:13 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:04:14 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:07:42 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:07:42 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:07:42 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:07:42 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:08:36 [vision_agent] INFO  ============================================================
+2026-02-28 22:08:36 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:08:36 [vision_agent] INFO  ============================================================
+2026-02-28 22:08:36 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:08:36 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:08:36 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:08:36 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:08:37 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:09:53 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 22:09:53 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.278 escalated=False
+2026-02-28 22:10:04 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:10:12 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8512 ms)
+2026-02-28 22:10:12 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:10:12 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:10:12 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:10:12 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 22:10:20 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:10:20 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 22:10:25 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=medium
+2026-02-28 22:10:25 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=medium fused=0.550 escalated=False
+2026-02-28 22:10:55 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 22:10:55 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.671 escalated=False
+2026-02-28 22:11:04 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 22:11:04 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.357 escalated=False
+2026-02-28 22:11:12 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8008 ms)
+2026-02-28 22:11:12 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:11:12 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 22:11:25 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 22:11:25 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.697 escalated=False
+2026-02-28 22:11:42 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:11:42 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.682 escalated=False
+2026-02-28 22:11:55 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 22:11:55 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.722 escalated=False
+2026-02-28 22:12:12 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:12:12 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:12:12 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:12:12 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:12:40 [vision_agent] INFO  ============================================================
+2026-02-28 22:12:40 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:12:40 [vision_agent] INFO  ============================================================
+2026-02-28 22:12:40 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:12:40 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:12:40 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:12:40 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:12:41 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:14:33 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 22:14:33 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 22:14:36 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:14:46 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (9341 ms)
+2026-02-28 22:14:46 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:14:46 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.262 escalated=False
+2026-02-28 22:14:46 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=medium
+2026-02-28 22:14:46 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=medium fused=0.261 escalated=False
+2026-02-28 22:14:46 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 22:14:46 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.267 escalated=False
+2026-02-28 22:14:53 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (6697 ms)
+2026-02-28 22:14:53 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:14:53 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:14:54 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:14:54 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:14:54 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:14:54 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:15:14 [vision_agent] INFO  ============================================================
+2026-02-28 22:15:14 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:15:14 [vision_agent] INFO  ============================================================
+2026-02-28 22:15:14 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:15:14 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:15:14 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:15:14 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:15:15 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:16:11 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:16:20 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8728 ms)
+2026-02-28 22:16:20 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:16:20 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:17:12 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=low
+2026-02-28 22:17:12 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=low fused=0.332 escalated=False
+2026-02-28 22:17:19 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (7437 ms)
+2026-02-28 22:17:19 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:17:19 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:17:32 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:17:32 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:17:32 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:17:32 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:18:02 [vision_agent] INFO  ============================================================
+2026-02-28 22:18:02 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:18:02 [vision_agent] INFO  ============================================================
+2026-02-28 22:18:02 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:18:02 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:18:02 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:18:02 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:18:03 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:18:50 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 22:18:50 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.267 escalated=False
+2026-02-28 22:18:54 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:19:05 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10886 ms)
+2026-02-28 22:19:05 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:19:05 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:19:05 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:19:05 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 22:20:02 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8011 ms)
+2026-02-28 22:20:02 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:20:02 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:21:06 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10271 ms)
+2026-02-28 22:21:06 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:21:06 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.300 escalated=False
+2026-02-28 22:21:48 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:21:48 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 22:22:06 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (8887 ms)
+2026-02-28 22:22:06 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:22:06 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.325 escalated=False
+2026-02-28 22:22:06 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 22:22:06 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.671 escalated=False
+2026-02-28 22:22:23 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:22:23 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.682 escalated=False
+2026-02-28 22:22:30 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=high
+2026-02-28 22:22:30 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=high fused=0.627 escalated=False
+2026-02-28 22:23:00 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_DETECTED severity=low
+2026-02-28 22:23:00 [vision_agent] INFO  Decision: WANDERING_DETECTED severity=low fused=0.396 escalated=False
+2026-02-28 22:23:01 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:23:01 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:23:01 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:23:01 [vision_agent] INFO  Vision-Agent pipeline stopped
+2026-02-28 22:33:15 [vision_agent] INFO  ============================================================
+2026-02-28 22:33:15 [vision_agent] INFO    Vision-Agent  —  AI Orchestration Layer
+2026-02-28 22:33:15 [vision_agent] INFO  ============================================================
+2026-02-28 22:33:15 [src.reasoning] INFO  OllamaProvider configured (model=qwen2.5:3b, url=http://localhost:11434)
+2026-02-28 22:33:15 [src.reasoning] INFO  ReasoningEngine initialized (provider=ollama, model=qwen2.5:3b, rpm=20)
+2026-02-28 22:33:15 [vision_agent] INFO  Starting Vision-Agent pipeline...
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Connecting to MQTT broker localhost:1883
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Connected to MQTT broker (rc=Success)
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/event
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/movement
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/person_count
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/vision/+/status
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/anomaly
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/status
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/smartguard/batch
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/health/+/alert
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/heart_rate
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/hrv
+2026-02-28 22:33:15 [src.mqtt_adapter] INFO  Subscribed → etms/floor/+/mobile/+/oxygen_saturation
+2026-02-28 22:33:16 [vision_agent] INFO  Vision-Agent pipeline running
+2026-02-28 22:34:18 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=medium
+2026-02-28 22:34:18 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=medium fused=0.336 escalated=False
+2026-02-28 22:34:19 [src.reasoning] INFO  Ollama connected — model 'qwen2.5:3b' available
+2026-02-28 22:34:29 [src.reasoning] INFO  LLM reasoning: WANDERING_PATTERN (10855 ms)
+2026-02-28 22:34:29 [src.mqtt_adapter] INFO  Published reasoned event: WANDERING_PATTERN severity=high
+2026-02-28 22:34:29 [vision_agent] INFO  Decision: WANDERING_PATTERN severity=high fused=0.300 escalated=False
+2026-02-28 22:34:29 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:34:29 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.632 escalated=False
+2026-02-28 22:34:46 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:34:46 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.657 escalated=False
+2026-02-28 22:35:05 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 22:35:05 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.530 escalated=False
+2026-02-28 22:35:11 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:35:11 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.682 escalated=False
+2026-02-28 22:35:18 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 22:35:18 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.561 escalated=False
+2026-02-28 22:35:18 [src.mqtt_adapter] INFO  Published reasoned event: GAIT_INSTABILITY severity=high
+2026-02-28 22:35:18 [vision_agent] INFO  Decision: GAIT_INSTABILITY severity=high fused=0.597 escalated=False
+2026-02-28 22:35:29 [src.reasoning] INFO  LLM reasoning: MULTI_SIGNAL_ALERT (10319 ms)
+2026-02-28 22:35:29 [src.mqtt_adapter] INFO  Published reasoned event: MULTI_SIGNAL_ALERT severity=high
+2026-02-28 22:35:29 [vision_agent] INFO  Decision: MULTI_SIGNAL_ALERT severity=high fused=0.350 escalated=False
+2026-02-28 22:35:48 [src.mqtt_adapter] INFO  Published reasoned event: ERRATIC_MOVEMENT severity=high
+2026-02-28 22:35:48 [vision_agent] INFO  Decision: ERRATIC_MOVEMENT severity=high fused=0.722 escalated=False
+2026-02-28 22:36:10 [src.mqtt_adapter] INFO  Published reasoned event: ZONE_VIOLATION severity=high
+2026-02-28 22:36:10 [vision_agent] INFO  Decision: ZONE_VIOLATION severity=high fused=0.708 escalated=False
+2026-02-28 22:36:32 [vision_agent] INFO  Stopping Vision-Agent pipeline...
+2026-02-28 22:36:32 [src.mqtt_adapter] WARNING  Disconnected from MQTT broker (rc=Normal disconnection)
+2026-02-28 22:36:32 [src.mqtt_adapter] INFO  Disconnected from MQTT broker
+2026-02-28 22:36:32 [vision_agent] INFO  Vision-Agent pipeline stopped

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkhome_assistant_frontend=self.webpackChunkhome_assistant_frontend||[]).push([["43305"],{36784:function(n,t,e){e.a(n,async function(n,a){try{e.r(t),e.d(t,{HaAddonSelector:function(){return d}});var s=e(40445),c=e(77845),o=e(48585),r=n([o]);o=(r.then?(await r)():r)[0];class d extends o.HaAppSelector{}d=(0,s.Cg)([(0,c.EM)("ha-selector-addon")],d),a()}catch(d){a(d)}})}}]);
+//# sourceMappingURL=43305.ca32959b333adba0.js.map

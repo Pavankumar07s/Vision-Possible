@@ -1,0 +1,25 @@
+services:
+  vision-service:
+    build: .
+    container_name: etms-vision
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    volumes:
+      - ./config:/app/config
+      - ./models:/app/models
+      - ./logs:/app/logs
+    devices:
+      # GPU access (for laptop with NVIDIA)
+      - /dev/video0:/dev/video0  # Webcam access
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    network_mode: host  # Access local MQTT broker
+    # Override for development
+    # command: ["python", "-m", "src", "--camera", "0", "--log-level", "DEBUG"]

@@ -1,0 +1,169 @@
+Metadata-Version: 2.4
+Name: asyncinotify
+Version: 4.4.0
+Summary: 'A simple optionally-async python inotify library, focused on simplicity of use and operation, and leveraging modern Python features
+Keywords: async,inotify
+Author-email: "Taylor C. Richberger" <taylor.richberger@procern.com>
+Requires-Python: >= 3.6, < 4
+Description-Content-Type: text/x-rst
+License-Expression: MPL-2.0
+Classifier: Development Status :: 6 - Mature
+Classifier: Framework :: AsyncIO
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX :: BSD :: FreeBSD
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Libraries
+License-File: LICENSE
+Project-URL: documentation, https://asyncinotify.readthedocs.io/
+Project-URL: repository, https://github.com/ProCern/asyncinotify/
+
+asyncinotify
+============
+
+An async python inotify package.  Kept as simple and easy-to-understand as
+possible, while still being flexible and powerful.  This is built on no external
+dependencies, and works through ctypes in a very obvious fashion.
+
+This works without any other external dependencies.
+
+The code is available on GitHub_ and the documentation is available on
+ReadTheDocs_. The package itself is available on PyPi_.
+
+Installation
+------------
+
+You know the drill::
+
+  pip install asyncinotify
+
+Usage
+-----
+
+The core of this package is ``asyncinotify.Inotify``.  Most important
+Classes may be imported directly from the ``asyncinotify`` package.
+
+.. code-block:: python
+
+  from pathlib import Path
+  from asyncinotify import Inotify, Mask
+  import asyncio
+
+  async def main():
+      # Context manager to close the inotify handle after use
+      with Inotify() as inotify:
+          # Adding the watch can also be done outside of the context manager.
+          # __enter__ doesn't actually do anything except return self.
+          # This returns an asyncinotify.inotify.Watch instance
+          inotify.add_watch('/tmp', Mask.ACCESS | Mask.MODIFY | Mask.OPEN | Mask.CREATE | Mask.DELETE | Mask.ATTRIB | Mask.CLOSE | Mask.MOVE | Mask.ONLYDIR)
+          # Iterate events forever, yielding them one at a time
+          async for event in inotify:
+              # Events have a helpful __repr__.  They also have a reference to
+              # their Watch instance.
+              print(event)
+
+              # the contained path may or may not be valid UTF-8.  See the note
+              # below
+              print(repr(event.path))
+
+  asyncio.run(main())
+
+This will asynchronously watch the /tmp directory and report events it
+encounters.
+
+This library also supports synchronous operation, using the
+`asyncinotify.inotify.Inotify.sync_get`` method, or simply using
+synchronous iteration.
+
+Support
+-------
+
+This is supported and tested on the following:
+
+* Python 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, and 3.14
+* Debian bullseye, bookworm, and trixie
+* Ubuntu 20.04, 22.04, and 24.04
+* Fedora 42 and 43
+* Alma Linux 8, 9 and 10 (Should be equivalent to RHEL)
+* Alpine Linux 3.20 through 3.23
+
+We regularly remove out-of-support OSes from the tests and add new releases.
+
+We support back to Python 3.6 as long as it remains easy to do so.  We may, in
+some future version, restrict Python support to non-EOL versions, if supporting
+the older versions becomes inconvenient.
+
+Motivation
+----------
+
+There are a few different python inotify packages.  Most of them either have odd
+conventions, expose too much of the underlying C API in a way that I personally
+don't like, are badly documented, they work with paths in a non-idiomatic way,
+are not asynchronous, or are overengineered compared to the API they are
+wrapping.  I find that the last one is true for the majority of them.
+
+I encourage everybody to read the `sources <GitHub_>`_ of this package.  They are
+quite simple and easy to understand.
+
+This library
+
+* Works in a very simple way.  It does not have many add-ons or extra features beyond
+  presenting a very Python interface to the raw inotify functionality.  Any extra
+  features (such as recursive watching) are presented as completely separate classes.
+  The core inotify functionality is as pure as it can reasonably be.
+
+* Grabs events in bulk and caches them for minor performance gains.
+
+* Leverages IntFlag for all masks and flags, allowing the user to use the
+  features of IntFlag, such as seeing individual applied flags in the ``repr``,
+  checking for flag set bits with ``in``.
+
+* Exposes all paths via python's pathlib_
+
+* Exposes all the functionality of inotify without depending on the user having
+  to interact with any of the underlying mechanics of Inotify.  You should never
+  have to touch the inotify or watch descriptors for any reason.
+
+The primary motivation is that this is written to be a Python inotify module
+that I would feel comfortable using.
+
+.. _ospackage: https://docs.python.org/3/library/os.html#file-names-command-line-arguments-and-environment-variables
+.. _surrogateescape: https://docs.python.org/3/library/codecs.html#surrogateescape
+.. _GitHub: https://github.com/ProCern/asyncinotify
+.. _pathlib: https://docs.python.org/3/library/pathlib.html
+.. _ReadTheDocs: https://asyncinotify.readthedocs.io/en/latest/
+.. _PyPi: https://pypi.org/project/asyncinotify/
+
+
+License
+-------
+
+This code is Copyright 2019 - 2023 Absolute Performance, Inc, and 2024 - 2025
+ProCern Technology Solutions.
+
+It is written and maintained by `Taylor C. Richberger <mailto:taylor.richberger@procern.com>`_.
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v.
+2.0. If a copy of the MPL was not distributed with this file, You can obtain one
+at https://mozilla.org/MPL/2.0/.
+
+Note that this does **not** have the Exhibit B - “Incompatible With Secondary
+Licenses” Notice.  This software is explicitly **compatible** with secondary
+licenses.  It is MPL 2.0 to ensure that any improvements and other changes are
+distributed.  We do not want to inhibit nor prohibit its use with other FOSS or
+proprietary software, regardless of the license.  In other words, if you aren't
+changing asyncinotify, you can pretty much just use it as a library without
+worrying, unless your other license is explicitly or implicitly incompatible
+with it (which should be incredibly uncommon).
+
+

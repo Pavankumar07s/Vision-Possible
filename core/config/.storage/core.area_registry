@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "minor_version": 9,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "aliases": [],
+        "floor_id": "b_flank",
+        "humidity_entity_id": null,
+        "icon": "mdi:abacus",
+        "id": "003b",
+        "labels": [],
+        "name": "003B",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-02-20T18:28:57.339129+00:00",
+        "modified_at": "2026-02-20T18:28:57.339132+00:00"
+      }
+    ]
+  }
+}

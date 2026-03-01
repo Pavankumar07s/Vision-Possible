@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "minor_version": 1,
+  "key": "person",
+  "data": {
+    "items": [
+      {
+        "id": "pavan_kumar",
+        "name": "PAVAN KUMAR",
+        "user_id": "fcb69a9c840f4d00a4fc027322fac942",
+        "device_trackers": [
+          "device_tracker.sm_a528b",
+          "device_tracker.2412dpc0ai"
+        ]
+      }
+    ]
+  }
+}

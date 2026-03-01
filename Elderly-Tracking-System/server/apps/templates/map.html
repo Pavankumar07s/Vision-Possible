@@ -1,0 +1,184 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/map.css">
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="map-container">
+    <div class="row">
+        <div class="map-wrapper col">
+            <div id="map" class="map">
+                <div class="corridoor-row row">
+                    <div id="corridoor" class="corridoor col">
+                        <h2>Corridoor</h2>
+                    </div>
+                </div>
+                <div class="flat-row row">
+                    <div id="flatA" class="flat-a col">
+                        <h2>Flat A</h2>
+                    </div>
+                    <div id="flatB" class="flat-b col">
+                        <h2>Flat B</h2>
+                    </div>
+                    <div id="flatC" class="flat-c col">
+                        <h2>Flat C</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="info-wrapper col">
+            <div class="legend-row row">
+                <h2>Legend</h2>
+                <Legend>
+                    <div class="legend-item">
+                        <div class="col-md-1">
+                            <div class="legend-red-point"></div>
+                        </div>
+                        <span class="legend-text">Elderly Tracker</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="col-md-1">
+                            <div class="legend-yellow-point"></div>
+                        </div>
+                        <span class="legend-text">Elderly Location</span>
+                    </div>
+                </Legend>
+                <div class="floor-item">
+                    <span>Current floor:</span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="dropdown-row row">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="elderlydropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span id="selectedElderly">Select Elderly</span>
+                    </button>
+                    <div class="elderly dropdown-menu" aria-labelledby="elderlydropdownMenuButton">
+                        <script>
+                            fetch('/map-data')
+                            .then(response => response.json())
+                            .then(data => {
+    
+                                const dropdownMenu = document.querySelector('.elderly.dropdown-menu');
+                                Object.keys(data).forEach((key) => {
+                                    const item = data[key][0];
+                                    const dropdownItem = document.createElement('a');
+                                    dropdownItem.setAttribute('class', 'elderly dropdown-item');
+                                    dropdownItem.setAttribute('href', '#');
+                                    dropdownItem.setAttribute('data-elderly', key);
+                                    dropdownItem.textContent = item.label;
+                                    dropdownMenu.appendChild(dropdownItem);
+    
+                                    dropdownItem.addEventListener('click', function() {
+                                        document.getElementById('selectedElderly').textContent = this.textContent;
+                                        let elderlyKey = this.getAttribute('data-elderly');
+                                        displayElderlyPoints(elderlyKey);
+                                    });
+    
+                                });
+                            })
+                            .catch(error => console.error('Error fetching data:', error));
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    const mapElement = document.getElementById('map');
+
+    const originalMapWidth = 10;
+    const originalMapHeight = 10;
+    const currentMapWidth = mapElement.offsetWidth;
+    const currentMapHeight = mapElement.offsetHeight;
+    const scaleX = currentMapWidth / originalMapWidth;
+    const scaleY = currentMapHeight / originalMapHeight;
+
+    let corridoorCutOff = currentMapHeight * 0.34;
+    let flatACutOff = currentMapWidth * 0.33;
+    let flatBCutOff = currentMapWidth * 0.66;
+
+    const areas = {
+        corridoor: { x1: 0, y1: 0, x2: currentMapWidth, y2: corridoorCutOff },
+        flatA: { x1: 0, y1: corridoorCutOff, x2: flatACutOff, y2: currentMapHeight },
+        flatB: { x1: flatACutOff, y1: corridoorCutOff, x2: flatBCutOff, y2: currentMapHeight },
+        flatC: { x1: flatBCutOff, y1: corridoorCutOff, x2: currentMapWidth, y2: currentMapHeight }
+    };
+
+    function isPointInsideArea(point, area) {
+        return point.x >= area.x1 && point.x <= area.x2 &&
+                point.y >= area.y1 && point.y <= area.y2;
+    }
+
+    function changeAreaBackground(areaElement) {
+        areaElement.style.backgroundColor = 'yellow';
+    }
+
+    function resetBackground(areas) {
+        for (const areaName in areas) {
+
+            const areaElement = document.getElementById(`${areaName}`);
+            areaElement.style.backgroundColor = 'white';
+
+        }
+    }
+
+    function clearPoints() {
+        document.querySelectorAll('.point').forEach(point => point.remove());
+    }
+
+    function displayElderlyPoints(elderlyKey) {
+        resetBackground(areas);
+        clearPoints();
+        fetch('/map-data')
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(data);
+
+            let points = data[elderlyKey];
+
+            if (points) {
+
+                const floorElement = document.querySelector('.floor-item span:last-child');
+                floorElement.textContent = `${points[0].floor}`;
+
+                points.forEach(point => {
+                    const scaledX = point.x * scaleX;
+                    const scaledY = point.y * scaleY;
+
+                    const pointElement = document.createElement('div');
+                    pointElement.classList.add('point');
+                    pointElement.style.left = `${scaledX}px`;
+                    pointElement.style.top = `${scaledY}px`;
+                    pointElement.title = point.label;
+                    mapElement.appendChild(pointElement);
+
+                    for (const areaName in areas) {
+                        const area = areas[areaName];
+                        if (scaledX >= area.x1 && scaledX <= area.x2 && scaledY >= area.y1 && scaledY <= area.y2) {
+                            const areaElement = document.getElementById(`${areaName}`);
+                            changeAreaBackground(areaElement);
+                        }
+                    }
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+</script>
+
+{% endblock javascripts %}

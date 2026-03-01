@@ -1,0 +1,2 @@
+export const __rspack_esm_id="70762";export const __rspack_esm_ids=["70762"];export const __webpack_modules__={60977(e,t,_){_.r(t);var o=_(88354);const s=document.createElement("style");s.textContent=o.Q,document.head.append(s)}};
+//# sourceMappingURL=70762.3eba65e3dcbf7a69.js.map

@@ -1,0 +1,9 @@
+asyncinotify-4.4.0.dist-info/INSTALLER,sha256=5hhM4Q4mYTT9z6QB6PGpUAW81PGNFrYrdXMj4oM_6ak,2
+asyncinotify-4.4.0.dist-info/METADATA,sha256=1Jj-DR7eIf4JDxx2MIDhAcVskhfOlGZWW4GEEueeVjI,6843
+asyncinotify-4.4.0.dist-info/RECORD,,
+asyncinotify-4.4.0.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+asyncinotify-4.4.0.dist-info/WHEEL,sha256=G2gURzTEtmeR8nrdXUJfNiB3VYVxigPQ-bEQujpNiNs,82
+asyncinotify-4.4.0.dist-info/licenses/LICENSE,sha256=Pz2eACSxkhsGfW9_iN60pgy-enjnbGTj8df8O3ebnQQ,16726
+asyncinotify/__init__.py,sha256=zX64DdyEt25a-Ruiwm5VGMV0b-HdFUptq-SAufPAvFw,30250
+asyncinotify/_ffi.py,sha256=pSIXqXVm0bPLpMpUgXEaQRXhrdWJh6AJOvfOx80jda4,2670
+asyncinotify/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
