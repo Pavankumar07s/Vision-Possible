@@ -344,6 +344,4 @@ It is a **distributed safety infrastructure** that:
 
 ---
 
-## License
 
-*Specify your license here.*
